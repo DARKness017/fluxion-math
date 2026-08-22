@@ -420,10 +420,6 @@ if 'selected_unit_name' not in st.session_state:
     st.session_state.selected_unit_name = ""
 if 'user_answers' not in st.session_state:
     st.session_state.user_answers = []
-if 'failed_attempts' not in st.session_state:
-    st.session_state.failed_attempts = 0
-if 'lockout_until' not in st.session_state:
-    st.session_state.lockout_until = 0
 if 'reviewing_q_id' not in st.session_state:
     st.session_state.reviewing_q_id = None
 if 'auth_mode' not in st.session_state:
@@ -811,20 +807,20 @@ def login_screen():
                                     time.sleep(1)
                                     st.rerun()
                                 else:
-                                    # Log the strike in the database
+                                    # Log the strike
                                     new_attempts = user.get('failed_attempts', 0) + 1
                                     update_data = {"failed_attempts": new_attempts}
                                     
                                     if new_attempts >= 5:
-                                        # Write a strict UTC 5-minute timeout to the database
                                         lockout_dt = datetime.now(ZoneInfo("UTC")) + timedelta(minutes=5)
                                         update_data["lockout_until"] = lockout_dt.isoformat()
-                                        supabase.table("users").update(update_data).eq("email", login_email).execute()
                                         st.markdown("<div style='background-color: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; padding: 14px; border-radius: 8px; color: #ef4444; margin-bottom: 15px;'><i class='fa-solid fa-lock'></i> <b>Too many failed attempts.</b> You are locked out for 5 minutes.</div>", unsafe_allow_html=True)
                                     else:
-                                        supabase.table("users").update(update_data).eq("email", login_email).execute()
                                         attempts_left = 5 - new_attempts
                                         st.error(f"Invalid email or password. ({attempts_left} attempts remaining)")
+                                        
+                                    # Write to DB unconditionally (Claude's cleaner syntax!)
+                                    supabase.table("users").update(update_data).eq("email", login_email).execute()
                         else:
                             st.error("Invalid email or password.")
                     except Exception as e:
