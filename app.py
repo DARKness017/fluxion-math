@@ -1214,10 +1214,9 @@ def dashboard_screen():
                 if not alltime_xp.empty: st.dataframe(alltime_xp, use_container_width=True)
                 else: st.markdown("<div style='background-color: rgba(192, 155, 90, 0.1); border: 1px solid #C09B5A; padding: 12px; border-radius: 8px; color: #C09B5A;'><i class='fa-solid fa-circle-info'></i> No points earned yet.</div>", unsafe_allow_html=True)
 
-    # --- 5. SUPPORT THE CREATOR (UNIFIED BOX) ---
+    # --- 5. SUPPORT THE CREATOR (UNIFIED BOX - NO GLITCHES) ---
     st.write("---")
     
-    # We use columns to keep it perfectly centered and small
     col1, col2, col3 = st.columns([1, 2, 1])
     
     with col2:
@@ -1273,44 +1272,21 @@ def dashboard_screen():
                     border: 1px dashed #CBD5E1;
                     display: inline-block;
                     letter-spacing: 1.5px;
-                }
-                .toast {
-                    visibility: hidden;
-                    background-color: #22C55E;
-                    color: white;
-                    text-align: center;
-                    border-radius: 6px;
-                    padding: 8px 16px;
-                    position: fixed;
-                    z-index: 1;
-                    left: 50%;
-                    bottom: 10px;
-                    font-size: 13px;
-                    font-weight: 600;
-                    transform: translateX(-50%);
-                    opacity: 0;
-                    transition: opacity 0.3s;
-                    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-                }
-                .toast.show {
-                    visibility: visible;
-                    opacity: 1;
+                    transition: all 0.2s ease;
                 }
             </style>
             
             <div class="support-card" onclick="copyText()">
                 <div class="title"><i class="fa-solid fa-mug-hot"></i> Support the creator</div>
                 <div class="subtitle">Uzum Bank</div>
-                <div class="card-number">4916 9903 1275 5009</div>
+                <div class="card-number" id="num-display">4916 9903 1275 5009</div>
             </div>
-            
-            <div id="toast"><i class="fa-solid fa-check"></i> Copied to clipboard!</div>
             
             <script>
                 function copyText() {
                     const textToCopy = "4916 9903 1275 5009";
                     
-                    // Securely copies the text when the user clicks the box
+                    // Securely copy the text
                     const tempInput = document.createElement("input");
                     tempInput.value = textToCopy;
                     document.body.appendChild(tempInput);
@@ -1318,10 +1294,22 @@ def dashboard_screen():
                     document.execCommand("copy");
                     document.body.removeChild(tempInput);
                     
-                    // Shows the green success notification
-                    const toast = document.getElementById("toast");
-                    toast.className = "toast show";
-                    setTimeout(function() { toast.className = toast.className.replace("toast show", "toast"); }, 2000);
+                    // In-place UI feedback (No floating popups!)
+                    const numDisplay = document.getElementById("num-display");
+                    const originalText = numDisplay.innerText;
+                    
+                    numDisplay.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+                    numDisplay.style.color = "#16A34A"; // Green success color
+                    numDisplay.style.borderColor = "#16A34A";
+                    numDisplay.style.backgroundColor = "#DCFCE7"; // Light green background
+                    
+                    // Revert back after 2 seconds
+                    setTimeout(function() { 
+                        numDisplay.innerText = originalText;
+                        numDisplay.style.color = "#0B1B3D";
+                        numDisplay.style.borderColor = "#CBD5E1";
+                        numDisplay.style.backgroundColor = "#F8FAFC";
+                    }, 2000);
                 }
             </script>
             """,
