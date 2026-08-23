@@ -1214,24 +1214,28 @@ def dashboard_screen():
                 if not alltime_xp.empty: st.dataframe(alltime_xp, use_container_width=True)
                 else: st.markdown("<div style='background-color: rgba(192, 155, 90, 0.1); border: 1px solid #C09B5A; padding: 12px; border-radius: 8px; color: #C09B5A;'><i class='fa-solid fa-circle-info'></i> No points earned yet.</div>", unsafe_allow_html=True)
 
-    # --- 5. SUPPORT THE CREATOR (UNIFIED BOX - NO GLITCHES) ---
+    # --- 5. SUPPORT THE CREATOR (SECURE & UNIFIED BOX) ---
     st.write("---")
     
     col1, col2, col3 = st.columns([1, 2, 1])
     
     with col2:
+        # 1. Safely pull the card number from Streamlit Secrets (No Git exposure!)
+        card_number = st.secrets.get("support_card", "CARD_NOT_FOUND")
+        
+        # 2. Use an f-string to inject it dynamically
         components.html(
-            """
+            f"""
             <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
             <style>
-                body {
+                body {{
                     margin: 0;
                     padding: 5px;
                     background: transparent;
                     font-family: 'Inter', sans-serif;
-                }
-                .support-card {
+                }}
+                .support-card {{
                     background-color: #FFFFFF;
                     border: 1.5px solid #E2E8F0;
                     border-radius: 12px;
@@ -1240,28 +1244,26 @@ def dashboard_screen():
                     cursor: pointer;
                     transition: all 0.25s ease;
                     box-shadow: 0 4px 10px rgba(11, 27, 61, 0.03);
-                }
-                .support-card:hover {
+                }}
+                .support-card:hover {{
                     border-color: #C09B5A;
                     transform: translateY(-2px);
                     box-shadow: 0 8px 20px rgba(192, 155, 90, 0.15);
                     background-color: #FAF8F5;
-                }
-                .support-card:active {
-                    transform: translateY(1px);
-                }
-                .title {
+                }}
+                .title {{
                     color: #C09B5A;
                     font-size: 14px;
                     font-weight: 600;
-                    margin-bottom: 4px;
-                }
-                .subtitle {
+                    margin-bottom: 6px;
+                }}
+                .subtitle {{
                     color: #64748B;
                     font-size: 12px;
-                    margin-bottom: 12px;
-                }
-                .card-number {
+                    margin-bottom: 8px;
+                    line-height: 1.4;
+                }}
+                .card-number {{
                     background-color: #F8FAFC;
                     color: #0B1B3D;
                     font-family: monospace;
@@ -1273,47 +1275,53 @@ def dashboard_screen():
                     display: inline-block;
                     letter-spacing: 1.5px;
                     transition: all 0.2s ease;
-                }
+                }}
             </style>
             
             <div class="support-card" onclick="copyText()">
                 <div class="title"><i class="fa-solid fa-mug-hot"></i> Support the creator</div>
-                <div class="subtitle">Uzum Bank</div>
-                <div class="card-number" id="num-display">4916 9903 1275 5009</div>
+                <div class="subtitle">Novara Academy is self-funded. If this platform has helped you, consider supporting server costs.</div>
+                <div class="subtitle" style="font-weight: 600; color: #0B1B3D; margin-bottom: 4px;">Uzum Bank (Click to copy)</div>
+                <div class="card-number" id="num-display">{card_number}</div>
             </div>
             
             <script>
-                function copyText() {
-                    const textToCopy = "4916 9903 1275 5009";
+                function copyText() {{
+                    const textToCopy = "{card_number}";
                     
-                    // Securely copy the text
-                    const tempInput = document.createElement("input");
-                    tempInput.value = textToCopy;
-                    document.body.appendChild(tempInput);
-                    tempInput.select();
-                    document.execCommand("copy");
-                    document.body.removeChild(tempInput);
-                    
-                    // In-place UI feedback (No floating popups!)
-                    const numDisplay = document.getElementById("num-display");
-                    const originalText = numDisplay.innerText;
-                    
-                    numDisplay.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
-                    numDisplay.style.color = "#16A34A"; // Green success color
-                    numDisplay.style.borderColor = "#16A34A";
-                    numDisplay.style.backgroundColor = "#DCFCE7"; // Light green background
-                    
-                    // Revert back after 2 seconds
-                    setTimeout(function() { 
-                        numDisplay.innerText = originalText;
-                        numDisplay.style.color = "#0B1B3D";
-                        numDisplay.style.borderColor = "#CBD5E1";
-                        numDisplay.style.backgroundColor = "#F8FAFC";
-                    }, 2000);
-                }
+                    // Claude's modern Clipboard API fix, with a fallback just in case Streamlit's iframe blocks it
+                    const copyAction = navigator.clipboard ? 
+                        navigator.clipboard.writeText(textToCopy) : 
+                        new Promise((res) => {{
+                            const tempInput = document.createElement("input");
+                            tempInput.value = textToCopy;
+                            document.body.appendChild(tempInput);
+                            tempInput.select();
+                            document.execCommand("copy");
+                            document.body.removeChild(tempInput);
+                            res();
+                        }});
+                        
+                    copyAction.then(() => {{
+                        const numDisplay = document.getElementById("num-display");
+                        const originalText = "{card_number}";
+                        
+                        numDisplay.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+                        numDisplay.style.color = "#16A34A";
+                        numDisplay.style.borderColor = "#16A34A";
+                        numDisplay.style.backgroundColor = "#DCFCE7";
+                        
+                        setTimeout(() => {{
+                            numDisplay.innerText = originalText;
+                            numDisplay.style.color = "#0B1B3D";
+                            numDisplay.style.borderColor = "#CBD5E1";
+                            numDisplay.style.backgroundColor = "#F8FAFC";
+                        }}, 2000);
+                    }});
+                }}
             </script>
             """,
-            height=135
+            height=165
         )
 
     # --- MINIMALIST SOCIAL MEDIA & LEGAL FOOTER ---
