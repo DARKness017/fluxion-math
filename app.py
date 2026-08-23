@@ -1214,21 +1214,26 @@ def dashboard_screen():
                 if not alltime_xp.empty: st.dataframe(alltime_xp, use_container_width=True)
                 else: st.markdown("<div style='background-color: rgba(192, 155, 90, 0.1); border: 1px solid #C09B5A; padding: 12px; border-radius: 8px; color: #C09B5A;'><i class='fa-solid fa-circle-info'></i> No points earned yet.</div>", unsafe_allow_html=True)
 
-    # --- 5. ☕ MINIMALIST DIRECT SUPPORT (UZUM) ---
+    # --- 5. SUPPORT THE CREATOR (MINIMALIST) ---
     st.write("---")
     
-    st.markdown("""
-    <div style="text-align: center; margin-top: 10px; margin-bottom: 5px;">
-        <span style="color: #64748B; font-size: 13px; font-family: 'Inter', sans-serif;">
-            <i class="fa-solid fa-heart" style="color: #EF4444;"></i> Help keep Novara Academy servers running and 100% free. 
-            <span style="color: #C09B5A; font-weight: 600;">Direct Uzum Transfer:</span>
-        </span>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    # Creates a tiny, centered copy box for your card number
+    # Using columns to force the box to be small and centered
     col1, col2, col3 = st.columns([1.5, 2, 1.5])
+    
     with col2:
+        st.markdown("""
+        <div style="text-align: center; margin-bottom: 5px;">
+            <span style="color: #C09B5A; font-size: 14px; font-weight: 600; font-family: 'Inter', sans-serif;">
+                <i class="fa-solid fa-mug-hot"></i> Support the creator
+            </span>
+            <br>
+            <span style="color: #64748B; font-size: 12px; font-family: 'Inter', sans-serif;">
+                Uzum Bank
+            </span>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # The native Streamlit code box handles the background and copy button perfectly
         st.code("4916 9903 1275 5009", language="text")
         
     # --- MINIMALIST SOCIAL MEDIA & LEGAL FOOTER ---
