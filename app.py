@@ -1300,7 +1300,7 @@ def dashboard_screen():
             
             <div class="support-card" onclick="copyText()">
                 <div class="title"><i class="fa-solid fa-mug-hot"></i> Support the creator</div>
-                <div class="subtitle">Uzum Bank (Click anywhere to copy)</div>
+                <div class="subtitle">Uzum Bank</div>
                 <div class="card-number">4916 9903 1275 5009</div>
             </div>
             
