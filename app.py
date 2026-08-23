@@ -1280,7 +1280,7 @@ def dashboard_screen():
             
             <div class="support-card" onclick="copyText()">
                 <div class="title"><i class="fa-solid fa-mug-hot"></i> Support the creator</div>
-                <div class="subtitle">Novara Academy is self-funded. If this platform has helped you, consider supporting server costs.</div>
+                <div class="subtitle">This platform is built and maintained independently and is self-funded. If it helped you, consider supporting server & hosting costs.</div>
                 <div class="subtitle" style="font-weight: 600; color: #0B1B3D; margin-bottom: 4px;">Uzum Bank (Click to copy)</div>
                 <div class="card-number" id="num-display">{card_number}</div>
             </div>
