@@ -1321,7 +1321,7 @@ def dashboard_screen():
                 }}
             </script>
             """,
-            height=165
+            height=190
         )
 
     # --- MINIMALIST SOCIAL MEDIA & LEGAL FOOTER ---
