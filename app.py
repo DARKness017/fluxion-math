@@ -1214,6 +1214,38 @@ def dashboard_screen():
                 if not alltime_xp.empty: st.dataframe(alltime_xp, use_container_width=True)
                 else: st.markdown("<div style='background-color: rgba(192, 155, 90, 0.1); border: 1px solid #C09B5A; padding: 12px; border-radius: 8px; color: #C09B5A;'><i class='fa-solid fa-circle-info'></i> No points earned yet.</div>", unsafe_allow_html=True)
 
+    # --- 5. ☕ SUPPORT THE DEVELOPER CARD (UZUM BANK) ---
+    st.write("---")
+    st.markdown("""
+    <div style="
+        background: linear-gradient(135deg, #0B1B3D 0%, #152A55 100%); 
+        border: 1.5px solid #C09B5A;
+        border-radius: 16px;
+        padding: 24px;
+        text-align: center;
+        margin-top: 25px;
+        margin-bottom: 10px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    ">
+        <h3 style="color: #C09B5A; margin-top: 0; margin-bottom: 8px; font-family: 'Inter', sans-serif;">
+            <i class="fa-solid fa-heart" style="color: #EF4444; margin-right: 6px;"></i> Help Keep Novara Free
+        </h3>
+        <p style="color: #94A3B8; font-size: 14px; margin-bottom: 15px; line-height: 1.6; font-family: 'Inter', sans-serif; max-width: 600px; margin-left: auto; margin-right: auto;">
+            Novara Academy is built by a student, for students. If this adaptive engine helped you master a unit, consider supporting the project to help cover database server costs and keep this platform 100% free across Uzbekistan.
+        </p>
+        <p style="color: #E2E8F0; font-size: 15px; font-weight: 600; margin-bottom: 0px;">
+            Transfer via Uzum Bank (Click to Copy):
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # This Streamlit function automatically creates a "Copy" button!
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        # PUT YOUR REAL 16-DIGIT UZUM CARD NUMBER HERE 👇
+        st.code("4916 9903 1275 5009", language="text")
+        st.markdown("<p style='text-align: center; color: #64748B; font-size: 12px; margin-top: -10px;'>👆 Click the copy icon in the top right corner of the box</p>", unsafe_allow_html=True)
+
     # --- MINIMALIST SOCIAL MEDIA & LEGAL FOOTER ---
     st.write("---")
     st.markdown("""
