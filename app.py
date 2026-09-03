@@ -388,8 +388,16 @@ CHEAT_SHEETS = {
 @st.cache_data(ttl=3600)
 def get_question_map():
     """Cache the mapping of question_id to unit_number to save database calls."""
-    q_res = supabase.table("questions").select("question_id, unit_number").execute()
-    return {q['question_id']: q['unit_number'] for q in q_res.data} if q_res.data else {}
+    q_map = {}
+    offset = 0
+    while True:
+        chunk = supabase.table("questions").select("question_id, unit_number").range(offset, offset + 999).execute()
+        if not chunk.data:
+            break
+        for q in chunk.data:
+            q_map[q['question_id']] = q['unit_number']
+        offset += 1000
+    return q_map
 
 # --- 3. Session State Management ---
 if 'logged_in' not in st.session_state:
@@ -450,9 +458,16 @@ def start_quiz(unit=None, selected_subtopic="All Subtopics"):
             random.shuffle(questions)
             
     else:
-        all_questions_response = supabase.table("questions").select("*").execute()
-        all_questions = all_questions_response.data
-        
+        # Bypass Supabase's 1000-row limit using dynamic pagination
+        all_questions = []
+        offset = 0
+        while True:
+            chunk = supabase.table("questions").select("*").range(offset, offset + 999).execute()
+            if not chunk.data:
+                break
+            all_questions.extend(chunk.data)
+            offset += 1000
+            
         attempts_response = supabase.table("attempts").select("is_correct, question_id").eq("user_id", st.session_state.user_id).execute()
         attempts = attempts_response.data
         
