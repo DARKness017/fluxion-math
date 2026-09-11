@@ -43,13 +43,12 @@ st.markdown("""
     [data-testid="stToolbar"] {display: none !important;}
     [data-testid="stDecoration"] {display: none !important;}
     [data-testid="stStatusWidget"] {display: none !important;}
-    [data-testid="viewerBadge"] {display: none !important;}
     
-    .block-container {
-        padding-top: 2rem !important;
-        padding-bottom: 2rem !important;
-        max-width: 900px !important;
-    }
+    /* Updated Streamlit Cloud Watermark Kill-Switches */
+    [data-testid="viewerBadge"] {display: none !important;}
+    div[data-testid="stAppCreatorProfile"] {display: none !important;}
+    div[class^="viewerBadge"] {display: none !important;}
+    div[class^="styles_viewerBadge"] {display: none !important;}
 
     /* --- 3. METRIC CARDS & DATA WRAPPERS --- */
     div[data-testid="stMetric"] {
