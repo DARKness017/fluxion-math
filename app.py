@@ -50,6 +50,13 @@ st.markdown("""
     div[class^="viewerBadge"] {display: none !important;}
     div[class^="styles_viewerBadge"] {display: none !important;}
 
+    /* RESTORED APP WIDTH */
+    .block-container {
+        padding-top: 2rem !important;
+        padding-bottom: 2rem !important;
+        max-width: 900px !important;
+    }
+
     /* --- 3. METRIC CARDS & DATA WRAPPERS --- */
     div[data-testid="stMetric"] {
         background-color: #FFFFFF !important;
