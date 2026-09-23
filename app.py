@@ -18,19 +18,20 @@ st.set_page_config(page_title="Novara Academy - Adaptive Engine", page_icon="�
 st.markdown("""
     <style>
     /* --- 0. IMPORT PREMIUM FONT & ICONS --- */
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap');
     @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
     
     html, body, [class*="css"] {
         font-family: 'Inter', sans-serif !important;
     }
 
-    /* --- 1. AMBIENT SAAS CANVAS (Removes the flat white void) --- */
+    /* --- 1. AMBIENT SAAS CANVAS (Vercel Template Style) --- */
     .stApp {
-        background-color: #F8FAFC !important;
+        background-color: #ffffff !important;
         background-image: 
-            radial-gradient(at 0% 0%, rgba(11, 27, 61, 0.03) 0px, transparent 50%),
-            radial-gradient(at 100% 0%, rgba(192, 155, 90, 0.05) 0px, transparent 50%) !important;
+            radial-gradient(1100px 500px at 85% -10%, rgba(143,203,251,0.25), transparent 60%),
+            radial-gradient(700px 460px at 92% 30%, rgba(216,176,108,0.12), transparent 65%),
+            radial-gradient(800px 500px at 5% 20%, rgba(234,244,252,0.7), transparent 60%) !important;
         background-attachment: fixed !important;
     }
 
@@ -44,7 +45,7 @@ st.markdown("""
     [data-testid="stDecoration"] {display: none !important;}
     [data-testid="stStatusWidget"] {display: none !important;}
     
-    /* Ядерный вариант скрытия водяных знаков */
+    /* Убиваем водяные знаки */
     [data-testid="stAppCreatorProfile"] {display: none !important; opacity: 0 !important; pointer-events: none !important;}
     [data-testid="viewerBadge"] {display: none !important; opacity: 0 !important; pointer-events: none !important;}
     [class^="viewerBadge"] {display: none !important;}
@@ -72,48 +73,61 @@ st.markdown("""
         box-shadow: 0 8px 20px rgba(11, 27, 61, 0.08) !important;
         border-color: #C09B5A !important;
     }
+    
+    /* --- 3.5 ELITE FORM INPUTS --- */
+    .stTextInput > div > div > input {
+        border-radius: 12px !important;
+        background-color: #F5FAFF !important;
+        border: 1px solid #D7E7F5 !important;
+        padding: 14px 16px !important;
+        color: #0A2038 !important;
+        font-family: 'Inter', sans-serif !important;
+        transition: all 0.25s ease !important;
+    }
+    .stTextInput > div > div > input:focus {
+        border-color: #2260D6 !important;
+        background-color: #FFFFFF !important;
+        box-shadow: 0 0 0 4px rgba(46,127,224,.12) !important;
+    }
+    .stTextInput label {
+        font-size: 13px !important;
+        font-weight: 600 !important;
+        color: #0A2038 !important;
+    }
 
-    /* --- 4. NOVARA ACADEMY ANIMATED BUTTONS --- */
+    /* --- 4. ELITE ANIMATED BUTTONS --- */
     .stButton > button, [data-testid="stFormSubmitButton"] > button {
-        background-color: #0B1B3D !important;
+        background-color: #0A2038 !important;
         color: white !important;
-        border-radius: 10px !important;
-        border: 1px solid rgba(192, 155, 90, 0.6) !important;
-        font-weight: 600;
-        letter-spacing: 0.2px;
+        border-radius: 12px !important;
+        border: none !important;
+        font-weight: 600 !important;
         padding: 10px 20px !important;
-        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
-        box-shadow: 0 4px 10px rgba(11, 27, 61, 0.12) !important;
+        transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1) !important;
+        box-shadow: 0 14px 26px -12px rgba(22,50,79,.5) !important;
     }
     .stButton > button:hover, [data-testid="stFormSubmitButton"] > button:hover {
-        background-color: #C09B5A !important;
-        color: #0B1B3D !important;
-        border: 1px solid #0B1B3D !important;
-        transform: translateY(-2px) !important;
-        box-shadow: 0 8px 18px rgba(192, 155, 90, 0.35) !important;
+        background-color: #2260D6 !important;
+        transform: translateY(-3px) !important;
+        box-shadow: 0 16px 30px -16px rgba(46,127,224,.6) !important;
+        color: white !important;
     }
     .stButton > button:active, [data-testid="stFormSubmitButton"] > button:active {
         transform: translateY(1px) !important;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
     }
     
     .stButton > button[kind="primary"], [data-testid="stFormSubmitButton"] > button[kind="primary"] {
-        background: linear-gradient(135deg, #C09B5A 0%, #B08B4A 100%) !important;
-        color: #0B1B3D !important;
-        border-radius: 10px !important;
-        border: 1px solid #0B1B3D !important;
-        font-weight: 700;
+        background: linear-gradient(135deg, #2260D6 0%, #153E91 100%) !important;
+        box-shadow: 0 16px 34px -14px rgba(21,62,145,.6) !important;
     }
     .stButton > button[kind="primary"]:hover, [data-testid="stFormSubmitButton"] > button[kind="primary"]:hover {
-        background: #0B1B3D !important;
-        color: #FFFFFF !important;
-        border: 1px solid #C09B5A !important; 
-        box-shadow: 0 8px 18px rgba(11, 27, 61, 0.25) !important;
+        background: #0A2038 !important;
+        box-shadow: 0 22px 40px -14px rgba(21,62,145,.75) !important;
     }
 
     /* --- 5. CUSTOM GOLD PROGRESS BAR --- */
     [data-testid="stProgress"] > div > div > div > div {
-        background: linear-gradient(90deg, #0B1B3D 0%, #C09B5A 100%) !important;
+        background: linear-gradient(90deg, #153E91 0%, #d8b06c 100%) !important;
         border-radius: 8px !important;
     }
     [data-testid="stProgress"] > div > div {
@@ -123,8 +137,8 @@ st.markdown("""
 
     /* --- 6. NATIVE MARKDOWN TABLE STYLING --- */
     .stMarkdown table {
-        background-color: #0B1B3D !important;
-        border: 2px solid #C09B5A !important;
+        background-color: #0A2038 !important;
+        border: 2px solid #d8b06c !important;
         border-top: none !important;
         border-bottom-left-radius: 14px !important;
         border-bottom-right-radius: 14px !important;
@@ -137,7 +151,7 @@ st.markdown("""
     }
     .stMarkdown th { display: none !important; }
     .stMarkdown td {
-        border-bottom: 1px solid rgba(192, 155, 90, 0.4) !important;
+        border-bottom: 1px solid rgba(216, 176, 108, 0.4) !important;
         border-top: none !important;
         border-right: none !important;
         border-left: none !important;
@@ -149,25 +163,25 @@ st.markdown("""
     .stMarkdown tr:last-child td:first-child { border-bottom-left-radius: 12px !important; }
     .stMarkdown tr:last-child td:last-child { border-bottom-right-radius: 12px !important; }
     .stMarkdown td:first-child {
-        color: #C09B5A !important;
+        color: #d8b06c !important;
         font-weight: bold !important;
         width: 28% !important;
     }
 
     /* --- 7. SAAS SIDEBAR STYLING --- */
     [data-testid="stSidebar"] {
-        background-color: #0B1B3D !important;
-        border-right: 1.5px solid #C09B5A !important;
+        background-color: #0A2038 !important;
+        border-right: 1.5px solid #d8b06c !important;
         box-shadow: 4px 0 20px rgba(0,0,0,0.15) !important;
     }
     [data-testid="stSidebar"] hr {
-        border-bottom: 1px solid rgba(192, 155, 90, 0.3) !important;
+        border-bottom: 1px solid rgba(216, 176, 108, 0.3) !important;
     }
 
     /* --- 8. EXPANDER / ACCORDION CARDS --- */
     div[data-testid="stExpander"] {
         background-color: #FFFFFF !important;
-        border: 1px solid #E2E8F0 !important;
+        border: 1px solid #D7E7F5 !important;
         border-radius: 12px !important;
         box-shadow: 0 4px 10px rgba(0,0,0,0.03) !important;
         margin-bottom: 12px !important;
@@ -179,7 +193,7 @@ st.markdown("""
     }
     div[role="radiogroup"] > label {
         background-color: #FFFFFF !important;
-        border: 1.5px solid #E2E8F0 !important; 
+        border: 1.5px solid #D7E7F5 !important; 
         border-radius: 12px !important;
         padding: 16px 22px !important; 
         box-shadow: 0 4px 8px rgba(11, 27, 61, 0.03) !important;
@@ -190,10 +204,10 @@ st.markdown("""
         align-items: center !important;
     }
     div[role="radiogroup"] > label:hover {
-        border: 1.5px solid #C09B5A !important; 
+        border: 1.5px solid #2260D6 !important; 
         background-color: #FAF8F5 !important; 
         transform: translateY(-3px) !important; 
-        box-shadow: 0 10px 20px rgba(192, 155, 90, 0.18) !important; 
+        box-shadow: 0 10px 20px rgba(34, 96, 214, 0.12) !important; 
     }
 
     /* --- 10. HIDE STREAMLIT HEADER ANCHOR LINKS --- */
@@ -215,8 +229,8 @@ supabase = init_connection()
 # --- GLOBAL CONSTANTS (Performance Optimization) ---
 CHEAT_SHEETS = {
     1: r"""
-<div style="background-color: #0B1B3D; border: 2px solid #C09B5A; border-bottom: none; border-top-left-radius: 12px; border-top-right-radius: 12px; padding: 15px; text-align: center; color: #C09B5A;">
-    <h3 style="margin: 0; color: #C09B5A;">Unit 1: Limits & Continuity — Quick Reference</h3>
+<div style="background-color: #0A2038; border: 2px solid #d8b06c; border-bottom: none; border-top-left-radius: 12px; border-top-right-radius: 12px; padding: 15px; text-align: center; color: #d8b06c;">
+    <h3 style="margin: 0; color: #d8b06c; font-family: 'Fraunces', serif;">Unit 1: Limits & Continuity — Quick Reference</h3>
 </div>
 
 | | |
@@ -229,8 +243,8 @@ CHEAT_SHEETS = {
 | **1.16**<br>Intermediate Value Thm (IVT) | **Conditions:** **1.** $f(x)$ continuous on closed $[a,b]$ &nbsp; **2.** $u$ strictly between $f(a)$ and $f(b)$, $f(a)\neq f(b)$<br>**Conclusion:** there exists at least one $c\in(a,b)$ such that $f(c)=u$ |
 """,
     2: r"""
-<div style="background-color: #0B1B3D; border: 2px solid #C09B5A; border-bottom: none; border-top-left-radius: 12px; border-top-right-radius: 12px; padding: 15px; text-align: center; color: #C09B5A;">
-    <h3 style="margin: 0; color: #C09B5A;">Unit 2: Derivatives — Quick Reference</h3>
+<div style="background-color: #0A2038; border: 2px solid #d8b06c; border-bottom: none; border-top-left-radius: 12px; border-top-right-radius: 12px; padding: 15px; text-align: center; color: #d8b06c;">
+    <h3 style="margin: 0; color: #d8b06c; font-family: 'Fraunces', serif;">Unit 2: Derivatives — Quick Reference</h3>
 </div>
 
 | | |
@@ -242,8 +256,8 @@ CHEAT_SHEETS = {
 | **2.8–2.9**<br>Product & Quotient Rules | **Product Rule:** $\frac{d}{dx}[f(x)g(x)]=f'(x)g(x)+f(x)g'(x)$<br><br>**Quotient Rule:** $\frac{d}{dx}\left[\frac{f(x)}{g(x)}\right]=\frac{f'(x)g(x)-f(x)g'(x)}{[g(x)]^2}$ |
 """,
     3: r"""
-<div style="background-color: #0B1B3D; border: 2px solid #C09B5A; border-bottom: none; border-top-left-radius: 12px; border-top-right-radius: 12px; padding: 15px; text-align: center; color: #C09B5A;">
-    <h3 style="margin: 0; color: #C09B5A;">Unit 3: Differentiation Rules — Quick Reference</h3>
+<div style="background-color: #0A2038; border: 2px solid #d8b06c; border-bottom: none; border-top-left-radius: 12px; border-top-right-radius: 12px; padding: 15px; text-align: center; color: #d8b06c;">
+    <h3 style="margin: 0; color: #d8b06c; font-family: 'Fraunces', serif;">Unit 3: Differentiation Rules — Quick Reference</h3>
 </div>
 
 | | |
@@ -256,8 +270,8 @@ CHEAT_SHEETS = {
 | **3.6**<br>Higher-Order Derivatives | $f'(x)$: 1st derivative &nbsp;&nbsp;\|&nbsp;&nbsp; $f''(x)=\frac{d}{dx}\big[f'(x)\big]$: 2nd derivative<br><br>$f'''(x)$: 3rd derivative &nbsp;&nbsp;\|&nbsp;&nbsp; $f^{(n)}(x)$: $n$th derivative<br><br>**Leibniz notation:** $\frac{d^2y}{dx^2},\ \frac{d^3y}{dx^3},\ \frac{d^ny}{dx^n}$<br><br>**Implicit 2nd derivative:** differentiate the expression for $\frac{dy}{dx}$ again, substituting the original expression for $\frac{dy}{dx}$ where it reappears |
 """,
     4: r"""
-<div style="background-color: #0B1B3D; border: 2px solid #C09B5A; border-bottom: none; border-top-left-radius: 12px; border-top-right-radius: 12px; padding: 15px; text-align: center; color: #C09B5A;">
-    <h3 style="margin: 0; color: #C09B5A;">Unit 4: Contextual Applications — Quick Reference</h3>
+<div style="background-color: #0A2038; border: 2px solid #d8b06c; border-bottom: none; border-top-left-radius: 12px; border-top-right-radius: 12px; padding: 15px; text-align: center; color: #d8b06c;">
+    <h3 style="margin: 0; color: #d8b06c; font-family: 'Fraunces', serif;">Unit 4: Contextual Applications — Quick Reference</h3>
 </div>
 
 | | |
@@ -270,8 +284,8 @@ CHEAT_SHEETS = {
 | **4.7**<br>L'Hopital's Rule | If $\lim_{x\to c}\frac{f(x)}{g(x)}$ produces $\frac{0}{0}$ or $\frac{\pm\infty}{\pm\infty}$ (indeterminate), then:<br><br>$\lim_{x\to c}\frac{f(x)}{g(x)}=\lim_{x\to c}\frac{f'(x)}{g'(x)}$<br><br>(provided the right-hand limit exists or is $\pm\infty$)<br><br>Can reapply repeatedly if the new limit is still indeterminate; check the indeterminate form *before* every application |
 """,
     5: r"""
-<div style="background-color: #0B1B3D; border: 2px solid #C09B5A; border-bottom: none; border-top-left-radius: 12px; border-top-right-radius: 12px; padding: 15px; text-align: center; color: #C09B5A;">
-    <h3 style="margin: 0; color: #C09B5A;">Unit 5: Analytical Applications — Quick Reference</h3>
+<div style="background-color: #0A2038; border: 2px solid #d8b06c; border-bottom: none; border-top-left-radius: 12px; border-top-right-radius: 12px; padding: 15px; text-align: center; color: #d8b06c;">
+    <h3 style="margin: 0; color: #d8b06c; font-family: 'Fraunces', serif;">Unit 5: Analytical Applications — Quick Reference</h3>
 </div>
 
 | | |
@@ -288,8 +302,8 @@ CHEAT_SHEETS = {
 | **5.12**<br>Implicit Relations | Analyze extrema/concavity of implicitly defined curves:<br><br>• **Horizontal tangent:** $\frac{dy}{dx}=0$ (set numerator $=0$, denominator $\neq 0$)<br>• **Vertical tangent:** $\frac{dy}{dx}$ undefined (denominator $=0$, numerator $\neq 0$)<br><br>Find $\frac{d^2y}{dx^2}$ implicitly to test concavity, substituting known $\frac{dy}{dx}$ |
 """,
     6: r"""
-<div style="background-color: #0B1B3D; border: 2px solid #C09B5A; border-bottom: none; border-top-left-radius: 12px; border-top-right-radius: 12px; padding: 15px; text-align: center; color: #C09B5A;">
-    <h3 style="margin: 0; color: #C09B5A;">Unit 6: Integration & Accumulation — Quick Reference</h3>
+<div style="background-color: #0A2038; border: 2px solid #d8b06c; border-bottom: none; border-top-left-radius: 12px; border-top-right-radius: 12px; padding: 15px; text-align: center; color: #d8b06c;">
+    <h3 style="margin: 0; color: #d8b06c; font-family: 'Fraunces', serif;">Unit 6: Integration & Accumulation — Quick Reference</h3>
 </div>
 
 | | |
@@ -311,8 +325,8 @@ CHEAT_SHEETS = {
 | **6.14**<br>Selecting Techniques | • $\int x^n\,dx \implies$ Power Rule<br>• $\int f(g(x))g'(x)\,dx \implies u$-Substitution<br>• $\int u\,dv$ form $\implies$ Integration by Parts<br>• Rational, deg. num $\geq$ deg. den. $\implies$ Long Division<br>• $\frac{1}{ax^2+bx+c}$, no roots $\implies$ Complete the Square<br>• $\frac{P(x)}{(ax+b)(cx+d)} \implies$ Partial Fractions<br>• Infinite bound/discontinuity $\implies$ Improper Integral |
 """,
     7: r"""
-<div style="background-color: #0B1B3D; border: 2px solid #C09B5A; border-bottom: none; border-top-left-radius: 12px; border-top-right-radius: 12px; padding: 15px; text-align: center; color: #C09B5A;">
-    <h3 style="margin: 0; color: #C09B5A;">Unit 7: Differential Equations — Quick Reference</h3>
+<div style="background-color: #0A2038; border: 2px solid #d8b06c; border-bottom: none; border-top-left-radius: 12px; border-top-right-radius: 12px; padding: 15px; text-align: center; color: #d8b06c;">
+    <h3 style="margin: 0; color: #d8b06c; font-family: 'Fraunces', serif;">Unit 7: Differential Equations — Quick Reference</h3>
 </div>
 
 | | |
@@ -328,8 +342,8 @@ CHEAT_SHEETS = {
 | **7.9 (BC)**<br>Logistic Models | **Logistic DE:** $\frac{dP}{dt}=kP\left(1-\frac{P}{L}\right)$, where $L=$ carrying capacity, $k=$ growth constant<br><br>**Logistic Solution:** $P(t)=\frac{L}{1+Ae^{-kt}}$,&nbsp;&nbsp; $A=\frac{L-P_0}{P_0}$<br><br>**Key Properties:** $P\to L$ as $t\to\infty$ (upper bound); $P\to 0$ as $t\to-\infty$ (lower bound); fastest growth (inflection point) at $P=\frac{L}{2}$; $\frac{dP}{dt}$ is maximized when $P=\frac{L}{2}$; $\frac{d^2P}{dt^2}=0$ at inflection point $P=\frac{L}{2}$<br><br>**Second Derivative/Concavity:** $\frac{d^2P}{dt^2}=k^2P\left(1-\frac{P}{L}\right)\left(1-\frac{2P}{L}\right)$<br><br>Concave up when $P<\frac{L}{2}$ ;&nbsp;&nbsp; Concave down when $P>\frac{L}{2}$ |
 """,
     8: r"""
-<div style="background-color: #0B1B3D; border: 2px solid #C09B5A; border-bottom: none; border-top-left-radius: 12px; border-top-right-radius: 12px; padding: 15px; text-align: center; color: #C09B5A;">
-    <h3 style="margin: 0; color: #C09B5A;">Unit 8: Applications of Integration — Quick Reference</h3>
+<div style="background-color: #0A2038; border: 2px solid #d8b06c; border-bottom: none; border-top-left-radius: 12px; border-top-right-radius: 12px; padding: 15px; text-align: center; color: #d8b06c;">
+    <h3 style="margin: 0; color: #d8b06c; font-family: 'Fraunces', serif;">Unit 8: Applications of Integration — Quick Reference</h3>
 </div>
 
 | | |
@@ -349,8 +363,8 @@ CHEAT_SHEETS = {
 | **8.13 (BC)**<br>Arc Length & Distance Traveled | **Arc Length, $y=f(x)$:** $L=\int_a^b \sqrt{1+[f'(x)]^2}\,dx$<br><br>**Arc Length, $x=g(y)$:** $L=\int_c^d \sqrt{1+[g'(y)]^2}\,dy$<br><br>**Distance Traveled (Parametric),** for $x(t),y(t)$ on $[t_1,t_2]$: $L=\int_{t_1}^{t_2} \sqrt{\left(\frac{dx}{dt}\right)^2+\left(\frac{dy}{dt}\right)^2}\,dt$<br><br>**Speed (Parametric):** $\text{Speed}=\sqrt{\left(\frac{dx}{dt}\right)^2+\left(\frac{dy}{dt}\right)^2}$ |
 """,
     9: r"""
-<div style="background-color: #0B1B3D; border: 2px solid #C09B5A; border-bottom: none; border-top-left-radius: 12px; border-top-right-radius: 12px; padding: 15px; text-align: center; color: #C09B5A;">
-    <h3 style="margin: 0; color: #C09B5A;">Unit 9: Parametric, Polar & Vectors — Quick Reference</h3>
+<div style="background-color: #0A2038; border: 2px solid #d8b06c; border-bottom: none; border-top-left-radius: 12px; border-top-right-radius: 12px; padding: 15px; text-align: center; color: #d8b06c;">
+    <h3 style="margin: 0; color: #d8b06c; font-family: 'Fraunces', serif;">Unit 9: Parametric, Polar & Vectors — Quick Reference</h3>
 </div>
 
 | | |
@@ -366,8 +380,8 @@ CHEAT_SHEETS = {
 | **9.9 (BC)**<br>Area Between Two Polar Curves | **Formula:** $A=\frac{1}{2}\int_\alpha^\beta \Big([r_{\text{outer}}(\theta)]^2-[r_{\text{inner}}(\theta)]^2\Big)\,d\theta$<br><br>**Steps:**<br>• **1.** Find intersection points by setting $r_1(\theta)=r_2(\theta)$; also check the pole $r=0$<br>• **2.** Identify which curve is the outer (larger $r$) on the interval<br>• **3.** Integrate outer$^2$ minus inner$^2$, multiplied by $\frac{1}{2}$<br><br>**Important Caution:** polar curves can intersect at the pole even when $r_1(\theta)\neq r_2(\theta)$ for the same $\theta$ — always check $r=0$ separately and sketch the curves |
 """,
     10: r"""
-<div style="background-color: #0B1B3D; border: 2px solid #C09B5A; border-bottom: none; border-top-left-radius: 12px; border-top-right-radius: 12px; padding: 15px; text-align: center; color: #C09B5A;">
-    <h3 style="margin: 0; color: #C09B5A;">Unit 10: Infinite Sequences & Series — Quick Reference</h3>
+<div style="background-color: #0A2038; border: 2px solid #d8b06c; border-bottom: none; border-top-left-radius: 12px; border-top-right-radius: 12px; padding: 15px; text-align: center; color: #d8b06c;">
+    <h3 style="margin: 0; color: #d8b06c; font-family: 'Fraunces', serif;">Unit 10: Infinite Sequences & Series — Quick Reference</h3>
 </div>
 
 | | |
@@ -392,7 +406,6 @@ CHEAT_SHEETS = {
 
 @st.cache_data(ttl=3600)
 def get_question_map():
-    """Cache the mapping of question_id to unit_number to save database calls."""
     q_map = {}
     offset = 0
     while True:
@@ -405,84 +418,52 @@ def get_question_map():
     return q_map
 
 # --- 3. Session State Management ---
-if 'logged_in' not in st.session_state:
-    st.session_state.logged_in = False
-if 'user_id' not in st.session_state:
-    st.session_state.user_id = None
-if 'username' not in st.session_state:
-    st.session_state.username = None
-if 'is_admin' not in st.session_state:
-    st.session_state.is_admin = False
-if 'is_guest' not in st.session_state:
-    st.session_state.is_guest = False
-if 'current_screen' not in st.session_state:
-    st.session_state.current_screen = "login"
-if 'quiz_started' not in st.session_state:
-    st.session_state.quiz_started = False
-if 'current_q_index' not in st.session_state:
-    st.session_state.current_q_index = 0
-if 'quiz_questions' not in st.session_state:
-    st.session_state.quiz_questions = []
-if 'q_start_time' not in st.session_state:
-    st.session_state.q_start_time = 0
-if 'quiz_score' not in st.session_state:
-    st.session_state.quiz_score = 0
-if 'difficulty' not in st.session_state:
-    st.session_state.difficulty = "All" 
-if 'selected_unit' not in st.session_state:
-    st.session_state.selected_unit = None
-if 'selected_unit_name' not in st.session_state:
-    st.session_state.selected_unit_name = ""
-if 'user_answers' not in st.session_state:
-    st.session_state.user_answers = []
-if 'reviewing_q_id' not in st.session_state:
-    st.session_state.reviewing_q_id = None
-if 'auth_mode' not in st.session_state:
-    st.session_state.auth_mode = 'login'
-if 'current_answers' not in st.session_state:
-    st.session_state.current_answers = {}
-if 'hide_guide' not in st.session_state:
-    st.session_state.hide_guide = False
-if 'quiz_mode' not in st.session_state:
-    st.session_state.quiz_mode = "Exam Mode"
-if 'checked_answers' not in st.session_state:
-    st.session_state.checked_answers = {}
+if 'logged_in' not in st.session_state: st.session_state.logged_in = False
+if 'user_id' not in st.session_state: st.session_state.user_id = None
+if 'username' not in st.session_state: st.session_state.username = None
+if 'is_admin' not in st.session_state: st.session_state.is_admin = False
+if 'is_guest' not in st.session_state: st.session_state.is_guest = False
+if 'current_screen' not in st.session_state: st.session_state.current_screen = "login"
+if 'quiz_started' not in st.session_state: st.session_state.quiz_started = False
+if 'current_q_index' not in st.session_state: st.session_state.current_q_index = 0
+if 'quiz_questions' not in st.session_state: st.session_state.quiz_questions = []
+if 'q_start_time' not in st.session_state: st.session_state.q_start_time = 0
+if 'quiz_score' not in st.session_state: st.session_state.quiz_score = 0
+if 'difficulty' not in st.session_state: st.session_state.difficulty = "All" 
+if 'selected_unit' not in st.session_state: st.session_state.selected_unit = None
+if 'selected_unit_name' not in st.session_state: st.session_state.selected_unit_name = ""
+if 'user_answers' not in st.session_state: st.session_state.user_answers = []
+if 'reviewing_q_id' not in st.session_state: st.session_state.reviewing_q_id = None
+if 'auth_mode' not in st.session_state: st.session_state.auth_mode = 'login'
+if 'current_answers' not in st.session_state: st.session_state.current_answers = {}
+if 'hide_guide' not in st.session_state: st.session_state.hide_guide = False
+if 'quiz_mode' not in st.session_state: st.session_state.quiz_mode = "Exam Mode"
+if 'checked_answers' not in st.session_state: st.session_state.checked_answers = {}
 
 # --- 4. Core Application Logic ---
 def start_quiz(unit=None, selected_subtopic="All Subtopics"):
     if unit:
-        # Build the dynamic query
         query = supabase.table("questions").select("*").eq("unit_number", unit)
-        
-        # If the student selected a specific subtopic, apply the filter!
         if selected_subtopic != "All Subtopics":
             query = query.eq("subtopic", selected_subtopic)
-            
         response = query.execute()
         questions = response.data
-        
-        if questions:
-            random.shuffle(questions)
-            
+        if questions: random.shuffle(questions)
     else:
-        # Bypass Supabase's 1000-row limit using dynamic pagination
         all_questions = []
         offset = 0
         while True:
             chunk = supabase.table("questions").select("*").range(offset, offset + 999).execute()
-            if not chunk.data:
-                break
+            if not chunk.data: break
             all_questions.extend(chunk.data)
             offset += 1000
             
         if not st.session_state.get('is_guest', False):
             attempts_response = supabase.table("attempts").select("is_correct, question_id").eq("user_id", st.session_state.user_id).execute()
             attempts = attempts_response.data
-        else:
-            attempts = []
+        else: attempts = []
         
         q_map = get_question_map()
-        
         weak_units = []
         if attempts:
             unit_stats = {}
@@ -490,15 +471,11 @@ def start_quiz(unit=None, selected_subtopic="All Subtopics"):
                 q_id = a.get('question_id')
                 if q_id in q_map:
                     u = q_map[q_id]
-                    if u not in unit_stats:
-                        unit_stats[u] = {'correct': 0, 'total': 0}
+                    if u not in unit_stats: unit_stats[u] = {'correct': 0, 'total': 0}
                     unit_stats[u]['total'] += 1
                     unit_stats[u]['correct'] += a['is_correct']
-            
             for u, stats in unit_stats.items():
-                if (stats['correct'] / stats['total']) < 0.60:
-                    weak_units.append(u)
-        
+                if (stats['correct'] / stats['total']) < 0.60: weak_units.append(u)
         if weak_units:
             st.toast(f"🧠 Adaptive Engine Triggered: Prioritizing Units {weak_units}", icon="🎯")
             weak_q = [q for q in all_questions if q['unit_number'] in weak_units]
@@ -508,21 +485,16 @@ def start_quiz(unit=None, selected_subtopic="All Subtopics"):
             questions = weak_q + strong_q
         else:
             questions = all_questions
-            if questions:
-                random.shuffle(questions)
+            if questions: random.shuffle(questions)
 
     if st.session_state.difficulty != "All":
         questions = [q for q in questions if q.get('difficulty') == st.session_state.difficulty]
-        
-    if questions:
-        questions = questions[:10]
+    if questions: questions = questions[:10]
 
-    # --- SAFETY CHECK ---
     if not questions:
         st.warning(f"No {st.session_state.difficulty} questions found for this selection yet! Please change the difficulty or try another unit.")
         return
         
-    # --- NUKE OLD MEMORY & START FRESH ---
     st.session_state.quiz_questions = questions
     st.session_state.current_q_index = 0
     st.session_state.quiz_score = 0
@@ -535,22 +507,15 @@ def start_quiz(unit=None, selected_subtopic="All Subtopics"):
     st.rerun()
 
 def start_saved_quiz():
-    """Generates a custom quiz using ONLY the questions the student has starred/saved in their vault."""
     saved_res = supabase.table("saved_questions").select("question_id").eq("user_id", st.session_state.user_id).execute()
-    
     if not saved_res.data:
-        st.toast("⭐ You haven't saved any questions yet! Complete a quiz and star hard questions to review them here.", icon="⚠️")
+        st.toast("⭐ You haven't saved any questions yet!", icon="⚠️")
         return
-        
     saved_q_ids = [item['question_id'] for item in saved_res.data]
     q_res = supabase.table("questions").select("*").in_("question_id", saved_q_ids).execute()
     questions = q_res.data if q_res.data else []
-    
-    if not questions:
-        return
-        
+    if not questions: return
     random.shuffle(questions)
-    
     st.session_state.quiz_questions = questions[:10] 
     st.session_state.current_q_index = 0
     st.session_state.quiz_score = 0
@@ -565,7 +530,6 @@ def submit_entire_quiz():
     end_time = time.time()
     total_time = int(end_time - st.session_state.q_start_time)
     avg_time = max(1, total_time // len(st.session_state.quiz_questions))
-    
     st.session_state.quiz_score = 0
     st.session_state.user_answers = []
     attempts_batch = []
@@ -573,9 +537,7 @@ def submit_entire_quiz():
     for idx, q in enumerate(st.session_state.quiz_questions):
         selected_option = st.session_state.current_answers.get(idx, "A")
         is_correct = 1 if selected_option == q['correct_option'] else 0
-        
-        if is_correct:
-            st.session_state.quiz_score += 1
+        if is_correct: st.session_state.quiz_score += 1
 
         st.session_state.user_answers.append({
             'question_id': q['question_id'],
@@ -586,7 +548,6 @@ def submit_entire_quiz():
             'correct_text': q[f"option_{q['correct_option'].lower()}"],
             'is_correct': is_correct
         })
-
         attempts_batch.append({
             "user_id": st.session_state.user_id,
             "question_id": q['question_id'],
@@ -595,7 +556,6 @@ def submit_entire_quiz():
             "time_taken_seconds": avg_time
         })
 
-    # Bulk insert all attempts into Supabase ONLY if the user is NOT a guest
     if attempts_batch and not st.session_state.get('is_guest', False):
         supabase.table("attempts").insert(attempts_batch).execute()
     
@@ -604,17 +564,12 @@ def submit_entire_quiz():
 
 def save_to_vault(q_id):
     try:
-        supabase.table("saved_questions").insert({
-            "user_id": st.session_state.user_id,
-            "question_id": q_id
-        }).execute()
+        supabase.table("saved_questions").insert({"user_id": st.session_state.user_id,"question_id": q_id}).execute()
         st.toast("✅ Question saved to your Vault!", icon="⭐")
     except Exception as e:
         err_msg = str(e)
-        if "duplicate" in err_msg or "23505" in err_msg:
-            st.toast("This question is already in your Vault!", icon="⭐")
-        else:
-            st.toast(f"Error saving question: {err_msg}", icon="❌")
+        if "duplicate" in err_msg or "23505" in err_msg: st.toast("This question is already in your Vault!", icon="⭐")
+        else: st.toast(f"Error saving question.", icon="❌")
 
 def remove_from_vault(q_id):
     try:
@@ -625,16 +580,15 @@ def remove_from_vault(q_id):
 
 # --- 5. UI Screens ---
 def vault_screen():
-    st.markdown("<h1 style='text-align: center; color: #0B1B3D;'><i class='fa-solid fa-star' style='color: #C09B5A;'></i> My Saved Questions Vault</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center; color: #0a2038; font-family: Fraunces, serif;'><i class='fa-solid fa-star' style='color: #d8b06c;'></i> My Saved Questions Vault</h1>", unsafe_allow_html=True)
     st.write("---")
 
-    # Lock this feature for guests
     if st.session_state.get('is_guest', False):
         st.markdown("""
-        <div style="background-color: rgba(192, 155, 90, 0.1); border: 1px solid #C09B5A; padding: 20px; border-radius: 12px; text-align: center; margin-bottom: 20px;">
-            <i class="fa-solid fa-lock" style="font-size: 32px; color: #C09B5A; margin-bottom: 10px;"></i>
-            <h3 style="color: #0B1B3D; margin: 0;">Feature Locked for Guests</h3>
-            <p style="color: #64748B; font-size: 14px; margin-top: 10px;">Create a free account to save difficult questions, generate custom practice quizzes, and track your mastery!</p>
+        <div style="background-color: rgba(216, 176, 108, 0.1); border: 1px solid #d8b06c; padding: 20px; border-radius: 12px; text-align: center; margin-bottom: 20px;">
+            <i class="fa-solid fa-lock" style="font-size: 32px; color: #d8b06c; margin-bottom: 10px;"></i>
+            <h3 style="color: #0a2038; margin: 0; font-family: Fraunces, serif;">Feature Locked for Guests</h3>
+            <p style="color: #5c7386; font-size: 14px; margin-top: 10px;">Create a free account to save difficult questions, generate custom practice quizzes, and track your mastery!</p>
         </div>
         """, unsafe_allow_html=True)
         if st.button("Create Free Account", type="primary", use_container_width=True):
@@ -643,13 +597,11 @@ def vault_screen():
         return
 
     saved_res = supabase.table("saved_questions").select("question_id").eq("user_id", st.session_state.user_id).execute()
-    
     if not saved_res.data:
         st.info("Your vault is empty! Take a quiz and click 'Save to Vault' on questions you want to review later.")
         return
 
     saved_q_ids = [item['question_id'] for item in saved_res.data]
-    
     q_res = supabase.table("questions").select("*").in_("question_id", saved_q_ids).execute()
     questions = q_res.data if q_res.data else []
 
@@ -659,18 +611,13 @@ def vault_screen():
 
     if st.session_state.get('reviewing_q_id'):
         q = next((q for q in questions if q['question_id'] == st.session_state.reviewing_q_id), None)
-        
         if q:
             if st.button("← Back to Vault Grid"):
                 st.session_state.reviewing_q_id = None
                 st.rerun()
-            
             st.write("---")
             st.markdown(f"### Unit {q['unit_number']} - {q['difficulty']}")
-            
-            if q.get('image_url'):
-                st.image(q['image_url'], use_container_width=True)
-                
+            if q.get('image_url'): st.image(q['image_url'], use_container_width=True)
             st.markdown(f"**{q['question_text']}**")
             st.write("")
             st.write(f"**A)** {q['option_a']}")
@@ -681,7 +628,6 @@ def vault_screen():
             correct_letter = q['correct_option']
             correct_text = q[f"option_{correct_letter.lower()}"]
             st.markdown(f"<span style='display: block; background-color: rgba(34, 197, 94, 0.1); border: 1px solid #22c55e; padding: 14px; border-radius: 8px; color: #22c55e; margin-bottom: 15px;'><b>✅ Correct Answer:</b> {correct_letter}) {correct_text}</span>", unsafe_allow_html=True)
-            
             if st.button("Remove from Vault", type="primary"):
                 supabase.table("saved_questions").delete().eq("user_id", st.session_state.user_id).eq("question_id", q['question_id']).execute()
                 st.session_state.reviewing_q_id = None
@@ -698,14 +644,9 @@ def vault_screen():
         start_saved_quiz()
     st.write("---")
 
-    unit_titles = {
-        1: "Limits", 2: "Diff Basics", 3: "Composite", 4: "Context Apps", 5: "Analytical Apps",
-        6: "Integration", 7: "Diff Eq", 8: "Integration Apps", 9: "Parametric/Polar", 10: "Series"
-    }
-
+    unit_titles = {1: "Limits", 2: "Diff Basics", 3: "Composite", 4: "Context Apps", 5: "Analytical Apps", 6: "Integration", 7: "Diff Eq", 8: "Integration Apps", 9: "Parametric/Polar", 10: "Series"}
     q_by_unit = {i: [] for i in range(1, 11)}
-    for q in questions:
-        q_by_unit[q['unit_number']].append(q)
+    for q in questions: q_by_unit[q['unit_number']].append(q)
 
     for u in range(1, 11):
         col1, col2 = st.columns([1.5, 4])
@@ -728,66 +669,59 @@ def vault_screen():
         st.write("---")
 
 def login_screen():
-    st.write("") # Top padding
+    st.write("") 
     st.write("")
     
     col_info, col_space, col_login = st.columns([1.2, 0.2, 1])
     
     with col_info:
         st.markdown("""
-        <div style="padding-top: 30px; padding-right: 20px;">
-            <h1 style="color: #0B1B3D; font-size: 42px; font-weight: 800; line-height: 1.1; margin-bottom: 15px;">
-                Master AP Calculus.<br>
-                <span style="color: #C09B5A;">Smarter, Not Harder.</span>
+        <div style="padding-top: 10px; padding-right: 20px;">
+            <span style="display: inline-flex; align-items: center; gap: 8px; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: #153e91; font-weight: 600; margin-bottom: 18px;">
+                <span style="width: 22px; height: 1.5px; background: linear-gradient(90deg, #d8b06c, #2260d6); display: inline-block;"></span>
+                AP Learning Centre
+            </span>
+            <h1 style="font-family: 'Fraunces', serif; color: #0a2038; font-size: clamp(38px, 5vw, 48px); font-weight: 700; line-height: 1.05; margin-bottom: 24px; letter-spacing: -0.01em;">
+                Rise to your<br>
+                <span style="background: linear-gradient(100deg, #2260d6 0%, #153e91 55%, #9c7530 100%); -webkit-background-clip: text; color: transparent;">next-level</span> AP score.
             </h1>
-            <p style="color: #64748B; font-size: 16px; margin-bottom: 35px; line-height: 1.6;">
+            <p style="color: #5c7386; font-size: 17px; margin-bottom: 38px; line-height: 1.7; max-width: 480px;">
                 Welcome to Novara Academy's Adaptive Engine. We track your performance in real-time to pinpoint weaknesses, optimize your study time, and help you secure a 5 on the AP Exam.
             </p>
         </div>
         """, unsafe_allow_html=True)
         
-        st.markdown("""
-        <div style="display: flex; align-items: flex-start; margin-bottom: 25px;">
-            <div style="background-color: rgba(192, 155, 90, 0.15); border-radius: 8px; padding: 10px; margin-right: 15px;">
-                <i class="fa-solid fa-bullseye" style="color: #C09B5A; font-size: 20px;"></i>
-            </div>
-            <div>
-                <b style="color: #0B1B3D; font-size: 16px;">Adaptive Quizzing</b>
-                <p style="color: #64748B; font-size: 14px; margin: 2px 0 0 0;">Dynamic algorithms automatically target your weakest units.</p>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+        features = [
+            ("fa-bullseye", "Adaptive Quizzing", "Dynamic algorithms automatically target your weakest units."),
+            ("fa-chart-line", "Advanced Analytics", "Track your mastery with precision radar charts and speed metrics."),
+            ("fa-lock", "Personal Study Vault", "Save challenging questions and review them on demand.")
+        ]
         
-        st.markdown("""
-        <div style="display: flex; align-items: flex-start; margin-bottom: 25px;">
-            <div style="background-color: rgba(192, 155, 90, 0.15); border-radius: 8px; padding: 10px; margin-right: 15px;">
-                <i class="fa-solid fa-crosshairs" style="color: #C09B5A; font-size: 20px;"></i>
+        for icon, title, desc in features:
+            st.markdown(f"""
+            <div style="display: flex; align-items: flex-start; margin-bottom: 24px;">
+                <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(143,203,251,0.18); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-right: 16px; transition: transform 0.4s ease;">
+                    <i class="fa-solid {icon}" style="color: #2260d6; font-size: 18px;"></i>
+                </div>
+                <div>
+                    <h4 style="font-size: 15.5px; font-weight: 600; color: #0a2038; margin: 0 0 3px 0;">{title}</h4>
+                    <p style="font-size: 14px; color: #5c7386; margin: 0; line-height: 1.5;">{desc}</p>
+                </div>
             </div>
-            <div>
-                <b style="color: #0B1B3D; font-size: 16px;">Advanced Analytics</b>
-                <p style="color: #64748B; font-size: 14px; margin: 2px 0 0 0;">Track your mastery with precision radar charts and speed metrics.</p>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        st.markdown("""
-        <div style="display: flex; align-items: flex-start;">
-            <div style="background-color: rgba(192, 155, 90, 0.15); border-radius: 8px; padding: 10px; margin-right: 15px;">
-                <i class="fa-solid fa-bookmark" style="color: #C09B5A; font-size: 20px;"></i>
-            </div>
-            <div>
-                <b style="color: #0B1B3D; font-size: 16px;">Personal Study Vault</b>
-                <p style="color: #64748B; font-size: 14px; margin: 2px 0 0 0;">Save challenging questions and review them on demand.</p>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+            """, unsafe_allow_html=True)
 
     with col_login:
-        st.markdown("<div style='text-align: center; margin-bottom: 10px;'><i class='fa-solid fa-graduation-cap' style='color: #C09B5A; font-size: 32px;'></i><h2 style='color: #0B1B3D; margin-top: 10px;'>Novara Academy</h2></div>", unsafe_allow_html=True)
+        st.markdown("""
+        <div style="text-align: center; margin-bottom: 25px;">
+            <div style="width: 70px; height: 70px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #ffffff, #eaf4fc 45%, #8fcbfb 100%); box-shadow: 0 14px 26px -12px rgba(22,50,79,.2); display: flex; align-items: center; justify-content: center; margin: 0 auto 15px auto;">
+                <i class="fa-solid fa-graduation-cap" style="color: #153e91; font-size: 30px;"></i>
+            </div>
+            <h2 style="font-family: 'Fraunces', serif; color: #0a2038; margin: 0; font-size: 28px;">Novara Academy</h2>
+        </div>
+        """, unsafe_allow_html=True)
         
-        # --- SIGN IN VIEW ---
         if st.session_state.auth_mode == 'login':
-            st.markdown("<p style='text-align: center; color: #64748B; margin-top: -10px; margin-bottom: 30px; font-size: 15px;'>Welcome back! Please enter your details.</p>", unsafe_allow_html=True)
+            st.markdown("<p style='text-align: center; color: #5c7386; margin-top: -15px; margin-bottom: 30px; font-size: 14.5px;'>Welcome back! Please enter your details.</p>", unsafe_allow_html=True)
             
             login_email = st.text_input("Email Address", key="login_email")
             login_password = st.text_input("Password", type="password", key="login_password")
@@ -799,7 +733,6 @@ def login_screen():
                         user_record = supabase.table("users").select("*").eq("email", login_email).execute()
                         if user_record.data:
                             user = user_record.data[0]
-                            
                             is_locked = False
                             if user.get('lockout_until'):
                                 lockout_time = pd.to_datetime(user['lockout_until']).timestamp()
@@ -807,24 +740,20 @@ def login_screen():
                                     is_locked = True
                                     remaining = int(lockout_time - time.time())
                                     st.markdown(f"<div style='background-color: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; padding: 14px; border-radius: 8px; color: #ef4444; margin-bottom: 15px;'><i class='fa-solid fa-lock'></i> <b>Account temporarily locked.</b> Try again in {remaining} seconds.</div>", unsafe_allow_html=True)
-                            
                             if not is_locked:
                                 if bcrypt.checkpw(login_password.encode('utf-8'), user['password_hash'].encode('utf-8')):
                                     supabase.table("users").update({"failed_attempts": 0, "lockout_until": None}).eq("email", login_email).execute()
-                                    
                                     st.session_state.logged_in = True
                                     st.session_state.user_id = user['user_id']
                                     st.session_state.username = user['username']
                                     st.session_state.is_admin = user.get('is_admin', False)
                                     st.session_state.is_guest = False
                                     st.session_state.current_screen = "dashboard"
-                                    st.success(f"Welcome back, {user['username']}!")
-                                    time.sleep(1)
+                                    time.sleep(0.5)
                                     st.rerun()
                                 else:
                                     new_attempts = user.get('failed_attempts', 0) + 1
                                     update_data = {"failed_attempts": new_attempts}
-                                    
                                     if new_attempts >= 5:
                                         lockout_dt = datetime.now(ZoneInfo("UTC")) + timedelta(minutes=5)
                                         update_data["lockout_until"] = lockout_dt.isoformat()
@@ -832,7 +761,6 @@ def login_screen():
                                     else:
                                         attempts_left = 5 - new_attempts
                                         st.error(f"Invalid email or password. ({attempts_left} attempts remaining)")
-                                        
                                     supabase.table("users").update(update_data).eq("email", login_email).execute()
                         else:
                             st.error("Invalid email or password.")
@@ -841,15 +769,14 @@ def login_screen():
                 else:
                     st.warning("Please fill in both fields.")
             
-            st.markdown("<hr style='margin: 15px 0 8px 0; border: none; border-top: 1px solid rgba(192, 155, 90, 0.3);'>", unsafe_allow_html=True)
-            st.markdown("<div style='text-align: center; color: #64748B; font-size: 13px; margin-bottom: 8px;'>Don't have an account?</div>", unsafe_allow_html=True)
+            st.markdown("<hr style='margin: 15px 0 8px 0; border: none; border-top: 1px solid rgba(215, 231, 245, 1);'>", unsafe_allow_html=True)
+            st.markdown("<div style='text-align: center; color: #5c7386; font-size: 13px; margin-bottom: 8px;'>Don't have an account?</div>", unsafe_allow_html=True)
             if st.button("Sign Up", use_container_width=True):
                 st.session_state.auth_mode = 'register'
                 st.rerun()
 
-        # --- SIGN UP VIEW ---
         else:
-            st.markdown("<p style='text-align: center; color: #64748B; margin-top: -10px; margin-bottom: 30px; font-size: 15px;'>Create an account to start mastering AP Calc.</p>", unsafe_allow_html=True)
+            st.markdown("<p style='text-align: center; color: #5c7386; margin-top: -15px; margin-bottom: 30px; font-size: 14.5px;'>Create an account to start mastering AP Calc.</p>", unsafe_allow_html=True)
             
             reg_username = st.text_input("Full Name", key="reg_username")
             reg_email = st.text_input("Email Address", key="reg_email")
@@ -860,31 +787,19 @@ def login_screen():
                 if reg_username and reg_email and reg_password:
                     email_pattern = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
                     username_pattern = r"^[A-Za-z0-9 _.'-]{2,40}$" 
-                    
-                    if not re.match(email_pattern, reg_email):
-                        st.warning("Please enter a valid email address format (e.g., student@example.com).")
-                    elif not re.match(username_pattern, reg_username):
-                        st.warning("Username can only contain letters, numbers, spaces, and basic punctuation (2-40 characters). No HTML tags allowed.")
-                    elif len(reg_password) < 8:
-                        st.warning("Password must be at least 8 characters long.")
+                    if not re.match(email_pattern, reg_email): st.warning("Please enter a valid email address format (e.g., student@example.com).")
+                    elif not re.match(username_pattern, reg_username): st.warning("Username can only contain letters, numbers, spaces, and basic punctuation (2-40 characters). No HTML tags allowed.")
+                    elif len(reg_password) < 8: st.warning("Password must be at least 8 characters long.")
                     else:
                         try:
                             email_check = supabase.table("users").select("*").eq("email", reg_email).execute()
                             username_check = supabase.table("users").select("*").eq("username", reg_username).execute()
-                            
-                            if email_check.data:
-                                st.error("Registration failed: An account with this email already exists.")
-                            elif username_check.data:
-                                st.error("Registration failed: That username is already taken. Please choose another one.")
+                            if email_check.data: st.error("Registration failed: An account with this email already exists.")
+                            elif username_check.data: st.error("Registration failed: That username is already taken. Please choose another one.")
                             else:
                                 salt = bcrypt.gensalt()
                                 hashed_pw = bcrypt.hashpw(reg_password.encode('utf-8'), salt).decode('utf-8')
-                                
-                                supabase.table("users").insert({
-                                    "username": reg_username,
-                                    "email": reg_email,
-                                    "password_hash": hashed_pw 
-                                }).execute()
+                                supabase.table("users").insert({"username": reg_username, "email": reg_email, "password_hash": hashed_pw}).execute()
                                 st.success("Account created successfully! Switching to Log In...")
                                 time.sleep(1.5)
                                 st.session_state.auth_mode = 'login'
@@ -894,16 +809,15 @@ def login_screen():
                 else:
                     st.warning("Please fill in all fields.")
 
-            st.markdown("<hr style='margin: 15px 0 8px 0; border: none; border-top: 1px solid rgba(192, 155, 90, 0.3);'>", unsafe_allow_html=True)
-            st.markdown("<div style='text-align: center; color: #64748B; font-size: 13px; margin-bottom: 8px;'>Already have an account?</div>", unsafe_allow_html=True)
-            if st.button("Sign In", use_container_width=True):
+            st.markdown("<hr style='margin: 15px 0 8px 0; border: none; border-top: 1px solid rgba(215, 231, 245, 1);'>", unsafe_allow_html=True)
+            st.markdown("<div style='text-align: center; color: #5c7386; font-size: 13px; margin-bottom: 8px;'>Already have an account?</div>", unsafe_allow_html=True)
+            if st.button("Sign In Instead", use_container_width=True):
                 st.session_state.auth_mode = 'login'
                 st.rerun()
 
-        # --- GUEST ONBOARDING ---
-        st.markdown("<hr style='margin: 15px 0 8px 0; border: none; border-top: 1px solid rgba(192, 155, 90, 0.3);'>", unsafe_allow_html=True)
-        st.markdown("<div style='text-align: center; color: #64748B; font-size: 13px; margin-bottom: 8px;'>Want to try it first?</div>", unsafe_allow_html=True)
-        if st.button("Continue as Guest", use_container_width=True):
+        st.markdown("<hr style='margin: 15px 0 8px 0; border: none; border-top: 1px solid rgba(215, 231, 245, 1);'>", unsafe_allow_html=True)
+        st.markdown("<div style='text-align: center; color: #5c7386; font-size: 13px; margin-bottom: 8px;'>Want to try it first?</div>", unsafe_allow_html=True)
+        if st.button("Continue as Guest (No Registration)", use_container_width=True):
             st.session_state.logged_in = True
             st.session_state.is_guest = True
             st.session_state.user_id = "guest_user"
@@ -916,43 +830,21 @@ def login_screen():
     st.write("---")
     st.markdown("""
     <style>
-    .social-icon {
-        width: 32px;
-        height: 32px;
-        margin: 0 20px;
-        transition: transform 0.2s ease-in-out, opacity 0.2s;
-        opacity: 0.65;
-    }
-    .social-icon:hover {
-        transform: scale(1.15);
-        opacity: 1;
-    }
-    .social-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 15px;
-        margin-bottom: 15px;
-    }
-    .legal-footer {
-        text-align: center;
-        color: #A0A0A0;
-        font-size: 12px;
-        font-family: sans-serif;
-        padding-bottom: 30px;
-        line-height: 1.5;
-    }
+    .social-icon { width: 32px; height: 32px; margin: 0 20px; transition: transform 0.2s ease-in-out, opacity 0.2s; opacity: 0.65; }
+    .social-icon:hover { transform: scale(1.15); opacity: 1; }
+    .social-container { display: flex; justify-content: center; align-items: center; margin-top: 15px; margin-bottom: 15px; }
+    .legal-footer { text-align: center; color: #5c7386; font-size: 12px; font-family: sans-serif; padding-bottom: 30px; line-height: 1.5; }
     </style>
     
     <div class="social-container">
         <a href='https://t.me/Novara_Academy' target='_blank'>
-            <img class="social-icon" src='https://cdn.simpleicons.org/telegram/0B1B3D' alt='Telegram'/>
+            <img class="social-icon" src='https://cdn.simpleicons.org/telegram/153e91' alt='Telegram'/>
         </a>
         <a href='https://www.instagram.com/thenovaraacademy' target='_blank'>
-            <img class="social-icon" src='https://cdn.simpleicons.org/instagram/0B1B3D' alt='Instagram'/>
+            <img class="social-icon" src='https://cdn.simpleicons.org/instagram/153e91' alt='Instagram'/>
         </a>
         <a href='https://youtube.com/@thenovara_academy' target='_blank'>
-            <img class="social-icon" src='https://cdn.simpleicons.org/youtube/0B1B3D' alt='YouTube'/>
+            <img class="social-icon" src='https://cdn.simpleicons.org/youtube/153e91' alt='YouTube'/>
         </a>
     </div>
     
@@ -964,42 +856,40 @@ def login_screen():
     """, unsafe_allow_html=True)
 
 def dashboard_screen():
-    st.markdown(f"<h1 style='text-align: center; color: #0B1B3D;'>Welcome, {st.session_state.username}!</h1>", unsafe_allow_html=True)
+    st.markdown(f"<h1 style='text-align: center; color: #0a2038; font-family: Fraunces, serif;'>Welcome, {st.session_state.username}!</h1>", unsafe_allow_html=True)
     
     if st.session_state.get('is_guest', False):
         st.markdown("<div style='text-align: center; background-color: rgba(234, 179, 8, 0.1); border: 1px solid #eab308; padding: 10px; border-radius: 8px; color: #eab308; margin-bottom: 15px;'><i class='fa-solid fa-triangle-exclamation'></i> <b>You are playing as a Guest.</b> Your progress and XP will not be saved. Create an account to track your mastery!</div>", unsafe_allow_html=True)
 
     if not st.session_state.get('hide_guide', False):
         st.markdown("""
-        <div style="background: linear-gradient(135deg, #0B1B3D 0%, #152A55 100%); padding: 25px; border-radius: 16px; border: 1px solid #C09B5A; box-shadow: 0 10px 20px rgba(0,0,0,0.15); margin-bottom: 15px; margin-top: 10px;">
-            <h3 style="color: #C09B5A; margin-top: 0; text-align: center; margin-bottom: 20px;"><i class="fa-solid fa-map-location-dot"></i> Welcome to Novara Academy</h3>
+        <div style="background: linear-gradient(135deg, #0A2038 0%, #153E91 100%); padding: 25px; border-radius: 16px; border: 1px solid #d8b06c; box-shadow: 0 14px 26px -12px rgba(22,50,79,.5); margin-bottom: 15px; margin-top: 10px;">
+            <h3 style="color: #d8b06c; font-family: Fraunces, serif; margin-top: 0; text-align: center; margin-bottom: 20px;"><i class="fa-solid fa-map-location-dot"></i> Welcome to Novara Academy</h3>
             <div style="display: flex; flex-wrap: wrap; gap: 20px;">
                 <div style="flex: 1 1 45%; min-width: 200px;">
-                    <h4 style="color: #FFFFFF; margin-top: 0; font-size: 16px;"><i class="fa-solid fa-brain" style="color: #C09B5A;"></i> Adaptive Engine</h4>
-                    <p style="font-size: 13px; color: #94A3B8; line-height: 1.5; margin-bottom: 0;">Click <b>Start Full Adaptive Quiz</b>. The algorithm tracks your unit accuracy and automatically targets your weakest topics to force improvement.</p>
+                    <h4 style="color: #FFFFFF; margin-top: 0; font-size: 16px;"><i class="fa-solid fa-brain" style="color: #d8b06c;"></i> Adaptive Engine</h4>
+                    <p style="font-size: 13px; color: #b9cbdc; line-height: 1.5; margin-bottom: 0;">Click <b>Start Full Adaptive Quiz</b>. The algorithm tracks your unit accuracy and automatically targets your weakest topics to force improvement.</p>
                 </div>
                 <div style="flex: 1 1 45%; min-width: 200px;">
-                    <h4 style="color: #FFFFFF; margin-top: 0; font-size: 16px;"><i class="fa-solid fa-stopwatch" style="color: #C09B5A;"></i> Practice vs. Exam Mode</h4>
-                    <p style="font-size: 13px; color: #94A3B8; line-height: 1.5; margin-bottom: 0;"><b>Practice Mode</b> gives you instant feedback and a relaxed timer to learn concepts. <b>Exam Mode</b> runs a strict 15-minute clock with zero hints until the end.</p>
+                    <h4 style="color: #FFFFFF; margin-top: 0; font-size: 16px;"><i class="fa-solid fa-stopwatch" style="color: #d8b06c;"></i> Practice vs. Exam Mode</h4>
+                    <p style="font-size: 13px; color: #b9cbdc; line-height: 1.5; margin-bottom: 0;"><b>Practice Mode</b> gives you instant feedback and a relaxed timer to learn concepts. <b>Exam Mode</b> runs a strict 15-minute clock with zero hints until the end.</p>
                 </div>
                 <div style="flex: 1 1 45%; min-width: 200px;">
-                    <h4 style="color: #FFFFFF; margin-top: 0; font-size: 16px;"><i class="fa-solid fa-fire" style="color: #C09B5A;"></i> XP & Streaks</h4>
-                    <p style="font-size: 13px; color: #94A3B8; line-height: 1.5; margin-bottom: 0;">Consistency is key. You earn <b>1 XP</b> for every <i>correct</i> answer. Practice daily to build your blazing streak and climb the Leaderboard!</p>
+                    <h4 style="color: #FFFFFF; margin-top: 0; font-size: 16px;"><i class="fa-solid fa-fire" style="color: #d8b06c;"></i> XP & Streaks</h4>
+                    <p style="font-size: 13px; color: #b9cbdc; line-height: 1.5; margin-bottom: 0;">Consistency is key. You earn <b>1 XP</b> for every <i>correct</i> answer. Practice daily to build your blazing streak and climb the Leaderboard!</p>
                 </div>
                 <div style="flex: 1 1 45%; min-width: 200px;">
-                    <h4 style="color: #FFFFFF; margin-top: 0; font-size: 16px;"><i class="fa-solid fa-bookmark" style="color: #C09B5A;"></i> The Vault</h4>
-                    <p style="font-size: 13px; color: #94A3B8; line-height: 1.5; margin-bottom: 0;">Don't lose hard questions. Click <b>Save to Vault</b> during a quiz review to build a personal bank, then generate custom practice quizzes.</p>
+                    <h4 style="color: #FFFFFF; margin-top: 0; font-size: 16px;"><i class="fa-solid fa-bookmark" style="color: #d8b06c;"></i> The Vault</h4>
+                    <p style="font-size: 13px; color: #b9cbdc; line-height: 1.5; margin-bottom: 0;">Don't lose hard questions. Click <b>Save to Vault</b> during a quiz review to build a personal bank, then generate custom practice quizzes.</p>
                 </div>
             </div>
         </div>
         """, unsafe_allow_html=True)
-        
         if st.button("Got it! Dismiss Guide", type="primary", use_container_width=True):
             st.session_state.hide_guide = True
             st.rerun()
         st.write("---")
 
-    # --- 1. ⏱️ AP EXAM COUNTDOWN & STREAK TRACKER ---
     tz = ZoneInfo("Asia/Tashkent")
     exam_datetime = datetime(2027, 5, 10, 8, 0, 0, tzinfo=tz) 
     now = datetime.now(tz)
@@ -1013,22 +903,18 @@ def dashboard_screen():
         try:
             q_map = get_question_map()
             response = supabase.table("attempts").select("timestamp, is_correct, question_id").eq("user_id", st.session_state.user_id).execute()
-            
             if response.data:
                 active_dates = set()
                 unit_stats = {}
-                
                 for row in response.data:
                     if row.get("timestamp"):
                         utc_dt = pd.to_datetime(row["timestamp"], utc=True)
                         tashkent_dt = utc_dt.tz_convert(tz)
                         active_dates.add(tashkent_dt.strftime("%Y-%m-%d"))
-                    
                     q_id = row.get("question_id")
                     if q_id in q_map:
                         u = q_map[q_id]
-                        if u not in unit_stats:
-                            unit_stats[u] = {"correct": 0, "total": 0}
+                        if u not in unit_stats: unit_stats[u] = {"correct": 0, "total": 0}
                         unit_stats[u]["total"] += 1
                         unit_stats[u]["correct"] += row["is_correct"]
                 
@@ -1043,10 +929,8 @@ def dashboard_screen():
                         current_date -= timedelta(days=1)
                         
                 for u, stats in unit_stats.items():
-                    if stats["total"] > 0:
-                        unit_accuracies[u] = (stats["correct"] / stats["total"]) * 100
-        except Exception:
-            pass
+                    if stats["total"] > 0: unit_accuracies[u] = (stats["correct"] / stats["total"]) * 100
+        except Exception: pass
 
     if streak == 0:
         card_bg = "linear-gradient(135deg, #1E293B 0%, #0F172A 100%)"
@@ -1072,17 +956,16 @@ def dashboard_screen():
     components.html(
     f"""
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     
     <div style="display: flex; justify-content: space-between; font-family: 'Inter', sans-serif; margin-bottom: 5px; margin-top: 15px;">
-        <!-- Countdown Card -->
-        <div style="background: linear-gradient(135deg, #0B1B3D 0%, #152A55 100%); border: 1px solid #C09B5A; border-radius: 16px; padding: 22px; width: 48%; text-align: center; box-shadow: 0 10px 20px rgba(0,0,0,0.15); box-sizing: border-box;">
-            <h4 style="color: #E2E8F0; margin-top: 0; margin-bottom: 8px; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;"><i class="fa-solid fa-hourglass-half" style="color: #C09B5A; margin-right: 5px;"></i> AP Calc Exam</h4>
-            <h1 id="countdown" style="color: #C09B5A; margin: 0; font-size: 26px; font-weight: 800;"></h1>
-            <p style="color: #A0A0A0; margin: 8px 0 0 0; font-size: 12px;">Time Left (May 10)</p>
+        <div style="background: linear-gradient(135deg, #0A2038 0%, #153E91 100%); border: 1px solid #d8b06c; border-radius: 16px; padding: 22px; width: 48%; text-align: center; box-shadow: 0 14px 26px -12px rgba(22,50,79,.5); box-sizing: border-box;">
+            <h4 style="color: #E2E8F0; margin-top: 0; margin-bottom: 8px; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;"><i class="fa-solid fa-hourglass-half" style="color: #d8b06c; margin-right: 5px;"></i> AP Calc Exam</h4>
+            <h1 id="countdown" style="color: #d8b06c; margin: 0; font-size: 26px; font-weight: 800;"></h1>
+            <p style="color: #b9cbdc; margin: 8px 0 0 0; font-size: 12px;">Time Left (May 10)</p>
         </div>
         
-        <!-- Duolingo-Style Gamified Streak Card -->
-        <div style="background: {card_bg}; border-radius: 16px; padding: 22px; width: 48%; text-align: center; box-shadow: 0 10px 20px rgba(0,0,0,0.15); box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: all 0.3s ease;">
+        <div style="background: {card_bg}; border-radius: 16px; padding: 22px; width: 48%; text-align: center; box-shadow: 0 14px 26px -12px rgba(22,50,79,.4); box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: all 0.3s ease;">
             <div style="display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 4px;">
                 <i class="fa-solid fa-fire" style="color: {icon_color}; font-size: 42px;"></i>
                 <h1 style="color: {text_color}; margin: 0; font-size: 46px; font-weight: 800; line-height: 1;">{streak}</h1>
@@ -1090,63 +973,43 @@ def dashboard_screen():
             <p style="color: {text_color}; margin: 0; font-size: 15px; font-weight: 600; opacity: 0.95;">{streak_msg}</p>
         </div>
     </div>
-    
     <script>
         let total_seconds = {total_seconds};
         const countdown_div = document.getElementById("countdown");
-
         function updateTimer() {{
             if (total_seconds <= 0) {{
-                countdown_div.innerHTML = "<i class='fa-solid fa-champagne-glasses' style='color:#C09B5A;'></i> Exam Day!";
-                clearInterval(timer);
+                countdown_div.innerHTML = "<i class='fa-solid fa-champagne-glasses' style='color:#d8b06c;'></i> Exam Day!";
                 return;
             }}
-            
             let d = Math.floor(total_seconds / (3600*24));
             let h = Math.floor((total_seconds % (3600*24)) / 3600);
             let m = Math.floor((total_seconds % 3600) / 60);
             let s = Math.floor(total_seconds % 60);
-            
-            let formatted_time = d + "d " + 
-                                (h < 10 ? "0" : "") + h + "h " + 
-                                (m < 10 ? "0" : "") + m + "m " + 
-                                (s < 10 ? "0" : "") + s + "s";
-                                
-            countdown_div.innerText = formatted_time;
+            countdown_div.innerText = d + "d " + (h < 10 ? "0" : "") + h + "h " + (m < 10 ? "0" : "") + m + "m " + (s < 10 ? "0" : "") + s + "s";
             total_seconds--;
         }}
-        
-        const timer = setInterval(updateTimer, 1000);
-        updateTimer(); 
+        setInterval(updateTimer, 1000); updateTimer(); 
     </script>
     """,
     height=180
     )
     
-    # --- 2. 🏆 TROPHY CASE (MASTERY BADGES) ---
-    st.markdown("<h3 style='text-align: center; color: #0B1B3D; margin-bottom: 15px;'><i class='fa-solid fa-award' style='color: #C09B5A;'></i> Unit Mastery Trophy Case</h3>", unsafe_allow_html=True)
-    
-    unit_titles = {
-        1: "Limits", 2: "Diff Basics", 3: "Composite", 4: "Context Apps", 5: "Analytical Apps",
-        6: "Integration", 7: "Diff Eq", 8: "Integration Apps", 9: "Parametric/Polar", 10: "Series"
-    }
-    
+    st.markdown("<h3 style='text-align: center; color: #0a2038; font-family: Fraunces, serif; margin-bottom: 15px;'><i class='fa-solid fa-award' style='color: #d8b06c;'></i> Unit Mastery Trophy Case</h3>", unsafe_allow_html=True)
+    unit_titles = {1: "Limits", 2: "Diff Basics", 3: "Composite", 4: "Context Apps", 5: "Analytical Apps", 6: "Integration", 7: "Diff Eq", 8: "Integration Apps", 9: "Parametric/Polar", 10: "Series"}
     for row_start in [1, 6]:
         cols = st.columns(5)
         for idx, u_num in enumerate(range(row_start, row_start + 5)):
             acc = unit_accuracies.get(u_num, 0)
             is_mastered = acc >= 80.0
-            
-            bg_color = "#C09B5A" if is_mastered else "#0B1B3D"
-            text_color = "#0B1B3D" if is_mastered else "#A0A0A0"
-            border_style = "2px solid #C09B5A" if is_mastered else "1px solid #334155"
-            
+            bg_color = "#d8b06c" if is_mastered else "#0A2038"
+            text_color = "#0A2038" if is_mastered else "#b9cbdc"
+            border_style = "2px solid #d8b06c" if is_mastered else "1px solid #153E91"
             icon = "<i class='fa-solid fa-trophy'></i>" if is_mastered else "<i class='fa-solid fa-lock'></i>"
-            icon_color = "#0B1B3D" if is_mastered else "#A0A0A0"
+            icon_color = "#0A2038" if is_mastered else "#b9cbdc"
             
             with cols[idx]:
                 st.markdown(f"""
-                <div style="background-color: {bg_color}; border: {border_style}; border-radius: 10px; padding: 10px 5px; text-align: center; margin-bottom: 12px;">
+                <div style="background-color: {bg_color}; border: {border_style}; border-radius: 10px; padding: 10px 5px; text-align: center; margin-bottom: 12px; box-shadow: 0 4px 12px rgba(11, 27, 61, 0.08);">
                     <span style="font-size: 18px; color: {icon_color};">{icon}</span><br>
                     <b style="color: {text_color}; font-size: 11px;">U{u_num}: {unit_titles[u_num]}</b><br>
                     <span style="color: {text_color}; font-size: 10px;">{acc:.0f}% Acc</span>
@@ -1154,45 +1017,21 @@ def dashboard_screen():
                 """, unsafe_allow_html=True)
 
     st.write("---")
-    
-    # --- 3. AP CALCULUS UNITS GRID ---
-    st.markdown("<h3 style='text-align: center; color: #0B1B3D;'>AP Calculus Units</h3>", unsafe_allow_html=True)
-    
-    units = [
-        "Unit 1: Limits & Continuity", 
-        "Unit 2: Differentiation (Basics)",
-        "Unit 3: Diff (Composite/Implicit)", 
-        "Unit 4: Contextual Apps of Diff",
-        "Unit 5: Analytical Apps of Diff", 
-        "Unit 6: Integration & Accumulation",
-        "Unit 7: Differential Equations", 
-        "Unit 8: Applications of Integration",
-        "Unit 9: Parametric/Polar/Vectors", 
-        "Unit 10: Infinite Sequences & Series"
-    ]
-    
+    st.markdown("<h3 style='text-align: center; color: #0a2038; font-family: Fraunces, serif;'>AP Calculus Units</h3>", unsafe_allow_html=True)
+    units = ["Unit 1: Limits & Continuity", "Unit 2: Differentiation (Basics)", "Unit 3: Diff (Composite/Implicit)", "Unit 4: Contextual Apps of Diff", "Unit 5: Analytical Apps of Diff", "Unit 6: Integration & Accumulation", "Unit 7: Differential Equations", "Unit 8: Applications of Integration", "Unit 9: Parametric/Polar/Vectors", "Unit 10: Infinite Sequences & Series"]
     for i in range(0, 10, 2):
         c1, c2 = st.columns(2)
         with c1:
             if st.button(units[i], use_container_width=True):
-                st.session_state.selected_unit = i + 1
-                st.session_state.selected_unit_name = units[i]
-                st.session_state.current_screen = "unit_detail"
-                st.rerun()
+                st.session_state.selected_unit = i + 1; st.session_state.selected_unit_name = units[i]; st.session_state.current_screen = "unit_detail"; st.rerun()
         with c2:
             if st.button(units[i+1], use_container_width=True):
-                st.session_state.selected_unit = i + 2
-                st.session_state.selected_unit_name = units[i+1]
-                st.session_state.current_screen = "unit_detail"
-                st.rerun()
+                st.session_state.selected_unit = i + 2; st.session_state.selected_unit_name = units[i+1]; st.session_state.current_screen = "unit_detail"; st.rerun()
 
-    # --- 4. 🌍 GLOBAL LEADERBOARD (Monthly & All-Time) ---
     st.write("---")
-    st.markdown("<h3 style='text-align: center; color: #0B1B3D;'><i class='fa-solid fa-globe' style='color: #C09B5A;'></i> Global Leaderboard</h3>", unsafe_allow_html=True)
-    
+    st.markdown("<h3 style='text-align: center; color: #0a2038; font-family: Fraunces, serif;'><i class='fa-solid fa-globe' style='color: #d8b06c;'></i> Global Leaderboard</h3>", unsafe_allow_html=True)
     lb_users_res = supabase.table("users").select("user_id, username").execute()
     lb_users_dict = {u['user_id']: u['username'] for u in lb_users_res.data} if lb_users_res.data else {}
-    
     lb_attempts_res = supabase.table("attempts").select("user_id, is_correct, timestamp").execute()
     
     if lb_attempts_res.data:
@@ -1200,7 +1039,6 @@ def dashboard_screen():
         if not df_lb.empty and 'timestamp' in df_lb.columns:
             df_lb['timestamp'] = pd.to_datetime(df_lb['timestamp'], errors='coerce', utc=True).dt.tz_convert(tz)
             df_lb = df_lb[df_lb['is_correct'] == 1]
-            
             curr_month = datetime.now(tz).month
             curr_year = datetime.now(tz).year
             
@@ -1217,114 +1055,47 @@ def dashboard_screen():
             
             tab_month, tab_alltime = st.tabs(["This Month", "All-Time"])
             with tab_month:
-                st.markdown("<h4 style='color: #0B1B3D; margin-top: 5px;'><i class='fa-solid fa-calendar-days' style='color: #C09B5A;'></i> This Month's Scholars</h4>", unsafe_allow_html=True)
+                st.markdown("<h4 style='color: #0a2038; font-family: Fraunces, serif; margin-top: 5px;'><i class='fa-solid fa-calendar-days' style='color: #d8b06c;'></i> This Month's Scholars</h4>", unsafe_allow_html=True)
                 if not monthly_xp.empty: st.dataframe(monthly_xp, use_container_width=True)
-                else: st.markdown("<div style='background-color: rgba(192, 155, 90, 0.1); border: 1px solid #C09B5A; padding: 12px; border-radius: 8px; color: #C09B5A;'><i class='fa-solid fa-circle-info'></i> No points earned yet this month! Be the first on the board.</div>", unsafe_allow_html=True)
+                else: st.markdown("<div style='background-color: rgba(216, 176, 108, 0.1); border: 1px solid #d8b06c; padding: 12px; border-radius: 8px; color: #d8b06c;'><i class='fa-solid fa-circle-info'></i> No points earned yet this month! Be the first on the board.</div>", unsafe_allow_html=True)
             with tab_alltime:
-                st.markdown("<h4 style='color: #0B1B3D; margin-top: 5px;'><i class='fa-solid fa-trophy' style='color: #C09B5A;'></i> All-Time Hall of Fame</h4>", unsafe_allow_html=True)
+                st.markdown("<h4 style='color: #0a2038; font-family: Fraunces, serif; margin-top: 5px;'><i class='fa-solid fa-trophy' style='color: #d8b06c;'></i> All-Time Hall of Fame</h4>", unsafe_allow_html=True)
                 if not alltime_xp.empty: st.dataframe(alltime_xp, use_container_width=True)
-                else: st.markdown("<div style='background-color: rgba(192, 155, 90, 0.1); border: 1px solid #C09B5A; padding: 12px; border-radius: 8px; color: #C09B5A;'><i class='fa-solid fa-circle-info'></i> No points earned yet.</div>", unsafe_allow_html=True)
+                else: st.markdown("<div style='background-color: rgba(216, 176, 108, 0.1); border: 1px solid #d8b06c; padding: 12px; border-radius: 8px; color: #d8b06c;'><i class='fa-solid fa-circle-info'></i> No points earned yet.</div>", unsafe_allow_html=True)
 
-    # --- 5. SUPPORT THE CREATOR (SECURE & UNIFIED BOX) ---
     st.write("---")
-    
     col1, col2, col3 = st.columns([1, 2, 1])
-    
     with col2:
         card_number = st.secrets.get("support_card", "CARD_NOT_FOUND")
-        
         components.html(
             f"""
             <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
             <style>
-                body {{
-                    margin: 0;
-                    padding: 5px;
-                    background: transparent;
-                    font-family: 'Inter', sans-serif;
-                }}
-                .support-card {{
-                    background-color: #FFFFFF;
-                    border: 1.5px solid #E2E8F0;
-                    border-radius: 12px;
-                    padding: 16px;
-                    text-align: center;
-                    cursor: pointer;
-                    transition: all 0.25s ease;
-                    box-shadow: 0 4px 10px rgba(11, 27, 61, 0.03);
-                }}
-                .support-card:hover {{
-                    border-color: #C09B5A;
-                    transform: translateY(-2px);
-                    box-shadow: 0 8px 20px rgba(192, 155, 90, 0.15);
-                    background-color: #FAF8F5;
-                }}
-                .title {{
-                    color: #C09B5A;
-                    font-size: 14px;
-                    font-weight: 600;
-                    margin-bottom: 6px;
-                }}
-                .subtitle {{
-                    color: #64748B;
-                    font-size: 12px;
-                    margin-bottom: 8px;
-                    line-height: 1.4;
-                }}
-                .card-number {{
-                    background-color: #F8FAFC;
-                    color: #0B1B3D;
-                    font-family: monospace;
-                    font-size: 16px;
-                    font-weight: bold;
-                    padding: 8px 16px;
-                    border-radius: 8px;
-                    border: 1px dashed #CBD5E1;
-                    display: inline-block;
-                    letter-spacing: 1.5px;
-                    transition: all 0.2s ease;
-                }}
+                body {{ margin: 0; padding: 5px; background: transparent; font-family: 'Inter', sans-serif; }}
+                .support-card {{ background-color: #FFFFFF; border: 1px solid #D7E7F5; border-radius: 16px; padding: 16px; text-align: center; cursor: pointer; transition: all 0.25s ease; box-shadow: 0 14px 26px -12px rgba(22,50,79,.15); }}
+                .support-card:hover {{ border-color: #2260D6; transform: translateY(-3px); box-shadow: 0 16px 30px -16px rgba(46,127,224,.25); background-color: #F5FAFF; }}
+                .title {{ color: #153E91; font-size: 14px; font-weight: 600; margin-bottom: 6px; }}
+                .subtitle {{ color: #5c7386; font-size: 12px; margin-bottom: 8px; line-height: 1.4; }}
+                .card-number {{ background-color: #0A2038; color: #ffffff; font-family: monospace; font-size: 16px; font-weight: bold; padding: 8px 16px; border-radius: 8px; border: 1px dashed #d8b06c; display: inline-block; letter-spacing: 1.5px; transition: all 0.2s ease; }}
             </style>
-            
             <div class="support-card" onclick="copyText()">
                 <div class="title"><i class="fa-solid fa-mug-hot"></i> Support the creator</div>
                 <div class="subtitle">This platform is built and maintained independently and is self-funded. If it helped you, consider supporting server & hosting costs.</div>
-                <div class="subtitle" style="font-weight: 600; color: #0B1B3D; margin-bottom: 4px;">Uzum Bank (Click to copy)</div>
+                <div class="subtitle" style="font-weight: 600; color: #0A2038; margin-bottom: 4px;">Uzum Bank (Click to copy)</div>
                 <div class="card-number" id="num-display">{card_number}</div>
             </div>
-            
             <script>
                 function copyText() {{
                     const textToCopy = "{card_number}";
-                    
-                    const copyAction = navigator.clipboard ? 
-                        navigator.clipboard.writeText(textToCopy) : 
-                        new Promise((res) => {{
-                            const tempInput = document.createElement("input");
-                            tempInput.value = textToCopy;
-                            document.body.appendChild(tempInput);
-                            tempInput.select();
-                            document.execCommand("copy");
-                            document.body.removeChild(tempInput);
-                            res();
-                        }});
-                        
+                    const copyAction = navigator.clipboard ? navigator.clipboard.writeText(textToCopy) : new Promise((res) => {{
+                        const tempInput = document.createElement("input"); tempInput.value = textToCopy; document.body.appendChild(tempInput); tempInput.select(); document.execCommand("copy"); document.body.removeChild(tempInput); res(); }});
                     copyAction.then(() => {{
                         const numDisplay = document.getElementById("num-display");
                         const originalText = "{card_number}";
-                        
                         numDisplay.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
-                        numDisplay.style.color = "#16A34A";
-                        numDisplay.style.borderColor = "#16A34A";
-                        numDisplay.style.backgroundColor = "#DCFCE7";
-                        
-                        setTimeout(() => {{
-                            numDisplay.innerText = originalText;
-                            numDisplay.style.color = "#0B1B3D";
-                            numDisplay.style.borderColor = "#CBD5E1";
-                            numDisplay.style.backgroundColor = "#F8FAFC";
-                        }}, 2000);
+                        numDisplay.style.color = "#ffffff"; numDisplay.style.borderColor = "#16A34A"; numDisplay.style.backgroundColor = "#16A34A";
+                        setTimeout(() => {{ numDisplay.innerText = originalText; numDisplay.style.color = "#ffffff"; numDisplay.style.borderColor = "#d8b06c"; numDisplay.style.backgroundColor = "#0A2038"; }}, 2000);
                     }});
                 }}
             </script>
@@ -1332,91 +1103,58 @@ def dashboard_screen():
             height=190
         )
 
-    # --- MINIMALIST SOCIAL MEDIA & LEGAL FOOTER ---
-    st.write("---")
-    st.markdown("""
-    <style>
-    .social-icon {
-        width: 32px;
-        height: 32px;
-        margin: 0 20px;
-        transition: transform 0.2s ease-in-out, opacity 0.2s;
-        opacity: 0.65;
-    }
-    .social-icon:hover {
-        transform: scale(1.15);
-        opacity: 1;
-    }
-    .social-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 15px;
-        margin-bottom: 15px;
-    }
-    .legal-footer {
-        text-align: center;
-        color: #A0A0A0;
-        font-size: 12px;
-        font-family: sans-serif;
-        padding-bottom: 30px;
-        line-height: 1.5;
-    }
-    .legal-footer a {
-        color: #C09B5A;
-        text-decoration: none;
-    }
-    .legal-footer a:hover {
-        text-decoration: underline;
-    }
-    </style>
-    
-    <div class="social-container">
-        <a href='https://t.me/Novara_Academy' target='_blank'>
-            <img class="social-icon" src='https://cdn.simpleicons.org/telegram/0B1B3D' alt='Telegram'/>
-        </a>
-        <a href='https://www.instagram.com/thenovaraacademy' target='_blank'>
-            <img class="social-icon" src='https://cdn.simpleicons.org/instagram/0B1B3D' alt='Instagram'/>
-        </a>
-        <a href='https://youtube.com/@thenovara_academy' target='_blank'>
-            <img class="social-icon" src='https://cdn.simpleicons.org/youtube/0B1B3D' alt='YouTube'/>
-        </a>
-    </div>
-    
-    <div class="legal-footer">
-        &copy; 2026 Novara Academy. All rights reserved.<br>
-        Designed & Engineered in Uzbekistan.<br>
-        <span style="font-size: 10px; opacity: 0.7;">For educational purposes only. Not affiliated with the College Board.</span>
-    </div>
-    """, unsafe_allow_html=True)
+        # --- MINIMALIST SOCIAL MEDIA & LEGAL FOOTER ---
+        st.write("---")
+        st.markdown("""
+        <style>
+        .social-icon { width: 32px; height: 32px; margin: 0 20px; transition: transform 0.2s ease-in-out, opacity 0.2s; opacity: 0.65; }
+        .social-icon:hover { transform: scale(1.15); opacity: 1; }
+        .social-container { display: flex; justify-content: center; align-items: center; margin-top: 15px; margin-bottom: 15px; }
+        .legal-footer { text-align: center; color: #5c7386; font-size: 12px; font-family: sans-serif; padding-bottom: 30px; line-height: 1.5; }
+        </style>
+        
+        <div class="social-container">
+            <a href='https://t.me/Novara_Academy' target='_blank'>
+                <img class="social-icon" src='https://cdn.simpleicons.org/telegram/153e91' alt='Telegram'/>
+            </a>
+            <a href='https://www.instagram.com/thenovaraacademy' target='_blank'>
+                <img class="social-icon" src='https://cdn.simpleicons.org/instagram/153e91' alt='Instagram'/>
+            </a>
+            <a href='https://youtube.com/@thenovara_academy' target='_blank'>
+                <img class="social-icon" src='https://cdn.simpleicons.org/youtube/153e91' alt='YouTube'/>
+            </a>
+        </div>
+        
+        <div class="legal-footer">
+            &copy; 2026 Novara Academy. All rights reserved.<br>
+            Designed & Engineered in Uzbekistan.<br>
+            <span style="font-size: 10px; opacity: 0.7;">For educational purposes only. Not affiliated with the College Board.</span>
+        </div>
+        """, unsafe_allow_html=True)
 
 def unit_detail_screen():
     unit_num = st.session_state.selected_unit
     unit_name = st.session_state.selected_unit_name
         
-    st.markdown(f"<h1 style='text-align: center; color: #0B1B3D;'>{unit_name}</h1>", unsafe_allow_html=True)
+    st.markdown(f"<h1 style='text-align: center; color: #0a2038; font-family: Fraunces, serif;'>{unit_name}</h1>", unsafe_allow_html=True)
     st.write("---")
     
-    st.markdown("<h3 style='text-align: center; color: #0B1B3D;'><i class='fa-solid fa-layer-group' style='color: #C09B5A;'></i> Select Subtopic</h3>", unsafe_allow_html=True)
-    
+    st.markdown("<h3 style='text-align: center; color: #0a2038; font-family: Fraunces, serif;'><i class='fa-solid fa-layer-group' style='color: #d8b06c;'></i> Select Subtopic</h3>", unsafe_allow_html=True)
     res = supabase.table("questions").select("subtopic").eq("unit_number", unit_num).execute()
-    
     subtopic_options = ["All Subtopics"]
     if res.data:
         unique_subs = list(set([q['subtopic'] for q in res.data if q.get('subtopic')]))
         def subtopic_sort_key(s):
             match = re.match(r"^(\d+)\.(\d+)", s)
-            if match:
-                return (int(match.group(1)), int(match.group(2)), s)
+            if match: return (int(match.group(1)), int(match.group(2)), s)
             return (999, 999, s)
-            
         fetched_subs = sorted(unique_subs, key=subtopic_sort_key)
         subtopic_options.extend(fetched_subs)
     
     selected_subtopic = st.selectbox("Focus on a specific skill:", subtopic_options, label_visibility="collapsed")
     st.write("---")
     
-    st.markdown("<h3 style='text-align: center; color: #0B1B3D;'><i class='fa-solid fa-sliders' style='color: #C09B5A;'></i> Select Difficulty Level</h3>", unsafe_allow_html=True)    
+    st.markdown("<h3 style='text-align: center; color: #0a2038; font-family: Fraunces, serif;'><i class='fa-solid fa-sliders' style='color: #d8b06c;'></i> Select Difficulty Level</h3>", unsafe_allow_html=True)    
     diff_col1, diff_col2, diff_col3, diff_col4 = st.columns(4)
     with diff_col1:
         if st.button("All", use_container_width=True): st.session_state.difficulty = "All"
@@ -1428,8 +1166,7 @@ def unit_detail_screen():
         if st.button("Hard", use_container_width=True): st.session_state.difficulty = "Hard"
 
     st.write("---")
-    
-    st.markdown("<h3 style='text-align: center; color: #0B1B3D;'><i class='fa-solid fa-stopwatch' style='color: #C09B5A;'></i> Select Testing Mode</h3>", unsafe_allow_html=True)    
+    st.markdown("<h3 style='text-align: center; color: #0a2038; font-family: Fraunces, serif;'><i class='fa-solid fa-stopwatch' style='color: #d8b06c;'></i> Select Testing Mode</h3>", unsafe_allow_html=True)    
     mode_col1, mode_col2 = st.columns(2)
     with mode_col1:
         if st.button("Exam Mode (Strict Timer, No Hints)", use_container_width=True): st.session_state.quiz_mode = "Exam Mode"
@@ -1437,16 +1174,13 @@ def unit_detail_screen():
         if st.button("Practice Mode (Untimed, Instant Feedback)", use_container_width=True): st.session_state.quiz_mode = "Practice Mode"
         
     st.info(f"**Current Settings:** **{st.session_state.difficulty}** Difficulty | **{st.session_state.quiz_mode}**")
-
     st.write("")
     
     btn_text = f"Start {st.session_state.quiz_mode}: {selected_subtopic}" if selected_subtopic != "All Subtopics" else f"Start Full Unit Quiz ({st.session_state.quiz_mode})"
-    
     if st.button(btn_text, type="primary", use_container_width=True):
         start_quiz(unit=unit_num, selected_subtopic=selected_subtopic)
         
     st.write("---")
-    
     with st.expander("View Unit Formulas & Cheat Sheets (Click to Expand)"):
         st.markdown(CHEAT_SHEETS.get(unit_num, "*Add your custom formulas for this unit here!*"), unsafe_allow_html=True)
 
@@ -1460,28 +1194,28 @@ def quiz_screen():
         
         /* Слегка затемняем фон всего экрана (чтобы белая карточка квиза мощно выделялась) */
         .stApp {
-            background-color: #F8FAFC !important;
+            background-color: #f0f6fc !important;
             background-image: 
-                radial-gradient(at 0% 0%, rgba(11, 27, 61, 0.05) 0px, transparent 50%),
-                radial-gradient(at 100% 0%, rgba(192, 155, 90, 0.08) 0px, transparent 50%) !important;
+                radial-gradient(1100px 500px at 85% -10%, rgba(34, 96, 214, 0.08), transparent 60%),
+                radial-gradient(700px 460px at 92% 30%, rgba(216, 176, 108, 0.15), transparent 65%) !important;
         }
 
-        /* Трансформируем стандартную форму Streamlit в премиальную стеклянную карточку */
+        /* Трансформируем стандартную форму Streamlit в премиальную карточку */
         div[data-testid="stForm"] {
             background: rgba(255, 255, 255, 0.95) !important;
             backdrop-filter: blur(16px) !important;
             -webkit-backdrop-filter: blur(16px) !important;
-            border: 1px solid rgba(192, 155, 90, 0.4) !important;
+            border: 1px solid rgba(216,176,108,0.4) !important;
             border-radius: 24px !important;
             padding: 40px 30px !important;
-            box-shadow: 0 24px 60px -28px rgba(11, 27, 61, 0.25) !important;
+            box-shadow: 0 24px 60px -28px rgba(6,19,35,0.25) !important;
             margin-top: 15px !important;
         }
         
         /* Стилизуем текст вопроса (h3), чтобы он был красивым (Fraunces), но не ломал LaTeX */
         .stMarkdown h3 {
             font-family: 'Fraunces', serif !important;
-            color: #0B1B3D !important;
+            color: #0a2038 !important;
             line-height: 1.6 !important;
             font-weight: 600 !important;
             margin-bottom: 20px !important;
@@ -1489,36 +1223,31 @@ def quiz_screen():
         </style>
     """, unsafe_allow_html=True)
 
-    # --- POST-QUIZ REVIEW SCREEN ---
     if st.session_state.current_q_index >= len(st.session_state.quiz_questions):
-        st.markdown("<h2 style='text-align: center; color: #0B1B3D; font-family: Fraunces, serif;'><i class='fa-solid fa-flag-checkered' style='color: #C09B5A;'></i> Quiz Complete!</h2>", unsafe_allow_html=True)
-        st.markdown(f"<h3 style='text-align: center; color: #C09B5A;'>Your Score: {st.session_state.quiz_score} / {len(st.session_state.quiz_questions)}</h3>", unsafe_allow_html=True)
+        st.markdown("<h2 style='text-align: center; color: #0a2038; font-family: Fraunces, serif;'><i class='fa-solid fa-flag-checkered' style='color: #d8b06c;'></i> Quiz Complete!</h2>", unsafe_allow_html=True)
+        st.markdown(f"<h3 style='text-align: center; color: #d8b06c;'>Your Score: {st.session_state.quiz_score} / {len(st.session_state.quiz_questions)}</h3>", unsafe_allow_html=True)
         st.write("---")
         
-        st.markdown("<h3 style='color: #0B1B3D; font-family: Fraunces, serif;'><i class='fa-solid fa-magnifying-glass' style='color: #C09B5A;'></i> Question Review</h3>", unsafe_allow_html=True)
+        st.markdown("<h3 style='color: #0a2038; font-family: Fraunces, serif;'><i class='fa-solid fa-magnifying-glass' style='color: #d8b06c;'></i> Question Review</h3>", unsafe_allow_html=True)
         
         saved_q_ids = []
         if not st.session_state.get('is_guest', False):
             vault_response = supabase.table("saved_questions").select("question_id").eq("user_id", st.session_state.user_id).execute()
-            if vault_response.data:
-                saved_q_ids = [item['question_id'] for item in vault_response.data]
+            if vault_response.data: saved_q_ids = [item['question_id'] for item in vault_response.data]
         
         for i, ans in enumerate(st.session_state.user_answers):
             st.markdown(f"**Q{i+1}:** {ans['question']}")
-            
             if ans['is_correct']:
-                st.markdown(f"<span style='display: block; background-color: rgba(34, 197, 94, 0.1); border: 1px solid #22c55e; padding: 14px; border-radius: 8px; color: #22c55e; margin-bottom: 12px;'><b>✅ Correct:</b> {ans['selected']}) {ans['selected_text']}</span>", unsafe_allow_html=True)
+                st.markdown(f"<span style='display: block; background-color: rgba(34, 197, 94, 0.1); border: 1px solid #22c55e; padding: 14px; border-radius: 12px; color: #22c55e; margin-bottom: 12px;'><b>✅ Correct:</b> {ans['selected']}) {ans['selected_text']}</span>", unsafe_allow_html=True)
             else:
-                st.markdown(f"<span style='display: block; background-color: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; padding: 14px; border-radius: 8px; color: #ef4444; margin-bottom: 12px;'><b>❌ Incorrect:</b> You chose {ans['selected']}) {ans['selected_text']}<br><br><i class='fa-solid fa-lightbulb' style='color: #eab308;'></i> <b style='color: #eab308;'>Right Answer:</b> <span style='color: #eab308;'>{ans['correct']}) {ans['correct_text']}</span></span>", unsafe_allow_html=True)
+                st.markdown(f"<span style='display: block; background-color: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; padding: 14px; border-radius: 12px; color: #ef4444; margin-bottom: 12px;'><b>❌ Incorrect:</b> You chose {ans['selected']}) {ans['selected_text']}<br><br><i class='fa-solid fa-lightbulb' style='color: #eab308;'></i> <b style='color: #eab308;'>Right Answer:</b> <span style='color: #eab308;'>{ans['correct']}) {ans['correct_text']}</span></span>", unsafe_allow_html=True)
             
-            # Lock vault buttons for guests
             if st.session_state.get('is_guest', False):
                 st.markdown("<div style='font-size: 13px; color: #eab308; margin-top: -5px;'><i class='fa-solid fa-lock'></i> Register to save questions to your Vault.</div>", unsafe_allow_html=True)
             elif ans['question_id'] in saved_q_ids:
                 st.button("Remove from Vault", key=f"remove_btn_{i}_{ans['question_id']}", on_click=remove_from_vault, args=(ans['question_id'],))
             else:
                 st.button("Save to Vault", key=f"save_btn_{i}_{ans['question_id']}", on_click=save_to_vault, args=(ans['question_id'],))
-            
             st.write("---")
             
         st.write("---")
@@ -1529,7 +1258,6 @@ def quiz_screen():
             st.rerun()
         return
 
-    # --- ACTIVE QUIZ SCREEN ---
     q = st.session_state.quiz_questions[st.session_state.current_q_index]
     
     elapsed = int(time.time() - st.session_state.q_start_time)
@@ -1542,14 +1270,14 @@ def quiz_screen():
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
         
-        <div style="background: linear-gradient(135deg, #0B1B3D 0%, #152A55 100%); padding: 18px 26px; border-radius: 16px; color: white; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 10px 20px rgba(0,0,0,0.15); border: 1px solid #C09B5A; font-family: 'Inter', sans-serif;">
+        <div style="background: linear-gradient(135deg, #0A2038 0%, #153E91 100%); padding: 18px 26px; border-radius: 16px; color: white; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 14px 26px -12px rgba(22,50,79,.5); border: 1px solid #d8b06c; font-family: 'Inter', sans-serif;">
             <div>
-                <h2 style="margin: 0; font-family: 'Fraunces', serif; font-size: 20px; color: #C09B5A;"><i class="fa-solid fa-pen-nib" style="margin-right: 8px;"></i> Novara Focus Mode</h2>
-                <p style="margin: 4px 0 0 0; font-size: 13px; color: #94A3B8; opacity: 0.95;">Unit {q['unit_number']} • {q['difficulty']} • Question {st.session_state.current_q_index + 1} of {len(st.session_state.quiz_questions)}</p>
+                <h2 style="margin: 0; font-family: 'Fraunces', serif; font-size: 20px; color: #d8b06c;"><i class="fa-solid fa-pen-nib" style="margin-right: 8px;"></i> Novara Focus Mode</h2>
+                <p style="margin: 4px 0 0 0; font-size: 13px; color: #b9cbdc; opacity: 0.95;">Unit {q['unit_number']} • {q['difficulty']} • Question {st.session_state.current_q_index + 1} of {len(st.session_state.quiz_questions)}</p>
             </div>
             <div style="text-align: right;">
                 <div style="font-size: 24px; font-weight: 800; font-family: monospace; color: #ffffff; line-height: 1;" id="clock">--:--</div>
-                <div style="font-size: 10px; color: #C09B5A; text-transform: uppercase; letter-spacing: 1px; margin-top: 4px;">{st.session_state.quiz_mode}</div>
+                <div style="font-size: 10px; color: #d8b06c; text-transform: uppercase; letter-spacing: 1px; margin-top: 4px;">{st.session_state.quiz_mode}</div>
             </div>
         </div>
         <script>
@@ -1575,40 +1303,28 @@ def quiz_screen():
     
     st.progress((st.session_state.current_q_index) / len(st.session_state.quiz_questions))
     
-    if q.get('image_url'):
-        st.image(q['image_url'], use_container_width=True)
-        
-    # Выводим вопрос через Native Markdown (h3), чтобы LaTeX сработал!
+    if q.get('image_url'): st.image(q['image_url'], use_container_width=True)
+    
+    # Выводим вопрос через Native Markdown (h3), чтобы CSS подхватил шрифт Fraunces, а LaTeX сработал!
     st.markdown(f"### {q['question_text']}")
     
     options = {"A": q['option_a'], "B": q['option_b'], "C": q['option_c'], "D": q['option_d']}
-    
     saved_ans = st.session_state.current_answers.get(st.session_state.current_q_index, "A")
     radio_index = ["A", "B", "C", "D"].index(saved_ans)
     
     with st.form(key=f"quiz_form_{st.session_state.current_q_index}"):
-        
-        choice_label = st.radio(
-            "Answer", 
-            ["A", "B", "C", "D"], 
-            index=radio_index,
-            format_func=lambda x: f"**{x})** {options[x]}",
-            label_visibility="collapsed"
-        )
-        
+        choice_label = st.radio("Answer", ["A", "B", "C", "D"], index=radio_index, format_func=lambda x: f"**{x})** {options[x]}", label_visibility="collapsed")
         st.write("") 
         
         if not is_exam and st.session_state.checked_answers.get(st.session_state.current_q_index, False):
             if choice_label == q['correct_option']:
-                st.markdown(f"<div style='background-color: rgba(34, 197, 94, 0.1); border: 1px solid #22c55e; padding: 14px; border-radius: 8px; color: #22c55e; margin-bottom: 15px;'><b>✅ Correct!</b> Great job.</div>", unsafe_allow_html=True)
+                st.markdown(f"<div style='background-color: rgba(34, 197, 94, 0.1); border: 1px solid #22c55e; padding: 14px; border-radius: 12px; color: #22c55e; margin-bottom: 15px;'><b>✅ Correct!</b> Great job.</div>", unsafe_allow_html=True)
             else:
                 correct_text = options[q['correct_option']]
-                st.markdown(f"<div style='background-color: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; padding: 14px; border-radius: 8px; color: #ef4444; margin-bottom: 15px;'><b>❌ Incorrect.</b><br><br><i class='fa-solid fa-lightbulb' style='color: #eab308;'></i> <b style='color: #eab308;'>Right Answer:</b> <span style='color: #eab308;'>{q['correct_option']}) {correct_text}</span></div>", unsafe_allow_html=True)
+                st.markdown(f"<div style='background-color: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; padding: 14px; border-radius: 12px; color: #ef4444; margin-bottom: 15px;'><b>❌ Incorrect.</b><br><br><i class='fa-solid fa-lightbulb' style='color: #eab308;'></i> <b style='color: #eab308;'>Right Answer:</b> <span style='color: #eab308;'>{q['correct_option']}) {correct_text}</span></div>", unsafe_allow_html=True)
 
         is_last = (st.session_state.current_q_index == len(st.session_state.quiz_questions) - 1)
         back_disabled = (st.session_state.current_q_index == 0)
-        
-        # FIX: Убеждаемся, что переменная создана до проверки if is_exam
         check_btn = False
 
         if is_exam:
@@ -1627,35 +1343,28 @@ def quiz_screen():
             st.session_state.quiz_started = False
             st.session_state.current_screen = "dashboard"
             st.rerun()
-            
         elif check_btn:
             st.session_state.current_answers[st.session_state.current_q_index] = choice_label
             st.session_state.checked_answers[st.session_state.current_q_index] = True
             st.rerun()
-            
         elif back_btn:
             st.session_state.current_answers[st.session_state.current_q_index] = choice_label
             st.session_state.current_q_index -= 1
             st.rerun()
-            
         elif next_btn:
             st.session_state.current_answers[st.session_state.current_q_index] = choice_label
-            if st.session_state.current_q_index >= len(st.session_state.quiz_questions) - 1:
-                submit_entire_quiz()
-            else:
-                st.session_state.current_q_index += 1
-                st.rerun()
+            if st.session_state.current_q_index >= len(st.session_state.quiz_questions) - 1: submit_entire_quiz()
+            else: st.session_state.current_q_index += 1; st.rerun()
 
 def analytics_screen():
-    st.markdown("<h1 style='text-align: center; color: #0B1B3D;'><i class='fa-solid fa-chart-line' style='color: #C09B5A;'></i> Performance Analytics</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center; color: #0a2038; font-family: Fraunces, serif;'><i class='fa-solid fa-chart-line' style='color: #d8b06c;'></i> Performance Analytics</h1>", unsafe_allow_html=True)
     
-    # Lock this feature for guests
     if st.session_state.get('is_guest', False):
         st.markdown("""
-        <div style="background-color: rgba(192, 155, 90, 0.1); border: 1px solid #C09B5A; padding: 20px; border-radius: 12px; text-align: center; margin-bottom: 20px;">
-            <i class="fa-solid fa-lock" style="font-size: 32px; color: #C09B5A; margin-bottom: 10px;"></i>
-            <h3 style="color: #0B1B3D; margin: 0;">Feature Locked for Guests</h3>
-            <p style="color: #64748B; font-size: 14px; margin-top: 10px;">Create a free account to track your mastery, view dynamic radar charts, and identify your weakest units!</p>
+        <div style="background-color: rgba(216, 176, 108, 0.1); border: 1px solid #d8b06c; padding: 20px; border-radius: 12px; text-align: center; margin-bottom: 20px;">
+            <i class="fa-solid fa-lock" style="font-size: 32px; color: #d8b06c; margin-bottom: 10px;"></i>
+            <h3 style="color: #0a2038; font-family: Fraunces, serif; margin: 0;">Feature Locked for Guests</h3>
+            <p style="color: #5c7386; font-size: 14px; margin-top: 10px;">Create a free account to track your mastery, view dynamic radar charts, and identify your weakest units!</p>
         </div>
         """, unsafe_allow_html=True)
         if st.button("Create Free Account", type="primary", use_container_width=True):
@@ -1665,55 +1374,48 @@ def analytics_screen():
 
     response = supabase.table("attempts").select("is_correct, time_taken_seconds, question_id").eq("user_id", st.session_state.user_id).execute()
     data = response.data
-    
     q_map = get_question_map()
 
     if data:
         processed = []
         slow_units = set() 
-        
         for item in data:
             q_id = item.get('question_id')
             if q_id in q_map:
                 unit_num = q_map[q_id]
                 processed.append({"unit_num": unit_num, "correct": item['is_correct']})
-                
-                if item['is_correct'] == 1 and item['time_taken_seconds'] > 90:
-                    slow_units.add(unit_num)
+                if item['is_correct'] == 1 and item['time_taken_seconds'] > 90: slow_units.add(unit_num)
         
         if processed:
             df = pd.DataFrame(processed)
             summary_raw = df.groupby('unit_num')['correct'].mean() * 100
             
-            st.markdown("<h3 style='color: #0B1B3D;'>Your Mastery Radar</h3>", unsafe_allow_html=True)
+            st.markdown("<h3 style='color: #0a2038; font-family: Fraunces, serif;'>Your Mastery Radar</h3>", unsafe_allow_html=True)
             
             all_units = [f"U{i}" for i in range(1, 11)]
             accuracies = []
             for i in range(1, 11):
-                if i in summary_raw.index:
-                    accuracies.append(summary_raw[i])
-                else:
-                    accuracies.append(0)
+                if i in summary_raw.index: accuracies.append(summary_raw[i])
+                else: accuracies.append(0)
             
             angles = np.linspace(0, 2 * np.pi, len(all_units), endpoint=False).tolist()
-            
             accuracies += [accuracies[0]]
             angles += [angles[0]]
             
             fig, ax = plt.subplots(figsize=(6, 6), subplot_kw=dict(polar=True))
-            fig.patch.set_facecolor('#0B1B3D')
-            ax.set_facecolor('#0B1B3D')
+            fig.patch.set_facecolor('none') 
+            ax.set_facecolor('#F5FAFF')
             
-            plt.xticks(angles[:-1], all_units, color='white', size=12)
+            plt.xticks(angles[:-1], all_units, color='#0a2038', size=12, weight='bold')
             ax.set_rlabel_position(0)
-            plt.yticks([20, 40, 60, 80], ["20%", "40%", "60%", "80%"], color="#A0A0A0", size=8)
+            plt.yticks([20, 40, 60, 80], ["20%", "40%", "60%", "80%"], color="#5c7386", size=8)
             plt.ylim(0, 100)
             
-            ax.plot(angles, accuracies, color='#C09B5A', linewidth=2.5, linestyle='solid')
-            ax.fill(angles, accuracies, color='#C09B5A', alpha=0.4)
+            ax.plot(angles, accuracies, color='#2260d6', linewidth=2.5, linestyle='solid')
+            ax.fill(angles, accuracies, color='#8fcbfb', alpha=0.4)
             
-            ax.grid(color='#334155', linestyle='--', linewidth=0.8)
-            ax.spines['polar'].set_color('#C09B5A')
+            ax.grid(color='#d7e7f5', linestyle='--', linewidth=0.8)
+            ax.spines['polar'].set_color('#d8b06c')
             
             st.pyplot(fig)
             plt.close(fig) 
@@ -1721,7 +1423,7 @@ def analytics_screen():
             
             if slow_units:
                 sorted_slow = sorted(list(slow_units))
-                st.markdown(f"<div style='background-color: rgba(234, 179, 8, 0.1); border: 1px solid #eab308; padding: 14px; border-radius: 8px; color: #eab308; margin-top: 15px;'><i class='fa-solid fa-stopwatch'></i> <b>Speed Improvement Needed:</b> You have correct answers that took longer than 90 seconds in <b>Units: {', '.join(map(str, sorted_slow))}</b>. The AP exam requires faster pacing here!</div>", unsafe_allow_html=True)
+                st.markdown(f"<div style='background-color: rgba(234, 179, 8, 0.1); border: 1px solid #eab308; padding: 14px; border-radius: 12px; color: #eab308; margin-top: 15px;'><i class='fa-solid fa-stopwatch'></i> <b>Speed Improvement Needed:</b> You have correct answers that took longer than 90 seconds in <b>Units: {', '.join(map(str, sorted_slow))}</b>. The AP exam requires faster pacing here!</div>", unsafe_allow_html=True)
         else:
             st.info("No unit data found for your attempts.")
     else:
@@ -1732,14 +1434,12 @@ def analytics_screen():
         st.rerun()
 
 def admin_dashboard_screen():
-    st.markdown("<h1 style='text-align: center; color: #0B1B3D;'><i class='fa-solid fa-crown' style='color: #C09B5A;'></i> Platform Administration</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center; color: #0a2038; font-family: Fraunces, serif;'><i class='fa-solid fa-crown' style='color: #d8b06c;'></i> Platform Administration</h1>", unsafe_allow_html=True)
     st.write("---")
 
     users_res = supabase.table("users").select("user_id, username").execute()
     users = {u['user_id']: u['username'] for u in users_res.data}
-
     attempts_res = supabase.table("attempts").select("user_id, is_correct, question_id").execute()
-    
     q_map = get_question_map()
     
     student_stats = []
@@ -1754,8 +1454,7 @@ def admin_dashboard_screen():
             q_id = a.get('question_id')
             if q_id in q_map:
                 unit = q_map[q_id]
-                if unit not in unit_acc:
-                    unit_acc[unit] = {'correct': 0, 'total': 0}
+                if unit not in unit_acc: unit_acc[unit] = {'correct': 0, 'total': 0}
                 unit_acc[unit]['total'] += 1
                 unit_acc[unit]['correct'] += a['is_correct']
         
@@ -1768,14 +1467,11 @@ def admin_dashboard_screen():
                 weakest_unit = f"Unit {u}"
         
         student_stats.append({
-            "Username": uname,
-            "Total XP": total_xp,
-            "Questions Answered": total_q,
-            "Accuracy": f"{accuracy:.1f}%",
-            "Weakest Unit": weakest_unit if total_q > 0 else "N/A"
+            "Username": uname, "Total XP": total_xp, "Questions Answered": total_q,
+            "Accuracy": f"{accuracy:.1f}%", "Weakest Unit": weakest_unit if total_q > 0 else "N/A"
         })
     
-    st.markdown("<h3 style='text-align: center; color: #0B1B3D;'><i class='fa-solid fa-globe' style='color: #C09B5A;'></i> Global Platform Metrics</h3>", unsafe_allow_html=True)
+    st.markdown("<h3 style='text-align: center; color: #0a2038; font-family: Fraunces, serif;'><i class='fa-solid fa-globe' style='color: #d8b06c;'></i> Global Platform Metrics</h3>", unsafe_allow_html=True)
     c1, c2, c3 = st.columns(3)
     c1.metric("Total Students", len(users))
     c2.metric("Total Questions Answered", len(attempts_res.data))
@@ -1783,75 +1479,47 @@ def admin_dashboard_screen():
     c3.metric("Global Average Accuracy", f"{global_acc:.1f}%")
     
     st.write("---")
-    st.markdown("<h3 style='color: #0B1B3D;'><i class='fa-solid fa-users' style='color: #C09B5A;'></i> Student Roster & Leaderboard</h3>", unsafe_allow_html=True)
-    
+    st.markdown("<h3 style='color: #0a2038; font-family: Fraunces, serif;'><i class='fa-solid fa-users' style='color: #d8b06c;'></i> Student Roster & Leaderboard</h3>", unsafe_allow_html=True)
     df = pd.DataFrame(student_stats)
     if not df.empty:
         df = df.sort_values(by="Total XP", ascending=False).reset_index(drop=True)
         df.index += 1 
         st.dataframe(df, use_container_width=True)
-    else:
-        st.info("No student data available yet.")
+    else: st.info("No student data available yet.")
 
 # --- 6. Screen Router & SaaS Sidebar ---
 if not st.session_state.logged_in:
     login_screen()
 else:
     with st.sidebar:
-        st.markdown("<h2 style='text-align: center; color: white;'><i class='fa-solid fa-user-graduate' style='color: #C09B5A;'></i> Novara Profile</h2>", unsafe_allow_html=True)
-        
-        # Prevent fetching XP for guests to avoid database errors
+        st.markdown("<h2 style='text-align: center; color: white; font-family: Fraunces, serif;'><i class='fa-solid fa-user-graduate' style='color: #d8b06c;'></i> Novara Profile</h2>", unsafe_allow_html=True)
         if not st.session_state.get('is_guest', False):
             response = supabase.table("attempts").select("is_correct").eq("user_id", st.session_state.user_id).execute()
             total_score = sum([1 for item in response.data if item['is_correct'] == 1]) if response.data else 0
         else:
             total_score = 0
             
-        st.markdown(f"<div style='text-align: center; color: #C09B5A; font-size: 18px; margin-bottom: 20px;'><b><i class='fa-solid fa-user'></i> {st.session_state.username}</b><br><i class='fa-solid fa-star'></i> Total XP: {total_score}</div>", unsafe_allow_html=True)
+        st.markdown(f"<div style='text-align: center; color: #d8b06c; font-size: 18px; margin-bottom: 20px;'><b><i class='fa-solid fa-user'></i> {st.session_state.username}</b><br><i class='fa-solid fa-star'></i> Total XP: {total_score}</div>", unsafe_allow_html=True)
         
-        if st.button("Home", use_container_width=True, type="primary"):
-            st.session_state.current_screen = "dashboard"
-            st.rerun()
-            
-        if st.button("Start Full Adaptive Quiz", use_container_width=True, type="primary"):
-            start_quiz()
-            
-        if st.button("Saved Questions", use_container_width=True, type="primary"):
-            st.session_state.current_screen = "vault"
-            st.rerun()
-            
-        if st.button("View Analytics", use_container_width=True, type="primary"):
-            st.session_state.current_screen = "analytics"
-            st.rerun()
-            
+        if st.button("Home", use_container_width=True, type="primary"): st.session_state.current_screen = "dashboard"; st.rerun()
+        if st.button("Start Full Adaptive Quiz", use_container_width=True, type="primary"): start_quiz()
+        if st.button("Saved Questions", use_container_width=True, type="primary"): st.session_state.current_screen = "vault"; st.rerun()
+        if st.button("View Analytics", use_container_width=True, type="primary"): st.session_state.current_screen = "analytics"; st.rerun()
+        
         if st.session_state.get("is_admin", False):
             st.write("---")
-            if st.button("Admin Dashboard", use_container_width=True, type="primary"):
-                st.session_state.current_screen = "admin_dashboard"
-                st.rerun()
+            if st.button("Admin Dashboard", use_container_width=True, type="primary"): st.session_state.current_screen = "admin_dashboard"; st.rerun()
             
         st.write("---")
-        
-        # Show "Create Account" for guests, "Log Out" for registered users
         if st.session_state.get('is_guest', False):
             st.markdown("<div style='text-align: center; color: #eab308; font-size: 13px; margin-bottom: 10px;'><i class='fa-solid fa-triangle-exclamation'></i> Progress not saved</div>", unsafe_allow_html=True)
-            if st.button("Create Account", use_container_width=True, type="primary"):
-                st.session_state.clear()
-                st.rerun()
+            if st.button("Create Account", use_container_width=True, type="primary"): st.session_state.clear(); st.rerun()
         else:
-            if st.button("Log Out", use_container_width=True, type="primary"):
-                st.session_state.clear()
-                st.rerun()
+            if st.button("Log Out", use_container_width=True, type="primary"): st.session_state.clear(); st.rerun()
 
-    if st.session_state.current_screen == "dashboard":
-        dashboard_screen()
-    elif st.session_state.current_screen == "unit_detail":
-        unit_detail_screen()
-    elif st.session_state.current_screen == "quiz":
-        quiz_screen()
-    elif st.session_state.current_screen == "analytics":
-        analytics_screen()
-    elif st.session_state.current_screen == "admin_dashboard":
-        admin_dashboard_screen()
-    elif st.session_state.current_screen == "vault":
-        vault_screen()
+    if st.session_state.current_screen == "dashboard": dashboard_screen()
+    elif st.session_state.current_screen == "unit_detail": unit_detail_screen()
+    elif st.session_state.current_screen == "quiz": quiz_screen()
+    elif st.session_state.current_screen == "analytics": analytics_screen()
+    elif st.session_state.current_screen == "admin_dashboard": admin_dashboard_screen()
+    elif st.session_state.current_screen == "vault": vault_screen()
