@@ -1264,6 +1264,7 @@ def quiz_screen():
 
         is_last = (st.session_state.current_q_index == len(st.session_state.quiz_questions) - 1)
         back_disabled = (st.session_state.current_q_index == 0)
+        check_btn = False
 
         if is_exam:
             c1, c_space, c2, c3 = st.columns([2, 3, 2, 2])
