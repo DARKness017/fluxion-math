@@ -203,35 +203,6 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# --- 1.5 STREAMLIT CLOUD BADGE ASSASSIN (JS HACK) ---
-components.html(
-    """
-    <script>
-        // Этот скрипт работает в фоновом режиме и агрессивно вырезает рекламу Streamlit каждые 500 миллисекунд
-        setInterval(function() {
-            var parent = window.parent.document;
-            
-            // 1. Уничтожаем профиль создателя
-            var profiles = parent.querySelectorAll('[data-testid="stAppCreatorProfile"]');
-            profiles.forEach(p => p.style.setProperty("display", "none", "important"));
-            
-            // 2. Уничтожаем сам бейдж
-            var badges = parent.querySelectorAll('[class*="viewerBadge"]');
-            badges.forEach(b => b.style.setProperty("display", "none", "important"));
-            
-            // 3. Запасной план: ищем любую ссылку, ведущую на облако Streamlit
-            var links = parent.querySelectorAll('a[href*="streamlit.io"]');
-            links.forEach(l => {
-                if(l.innerHTML.includes('Hosted with') || l.innerHTML.includes('Streamlit')) {
-                    l.parentElement.style.setProperty("display", "none", "important");
-                }
-            });
-        }, 500);
-    </script>
-    """,
-    height=0, width=0
-)
-
 # --- 2. Cloud Database Connection (Supabase) ---
 @st.cache_resource
 def init_connection():
@@ -1480,6 +1451,15 @@ def unit_detail_screen():
         st.markdown(CHEAT_SHEETS.get(unit_num, "*Add your custom formulas for this unit here!*"), unsafe_allow_html=True)
 
 def quiz_screen():
+    # --- FOCUS MODE: Полностью скрываем боковую панель во время теста ---
+    st.markdown("""
+        <style>
+        [data-testid="stSidebar"] { display: none !important; }
+        [data-testid="collapsedControl"] { display: none !important; }
+        </style>
+    """, unsafe_allow_html=True)
+
+    # --- POST-QUIZ REVIEW SCREEN ---
     if st.session_state.current_q_index >= len(st.session_state.quiz_questions):
         st.markdown("<h2 style='text-align: center; color: #0B1B3D;'><i class='fa-solid fa-flag-checkered' style='color: #C09B5A;'></i> Quiz Complete!</h2>", unsafe_allow_html=True)
         st.markdown(f"<h3 style='text-align: center; color: #C09B5A;'>Your Score: {st.session_state.quiz_score} / {len(st.session_state.quiz_questions)}</h3>", unsafe_allow_html=True)
