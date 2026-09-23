@@ -34,29 +34,14 @@ st.markdown("""
         background-attachment: fixed !important;
     }
 
-    /* --- 2. REMOVE STREAMLIT CHROME --- */
+    /* --- 2. REMOVE STREAMLIT CHROME & FIX MOBILE MENU --- */
     #MainMenu {visibility: hidden;}
-    header {visibility: hidden;}
-    footer {visibility: hidden;}
+    header {background-color: transparent !important;}
     
     .stDeployButton {display: none !important;}
     [data-testid="stToolbar"] {display: none !important;}
     [data-testid="stDecoration"] {display: none !important;}
     [data-testid="stStatusWidget"] {display: none !important;}
-    
-    /* Ядерный вариант скрытия водяных знаков */
-    [data-testid="stAppCreatorProfile"] {display: none !important; opacity: 0 !important; pointer-events: none !important;}
-    [data-testid="viewerBadge"] {display: none !important; opacity: 0 !important; pointer-events: none !important;}
-    [class^="viewerBadge"] {display: none !important;}
-    [class^="styles_viewerBadge"] {display: none !important;}
-    a[href*="streamlit.io/cloud"] {display: none !important;}
-    
-    /* RESTORED APP WIDTH */
-    .block-container {
-        padding-top: 2rem !important;
-        padding-bottom: 2rem !important;
-        max-width: 900px !important;
-    }
 
     /* --- 3. METRIC CARDS & DATA WRAPPERS --- */
     div[data-testid="stMetric"] {
@@ -625,7 +610,19 @@ def remove_from_vault(q_id):
 
 # --- 5. UI Screens ---
 def vault_screen():
-    components.html("<script>window.parent.document.querySelector('.main').scrollTo(0,0);</script>", height=0)
+    # Мощный авто-скролл наверх
+    components.html(
+        """
+        <script>
+            var mainContent = window.parent.document.querySelector('.main');
+            if (mainContent) { mainContent.scrollTop = 0; }
+            window.parent.scrollTo(0, 0);
+            window.parent.document.documentElement.scrollTop = 0;
+            window.parent.document.body.scrollTop = 0;
+        </script>
+        """, 
+        height=0
+    )
     st.markdown("<h1 style='text-align: center; color: #0B1B3D;'><i class='fa-solid fa-star' style='color: #C09B5A;'></i> My Saved Questions Vault</h1>", unsafe_allow_html=True)
     st.write("---")
 
@@ -1404,7 +1401,19 @@ def dashboard_screen():
     """, unsafe_allow_html=True)
 
 def unit_detail_screen():
-    components.html("<script>window.parent.document.querySelector('.main').scrollTo(0,0);</script>", height=0)
+    # Мощный авто-скролл наверх
+    components.html(
+        """
+        <script>
+            var mainContent = window.parent.document.querySelector('.main');
+            if (mainContent) { mainContent.scrollTop = 0; }
+            window.parent.scrollTo(0, 0);
+            window.parent.document.documentElement.scrollTop = 0;
+            window.parent.document.body.scrollTop = 0;
+        </script>
+        """, 
+        height=0
+    )
     unit_num = st.session_state.selected_unit
     unit_name = st.session_state.selected_unit_name
         
@@ -1661,7 +1670,19 @@ def quiz_screen():
                 st.rerun()
 
 def analytics_screen():
-    components.html("<script>window.parent.document.querySelector('.main').scrollTo(0,0);</script>", height=0)
+    # Мощный авто-скролл наверх
+    components.html(
+        """
+        <script>
+            var mainContent = window.parent.document.querySelector('.main');
+            if (mainContent) { mainContent.scrollTop = 0; }
+            window.parent.scrollTo(0, 0);
+            window.parent.document.documentElement.scrollTop = 0;
+            window.parent.document.body.scrollTop = 0;
+        </script>
+        """, 
+        height=0
+    )
     st.markdown("<h1 style='text-align: center; color: #0B1B3D;'><i class='fa-solid fa-chart-line' style='color: #C09B5A;'></i> Performance Analytics</h1>", unsafe_allow_html=True)
     
     # Lock this feature for guests
@@ -1747,7 +1768,19 @@ def analytics_screen():
         st.rerun()
 
 def admin_dashboard_screen():
-    components.html("<script>window.parent.document.querySelector('.main').scrollTo(0,0);</script>", height=0)
+    # Мощный авто-скролл наверх
+    components.html(
+        """
+        <script>
+            var mainContent = window.parent.document.querySelector('.main');
+            if (mainContent) { mainContent.scrollTop = 0; }
+            window.parent.scrollTo(0, 0);
+            window.parent.document.documentElement.scrollTop = 0;
+            window.parent.document.body.scrollTop = 0;
+        </script>
+        """, 
+        height=0
+    )
     st.markdown("<h1 style='text-align: center; color: #0B1B3D;'><i class='fa-solid fa-crown' style='color: #C09B5A;'></i> Platform Administration</h1>", unsafe_allow_html=True)
     st.write("---")
 
