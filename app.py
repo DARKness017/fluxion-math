@@ -625,6 +625,7 @@ def remove_from_vault(q_id):
 
 # --- 5. UI Screens ---
 def vault_screen():
+    components.html("<script>window.parent.document.querySelector('.main').scrollTo(0,0);</script>", height=0)
     st.markdown("<h1 style='text-align: center; color: #0B1B3D;'><i class='fa-solid fa-star' style='color: #C09B5A;'></i> My Saved Questions Vault</h1>", unsafe_allow_html=True)
     st.write("---")
 
@@ -1403,6 +1404,7 @@ def dashboard_screen():
     """, unsafe_allow_html=True)
 
 def unit_detail_screen():
+    components.html("<script>window.parent.document.querySelector('.main').scrollTo(0,0);</script>", height=0)
     unit_num = st.session_state.selected_unit
     unit_name = st.session_state.selected_unit_name
         
@@ -1659,6 +1661,7 @@ def quiz_screen():
                 st.rerun()
 
 def analytics_screen():
+    components.html("<script>window.parent.document.querySelector('.main').scrollTo(0,0);</script>", height=0)
     st.markdown("<h1 style='text-align: center; color: #0B1B3D;'><i class='fa-solid fa-chart-line' style='color: #C09B5A;'></i> Performance Analytics</h1>", unsafe_allow_html=True)
     
     # Lock this feature for guests
@@ -1744,6 +1747,7 @@ def analytics_screen():
         st.rerun()
 
 def admin_dashboard_screen():
+    components.html("<script>window.parent.document.querySelector('.main').scrollTo(0,0);</script>", height=0)
     st.markdown("<h1 style='text-align: center; color: #0B1B3D;'><i class='fa-solid fa-crown' style='color: #C09B5A;'></i> Platform Administration</h1>", unsafe_allow_html=True)
     st.write("---")
 
