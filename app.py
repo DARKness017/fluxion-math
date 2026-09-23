@@ -36,7 +36,7 @@ st.markdown("""
 
     /* --- 2. REMOVE STREAMLIT CHROME --- */
     #MainMenu {visibility: hidden;}
-    header {background-color: transparent !important;}
+    header {visibility: hidden;}
     footer {visibility: hidden;}
     
     .stDeployButton {display: none !important;}
