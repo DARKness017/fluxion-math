@@ -636,7 +636,7 @@ def vault_screen():
             <p style="color: #64748B; font-size: 14px; margin-top: 10px;">Create a free account to save difficult questions, generate custom practice quizzes, and track your mastery!</p>
         </div>
         """, unsafe_allow_html=True)
-        if st.button("Create Free Account 🚀", type="primary", use_container_width=True):
+        if st.button("Create Free Account", type="primary", use_container_width=True):
             st.session_state.clear()
             st.rerun()
         return
@@ -840,8 +840,9 @@ def login_screen():
                 else:
                     st.warning("Please fill in both fields.")
             
-            st.markdown("<div style='margin-top: 10px;'></div>", unsafe_allow_html=True)
-            if st.button("Create Account", use_container_width=True):
+            st.markdown("<hr style='margin: 15px 0 8px 0; border: none; border-top: 1px solid rgba(192, 155, 90, 0.3);'>", unsafe_allow_html=True)
+            st.markdown("<div style='text-align: center; color: #64748B; font-size: 13px; margin-bottom: 8px;'>Don't have an account?</div>", unsafe_allow_html=True)
+            if st.button("Sign Up", use_container_width=True):
                 st.session_state.auth_mode = 'register'
                 st.rerun()
 
@@ -892,13 +893,16 @@ def login_screen():
                 else:
                     st.warning("Please fill in all fields.")
 
-            st.markdown("<div style='margin-top: 10px;'></div>", unsafe_allow_html=True)
-            if st.button("Sign In Instead", use_container_width=True):
+            st.markdown("<hr style='margin: 15px 0 8px 0; border: none; border-top: 1px solid rgba(192, 155, 90, 0.3);'>", unsafe_allow_html=True)
+            st.markdown("<div style='text-align: center; color: #64748B; font-size: 13px; margin-bottom: 8px;'>Already have an account?</div>", unsafe_allow_html=True)
+            if st.button("Sign In", use_container_width=True):
                 st.session_state.auth_mode = 'login'
                 st.rerun()
 
         # --- GUEST ONBOARDING ---
-        if st.button("Continue as Guest (No Registration)", use_container_width=True):
+        st.markdown("<hr style='margin: 15px 0 8px 0; border: none; border-top: 1px solid rgba(192, 155, 90, 0.3);'>", unsafe_allow_html=True)
+        st.markdown("<div style='text-align: center; color: #64748B; font-size: 13px; margin-bottom: 8px;'>Want to try it first?</div>", unsafe_allow_html=True)
+        if st.button("Continue as Guest", use_container_width=True):
             st.session_state.logged_in = True
             st.session_state.is_guest = True
             st.session_state.user_id = "guest_user"
@@ -1604,7 +1608,7 @@ def analytics_screen():
             <p style="color: #64748B; font-size: 14px; margin-top: 10px;">Create a free account to track your mastery, view dynamic radar charts, and identify your weakest units!</p>
         </div>
         """, unsafe_allow_html=True)
-        if st.button("Create Free Account 🚀", type="primary", use_container_width=True):
+        if st.button("Create Free Account", type="primary", use_container_width=True):
             st.session_state.clear()
             st.rerun()
         return
