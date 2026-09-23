@@ -203,6 +203,35 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+# --- 1.5 STREAMLIT CLOUD BADGE ASSASSIN (JS HACK) ---
+components.html(
+    """
+    <script>
+        // Этот скрипт работает в фоновом режиме и агрессивно вырезает рекламу Streamlit каждые 500 миллисекунд
+        setInterval(function() {
+            var parent = window.parent.document;
+            
+            // 1. Уничтожаем профиль создателя
+            var profiles = parent.querySelectorAll('[data-testid="stAppCreatorProfile"]');
+            profiles.forEach(p => p.style.setProperty("display", "none", "important"));
+            
+            // 2. Уничтожаем сам бейдж
+            var badges = parent.querySelectorAll('[class*="viewerBadge"]');
+            badges.forEach(b => b.style.setProperty("display", "none", "important"));
+            
+            // 3. Запасной план: ищем любую ссылку, ведущую на облако Streamlit
+            var links = parent.querySelectorAll('a[href*="streamlit.io"]');
+            links.forEach(l => {
+                if(l.innerHTML.includes('Hosted with') || l.innerHTML.includes('Streamlit')) {
+                    l.parentElement.style.setProperty("display", "none", "important");
+                }
+            });
+        }, 500);
+    </script>
+    """,
+    height=0, width=0
+)
+
 # --- 2. Cloud Database Connection (Supabase) ---
 @st.cache_resource
 def init_connection():
