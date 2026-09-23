@@ -735,22 +735,20 @@ def login_screen():
     
     with col_info:
         st.markdown("""
-        <div style="padding-top: 30px; padding-right: 20px;">
-            <h1 style="color: #0a2038; font-size: 42px; font-weight: 800; line-height: 1.1; margin-bottom: 25px;">
-                Master AP Calculus.<br>
-                <span style="color: #d8b06c;">Smarter, Not Harder.</span>
-            </h1>
-            
-            <div style='margin-bottom: 30px;'>
-                <span style='display: inline-block; width: 30px; height: 1.5px; background-color: #d8b06c; vertical-align: middle; margin-right: 12px;'></span>
-                <span style='font-family: "Inter", sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #5c7386; vertical-align: middle;'>Regret the missed, not the mistake</span>
-            </div>
-
-            <p style="color: #5c7386; font-size: 16px; margin-bottom: 35px; line-height: 1.6;">
-                Welcome to Fluxion Math's Adaptive Engine. We track your performance in real-time to pinpoint weaknesses, optimize your study time, and help you secure a 5 on the AP Exam.
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
+<div style="padding-top: 30px; padding-right: 20px;">
+    <h1 style="color: #0a2038; font-size: 42px; font-weight: 800; line-height: 1.1; margin-bottom: 25px;">
+        Master AP Calculus.<br>
+        <span style="color: #d8b06c;">Smarter, Not Harder.</span>
+    </h1>
+    <div style='margin-bottom: 30px;'>
+        <span style='display: inline-block; width: 30px; height: 1.5px; background-color: #d8b06c; vertical-align: middle; margin-right: 12px;'></span>
+        <span style='font-family: "Inter", sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #5c7386; vertical-align: middle;'>Regret the missed, not the mistake</span>
+    </div>
+    <p style="color: #5c7386; font-size: 16px; margin-bottom: 35px; line-height: 1.6;">
+        Welcome to Fluxion Math's Adaptive Engine. We track your performance in real-time to pinpoint weaknesses, optimize your study time, and help you secure a 5 on the AP Exam.
+    </p>
+</div>
+""", unsafe_allow_html=True)
         
         st.markdown("""
         <div style="display: flex; align-items: flex-start; margin-bottom: 25px;">
