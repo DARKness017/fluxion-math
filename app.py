@@ -24,6 +24,11 @@ st.markdown("""
     html, body, [class*="css"] {
         font-family: 'Inter', sans-serif !important;
     }
+    
+    h1, h2, h3, .stMarkdown h3 {
+        font-family: 'Fraunces', serif !important;
+        color: #0a2038 !important;
+    }
 
     /* --- 1. AMBIENT SAAS CANVAS (Vercel Template Style) --- */
     .stApp {
@@ -210,7 +215,15 @@ st.markdown("""
         box-shadow: 0 10px 20px rgba(34, 96, 214, 0.12) !important; 
     }
 
-    /* --- 10. HIDE STREAMLIT HEADER ANCHOR LINKS --- */
+    /* --- 10. FOOTER STYLING --- */
+    .social-icon { width: 32px; height: 32px; margin: 0 20px; transition: transform 0.2s ease-in-out, opacity 0.2s; opacity: 0.65; }
+    .social-icon:hover { transform: scale(1.15); opacity: 1; }
+    .social-container { display: flex; justify-content: center; align-items: center; margin-top: 15px; margin-bottom: 15px; }
+    .legal-footer { text-align: center; color: #5c7386; font-size: 12px; font-family: sans-serif; padding-bottom: 30px; line-height: 1.5; }
+    .legal-footer a { color: #d8b06c; text-decoration: none; }
+    .legal-footer a:hover { text-decoration: underline; }
+
+    /* HIDE STREAMLIT HEADER ANCHOR LINKS */
     .stMarkdown h1 a, .stMarkdown h2 a, .stMarkdown h3 a, .stMarkdown h4 a {
         display: none !important;
     }
@@ -817,7 +830,7 @@ def login_screen():
 
         st.markdown("<hr style='margin: 15px 0 8px 0; border: none; border-top: 1px solid rgba(215, 231, 245, 1);'>", unsafe_allow_html=True)
         st.markdown("<div style='text-align: center; color: #5c7386; font-size: 13px; margin-bottom: 8px;'>Want to try it first?</div>", unsafe_allow_html=True)
-        if st.button("Continue as Guest (No Registration)", use_container_width=True):
+        if st.button("Continue as Guest", use_container_width=True):
             st.session_state.logged_in = True
             st.session_state.is_guest = True
             st.session_state.user_id = "guest_user"
@@ -825,35 +838,6 @@ def login_screen():
             st.session_state.is_admin = False
             st.session_state.current_screen = "dashboard"
             st.rerun()
-
-    # --- MINIMALIST SOCIAL MEDIA & LEGAL FOOTER ---
-    st.write("---")
-    st.markdown("""
-    <style>
-    .social-icon { width: 32px; height: 32px; margin: 0 20px; transition: transform 0.2s ease-in-out, opacity 0.2s; opacity: 0.65; }
-    .social-icon:hover { transform: scale(1.15); opacity: 1; }
-    .social-container { display: flex; justify-content: center; align-items: center; margin-top: 15px; margin-bottom: 15px; }
-    .legal-footer { text-align: center; color: #5c7386; font-size: 12px; font-family: sans-serif; padding-bottom: 30px; line-height: 1.5; }
-    </style>
-    
-    <div class="social-container">
-        <a href='https://t.me/Novara_Academy' target='_blank'>
-            <img class="social-icon" src='https://cdn.simpleicons.org/telegram/153e91' alt='Telegram'/>
-        </a>
-        <a href='https://www.instagram.com/thenovaraacademy' target='_blank'>
-            <img class="social-icon" src='https://cdn.simpleicons.org/instagram/153e91' alt='Instagram'/>
-        </a>
-        <a href='https://youtube.com/@thenovara_academy' target='_blank'>
-            <img class="social-icon" src='https://cdn.simpleicons.org/youtube/153e91' alt='YouTube'/>
-        </a>
-    </div>
-    
-    <div class="legal-footer">
-        &copy; 2026 Novara Academy. All rights reserved.<br>
-        Designed & Engineered in Uzbekistan.<br>
-        <span style="font-size: 10px; opacity: 0.7;">For educational purposes only. Not affiliated with the College Board.</span>
-    </div>
-    """, unsafe_allow_html=True)
 
 def dashboard_screen():
     st.markdown(f"<h1 style='text-align: center; color: #0a2038; font-family: Fraunces, serif;'>Welcome, {st.session_state.username}!</h1>", unsafe_allow_html=True)
@@ -996,23 +980,27 @@ def dashboard_screen():
     
     st.markdown("<h3 style='text-align: center; color: #0a2038; font-family: Fraunces, serif; margin-bottom: 15px;'><i class='fa-solid fa-award' style='color: #d8b06c;'></i> Unit Mastery Trophy Case</h3>", unsafe_allow_html=True)
     unit_titles = {1: "Limits", 2: "Diff Basics", 3: "Composite", 4: "Context Apps", 5: "Analytical Apps", 6: "Integration", 7: "Diff Eq", 8: "Integration Apps", 9: "Parametric/Polar", 10: "Series"}
+    
+    # --- ОБНОВЛЕННЫЙ ПРЕМИАЛЬНЫЙ ДИЗАЙН КАРТОЧЕК ДОСТИЖЕНИЙ ---
     for row_start in [1, 6]:
         cols = st.columns(5)
         for idx, u_num in enumerate(range(row_start, row_start + 5)):
             acc = unit_accuracies.get(u_num, 0)
             is_mastered = acc >= 80.0
-            bg_color = "#d8b06c" if is_mastered else "#0A2038"
-            text_color = "#0A2038" if is_mastered else "#b9cbdc"
-            border_style = "2px solid #d8b06c" if is_mastered else "1px solid #153E91"
+            
+            bg_color = "rgba(216, 176, 108, 0.12)" if is_mastered else "#ffffff"
+            border_style = "2px solid #d8b06c" if is_mastered else "1px solid #D7E7F5"
+            text_color = "#0a2038"
             icon = "<i class='fa-solid fa-trophy'></i>" if is_mastered else "<i class='fa-solid fa-lock'></i>"
-            icon_color = "#0A2038" if is_mastered else "#b9cbdc"
+            icon_color = "#d8b06c" if is_mastered else "#a0aec0"
+            acc_color = "#9c7530" if is_mastered else "#5c7386"
             
             with cols[idx]:
                 st.markdown(f"""
-                <div style="background-color: {bg_color}; border: {border_style}; border-radius: 10px; padding: 10px 5px; text-align: center; margin-bottom: 12px; box-shadow: 0 4px 12px rgba(11, 27, 61, 0.08);">
-                    <span style="font-size: 18px; color: {icon_color};">{icon}</span><br>
-                    <b style="color: {text_color}; font-size: 11px;">U{u_num}: {unit_titles[u_num]}</b><br>
-                    <span style="color: {text_color}; font-size: 10px;">{acc:.0f}% Acc</span>
+                <div style="background-color: {bg_color}; border: {border_style}; border-radius: 12px; padding: 16px 5px; text-align: center; margin-bottom: 12px; box-shadow: 0 4px 10px rgba(11,27,61,0.03);">
+                    <div style="font-size: 20px; color: {icon_color}; margin-bottom: 6px;">{icon}</div>
+                    <div style="color: {text_color}; font-size: 11.5px; font-weight: 600; line-height: 1.3; margin-bottom: 4px; font-family: 'Inter', sans-serif;">U{u_num}:<br>{unit_titles[u_num]}</div>
+                    <div style="color: {acc_color}; font-size: 11px; font-weight: 600;">{acc:.0f}% Acc</div>
                 </div>
                 """, unsafe_allow_html=True)
 
@@ -1103,34 +1091,27 @@ def dashboard_screen():
             height=190
         )
 
-        # --- MINIMALIST SOCIAL MEDIA & LEGAL FOOTER ---
-        st.write("---")
-        st.markdown("""
-        <style>
-        .social-icon { width: 32px; height: 32px; margin: 0 20px; transition: transform 0.2s ease-in-out, opacity 0.2s; opacity: 0.65; }
-        .social-icon:hover { transform: scale(1.15); opacity: 1; }
-        .social-container { display: flex; justify-content: center; align-items: center; margin-top: 15px; margin-bottom: 15px; }
-        .legal-footer { text-align: center; color: #5c7386; font-size: 12px; font-family: sans-serif; padding-bottom: 30px; line-height: 1.5; }
-        </style>
-        
-        <div class="social-container">
-            <a href='https://t.me/Novara_Academy' target='_blank'>
-                <img class="social-icon" src='https://cdn.simpleicons.org/telegram/153e91' alt='Telegram'/>
-            </a>
-            <a href='https://www.instagram.com/thenovaraacademy' target='_blank'>
-                <img class="social-icon" src='https://cdn.simpleicons.org/instagram/153e91' alt='Instagram'/>
-            </a>
-            <a href='https://youtube.com/@thenovara_academy' target='_blank'>
-                <img class="social-icon" src='https://cdn.simpleicons.org/youtube/153e91' alt='YouTube'/>
-            </a>
-        </div>
-        
-        <div class="legal-footer">
-            &copy; 2026 Novara Academy. All rights reserved.<br>
-            Designed & Engineered in Uzbekistan.<br>
-            <span style="font-size: 10px; opacity: 0.7;">For educational purposes only. Not affiliated with the College Board.</span>
-        </div>
-        """, unsafe_allow_html=True)
+    # --- ВОЗВРАЩАЕМ ГЛОБАЛЬНЫЙ FOOTER НА ГЛАВНЫЙ ЭКРАН ---
+    st.write("---")
+    st.markdown("""
+    <div class="social-container">
+        <a href='https://t.me/Novara_Academy' target='_blank'>
+            <img class="social-icon" src='https://cdn.simpleicons.org/telegram/153e91' alt='Telegram'/>
+        </a>
+        <a href='https://www.instagram.com/thenovaraacademy' target='_blank'>
+            <img class="social-icon" src='https://cdn.simpleicons.org/instagram/153e91' alt='Instagram'/>
+        </a>
+        <a href='https://youtube.com/@thenovara_academy' target='_blank'>
+            <img class="social-icon" src='https://cdn.simpleicons.org/youtube/153e91' alt='YouTube'/>
+        </a>
+    </div>
+    
+    <div class="legal-footer">
+        &copy; 2026 Novara Academy. All rights reserved.<br>
+        Designed & Engineered in Uzbekistan.<br>
+        <span style="font-size: 10px; opacity: 0.7;">For educational purposes only. Not affiliated with the College Board.</span>
+    </div>
+    """, unsafe_allow_html=True)
 
 def unit_detail_screen():
     unit_num = st.session_state.selected_unit
@@ -1194,28 +1175,28 @@ def quiz_screen():
         
         /* Слегка затемняем фон всего экрана (чтобы белая карточка квиза мощно выделялась) */
         .stApp {
-            background-color: #f0f6fc !important;
+            background-color: #F8FAFC !important;
             background-image: 
-                radial-gradient(1100px 500px at 85% -10%, rgba(34, 96, 214, 0.08), transparent 60%),
-                radial-gradient(700px 460px at 92% 30%, rgba(216, 176, 108, 0.15), transparent 65%) !important;
+                radial-gradient(at 0% 0%, rgba(11, 27, 61, 0.05) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(192, 155, 90, 0.08) 0px, transparent 50%) !important;
         }
 
-        /* Трансформируем стандартную форму Streamlit в премиальную карточку */
+        /* Трансформируем стандартную форму Streamlit в премиальную стеклянную карточку */
         div[data-testid="stForm"] {
             background: rgba(255, 255, 255, 0.95) !important;
             backdrop-filter: blur(16px) !important;
             -webkit-backdrop-filter: blur(16px) !important;
-            border: 1px solid rgba(216,176,108,0.4) !important;
+            border: 1px solid rgba(192, 155, 90, 0.4) !important;
             border-radius: 24px !important;
             padding: 40px 30px !important;
-            box-shadow: 0 24px 60px -28px rgba(6,19,35,0.25) !important;
+            box-shadow: 0 24px 60px -28px rgba(11, 27, 61, 0.25) !important;
             margin-top: 15px !important;
         }
         
         /* Стилизуем текст вопроса (h3), чтобы он был красивым (Fraunces), но не ломал LaTeX */
         .stMarkdown h3 {
             font-family: 'Fraunces', serif !important;
-            color: #0a2038 !important;
+            color: #0B1B3D !important;
             line-height: 1.6 !important;
             font-weight: 600 !important;
             margin-bottom: 20px !important;
@@ -1270,14 +1251,14 @@ def quiz_screen():
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
         
-        <div style="background: linear-gradient(135deg, #0A2038 0%, #153E91 100%); padding: 18px 26px; border-radius: 16px; color: white; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 14px 26px -12px rgba(22,50,79,.5); border: 1px solid #d8b06c; font-family: 'Inter', sans-serif;">
+        <div style="background: linear-gradient(135deg, #0B1B3D 0%, #152A55 100%); padding: 18px 26px; border-radius: 16px; color: white; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 10px 20px rgba(0,0,0,0.15); border: 1px solid #C09B5A; font-family: 'Inter', sans-serif;">
             <div>
-                <h2 style="margin: 0; font-family: 'Fraunces', serif; font-size: 20px; color: #d8b06c;"><i class="fa-solid fa-pen-nib" style="margin-right: 8px;"></i> Novara Focus Mode</h2>
-                <p style="margin: 4px 0 0 0; font-size: 13px; color: #b9cbdc; opacity: 0.95;">Unit {q['unit_number']} • {q['difficulty']} • Question {st.session_state.current_q_index + 1} of {len(st.session_state.quiz_questions)}</p>
+                <h2 style="margin: 0; font-family: 'Fraunces', serif; font-size: 20px; color: #C09B5A;"><i class="fa-solid fa-pen-nib" style="margin-right: 8px;"></i> Novara Focus Mode</h2>
+                <p style="margin: 4px 0 0 0; font-size: 13px; color: #94A3B8; opacity: 0.95;">Unit {q['unit_number']} • {q['difficulty']} • Question {st.session_state.current_q_index + 1} of {len(st.session_state.quiz_questions)}</p>
             </div>
             <div style="text-align: right;">
                 <div style="font-size: 24px; font-weight: 800; font-family: monospace; color: #ffffff; line-height: 1;" id="clock">--:--</div>
-                <div style="font-size: 10px; color: #d8b06c; text-transform: uppercase; letter-spacing: 1px; margin-top: 4px;">{st.session_state.quiz_mode}</div>
+                <div style="font-size: 10px; color: #C09B5A; text-transform: uppercase; letter-spacing: 1px; margin-top: 4px;">{st.session_state.quiz_mode}</div>
             </div>
         </div>
         <script>
@@ -1305,7 +1286,7 @@ def quiz_screen():
     
     if q.get('image_url'): st.image(q['image_url'], use_container_width=True)
     
-    # Выводим вопрос через Native Markdown (h3), чтобы CSS подхватил шрифт Fraunces, а LaTeX сработал!
+    # ВОТ ОНО - РЕШЕНИЕ ПРОБЛЕМЫ С LATEX. Нативный Markdown, стилизованный через CSS.
     st.markdown(f"### {q['question_text']}")
     
     options = {"A": q['option_a'], "B": q['option_b'], "C": q['option_c'], "D": q['option_d']}
@@ -1325,6 +1306,8 @@ def quiz_screen():
 
         is_last = (st.session_state.current_q_index == len(st.session_state.quiz_questions) - 1)
         back_disabled = (st.session_state.current_q_index == 0)
+        
+        # FIX: Убеждаемся, что переменная создана до проверки if is_exam
         check_btn = False
 
         if is_exam:
@@ -1404,6 +1387,8 @@ def analytics_screen():
             
             fig, ax = plt.subplots(figsize=(6, 6), subplot_kw=dict(polar=True))
             fig.patch.set_facecolor('none') 
+            
+            # FIX: Изменен rgba на HEX цвет, чтобы Matplotlib не ломался
             ax.set_facecolor('#F5FAFF')
             
             plt.xticks(angles[:-1], all_units, color='#0a2038', size=12, weight='bold')
