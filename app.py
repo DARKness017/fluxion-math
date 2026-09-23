@@ -965,7 +965,13 @@ def login_screen():
 
 def dashboard_screen():
     st.markdown(f"<h1 style='text-align: center; color: #0B1B3D;'>Welcome, {st.session_state.username}!</h1>", unsafe_allow_html=True)
-    st.markdown("<p style='text-align: center; color: #5c7386; font-family: Fraunces, serif; font-style: italic; font-size: 16px; margin-top: -15px; margin-bottom: 25px;'>«Regret the missed, not the mistake.»</p>", unsafe_allow_html=True)
+    st.markdown("""
+        <div style='text-align: center; margin-top: -15px; margin-bottom: 30px;'>
+            <span style='display: inline-block; width: 30px; height: 1.5px; background-color: #d8b06c; vertical-align: middle; margin-right: 12px;'></span>
+            <span style='font-family: "Inter", sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #5c7386; vertical-align: middle;'>Regret the missed, not the mistake</span>
+            <span style='display: inline-block; width: 30px; height: 1.5px; background-color: #d8b06c; vertical-align: middle; margin-left: 12px;'></span>
+        </div>
+    """, unsafe_allow_html=True)
     
     if st.session_state.get('is_guest', False):
         st.markdown("<div style='text-align: center; background-color: rgba(234, 179, 8, 0.1); border: 1px solid #eab308; padding: 10px; border-radius: 8px; color: #eab308; margin-bottom: 15px;'><i class='fa-solid fa-triangle-exclamation'></i> <b>You are playing as a Guest.</b> Your progress and XP will not be saved. Create an account to track your mastery!</div>", unsafe_allow_html=True)
