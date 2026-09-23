@@ -34,14 +34,22 @@ st.markdown("""
         background-attachment: fixed !important;
     }
 
-    /* --- 2. REMOVE STREAMLIT CHROME & FIX MOBILE MENU --- */
+    /* --- 2. REMOVE STREAMLIT CHROME --- */
     #MainMenu {visibility: hidden;}
-    header {background-color: transparent !important;}
+    header {visibility: hidden;}
+    footer {visibility: hidden;}
     
     .stDeployButton {display: none !important;}
     [data-testid="stToolbar"] {display: none !important;}
     [data-testid="stDecoration"] {display: none !important;}
     [data-testid="stStatusWidget"] {display: none !important;}
+    
+    /* RESTORED APP WIDTH */
+    .block-container {
+        padding-top: 2rem !important;
+        padding-bottom: 2rem !important;
+        max-width: 1200px !important;
+    }
 
     /* --- 3. METRIC CARDS & DATA WRAPPERS --- */
     div[data-testid="stMetric"] {
