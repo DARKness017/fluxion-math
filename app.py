@@ -27,7 +27,6 @@ st.markdown("""
     
     h1, h2, h3, .stMarkdown h3 {
         font-family: 'Fraunces', serif !important;
-        color: #0a2038 !important;
     }
 
     /* --- 1. AMBIENT SAAS CANVAS (Vercel Template Style) --- */
