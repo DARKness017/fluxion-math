@@ -743,6 +743,7 @@ def login_screen():
     <div style='margin-bottom: 30px;'>
         <span style='display: inline-block; width: 30px; height: 1.5px; background-color: #d8b06c; vertical-align: middle; margin-right: 12px;'></span>
         <span style='font-family: "Inter", sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #5c7386; vertical-align: middle;'>Regret the missed, not the mistake</span>
+        <span style='display: inline-block; width: 30px; height: 1.5px; background-color: #d8b06c; vertical-align: middle; margin-left: 12px;'></span>
     </div>
     <p style="color: #5c7386; font-size: 16px; margin-bottom: 35px; line-height: 1.6;">
         Welcome to Fluxion Math's Adaptive Engine. We track your performance in real-time to pinpoint weaknesses, optimize your study time, and help you secure a 5 on the AP Exam.
