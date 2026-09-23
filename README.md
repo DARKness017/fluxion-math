@@ -1,17 +1,17 @@
-# 🎓 Novara Academy — Adaptive AP Calculus Learning Engine
+# 🎓 Fluxion Math — Adaptive AP Calculus Learning Engine
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.28%2B-FF4B4B.svg)](https://streamlit.io/)
 [![Supabase](https://img.shields.io/badge/Database-Supabase%20PostgreSQL-3ECF8E.svg)](https://supabase.com/)
 [![Security](https://img.shields.io/badge/Auth-Bcrypt%20Salted-green.svg)](https://en.wikipedia.org/wiki/Bcrypt)
 
-**Novara Academy** is an open-access, cloud-connected adaptive learning engine designed to expand Advanced Placement (AP) STEM education among youth in Uzbekistan and beyond. By combining data-driven performance analytics, strict security protocols, and adaptive question queuing, Novara Academy empowers students to master AP Calculus efficiently—even in regions where AP coursework is traditionally inaccessible.
+**Fluxion Math** is an open-access, cloud-connected adaptive learning engine designed to expand Advanced Placement (AP) STEM education among youth in Uzbekistan and beyond. By combining data-driven performance analytics, strict security protocols, and adaptive question queuing, Fluxion Math empowers students to master AP Calculus efficiently—even in regions where AP coursework is traditionally inaccessible.
 
 ---
 
 ## 🚀 The Mission
 
-In many developing regions, Advanced Placement courses remain uncommon, leaving talented youth without structured pathways to world-class STEM preparation. **Novara Academy** was built to break that barrier. By offering a free, high-rigor, adaptive learning environment, the platform helps local students build conceptual mastery, accelerate their learning pace, and compete on the international academic stage.
+In many developing regions, Advanced Placement courses remain uncommon, leaving talented youth without structured pathways to world-class STEM preparation. **Fluxion Math** was built to break that barrier. By offering a free, high-rigor, adaptive learning environment, the platform helps local students build conceptual mastery, accelerate their learning pace, and compete on the international academic stage.
 
 ---
 
