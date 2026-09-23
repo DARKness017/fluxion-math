@@ -12,7 +12,7 @@ import re
 from zoneinfo import ZoneInfo
 
 # --- 1. Page Config & Theming ---
-st.set_page_config(page_title="Novara Academy - Adaptive Engine", page_icon="🎓", layout="centered")
+st.set_page_config(page_title="Fluxion Math - Adaptive Engine", page_icon="🎓", layout="centered")
 
 # --- Custom CSS Styling ---
 st.markdown("""
@@ -741,7 +741,7 @@ def login_screen():
                 <span style="color: #C09B5A;">Smarter, Not Harder.</span>
             </h1>
             <p style="color: #64748B; font-size: 16px; margin-bottom: 35px; line-height: 1.6;">
-                Welcome to Novara Academy's Adaptive Engine. We track your performance in real-time to pinpoint weaknesses, optimize your study time, and help you secure a 5 on the AP Exam.
+                Welcome to Fluxion Math's Adaptive Engine. We track your performance in real-time to pinpoint weaknesses, optimize your study time, and help you secure a 5 on the AP Exam.
             </p>
         </div>
         """, unsafe_allow_html=True)
@@ -783,7 +783,7 @@ def login_screen():
         """, unsafe_allow_html=True)
 
     with col_login:
-        st.markdown("<div style='text-align: center; margin-bottom: 10px;'><i class='fa-solid fa-graduation-cap' style='color: #C09B5A; font-size: 32px;'></i><h2 style='color: #0B1B3D; margin-top: 10px;'>Novara Academy</h2></div>", unsafe_allow_html=True)
+        st.markdown("<div style='text-align: center; margin-bottom: 10px;'><i class='fa-solid fa-graduation-cap' style='color: #C09B5A; font-size: 32px;'></i><h2 style='color: #0B1B3D; margin-top: 10px;'>Fluxion Math</h2></div>", unsafe_allow_html=True)
         
         # --- SIGN IN VIEW ---
         if st.session_state.auth_mode == 'login':
@@ -957,7 +957,7 @@ def login_screen():
     </div>
     
     <div class="legal-footer">
-        &copy; 2026 Novara Academy. All rights reserved.<br>
+        &copy; 2026 Fluxion Math. All rights reserved.<br>
         Designed & Engineered in Uzbekistan.<br>
         <span style="font-size: 10px; opacity: 0.7;">For educational purposes only. Not affiliated with the College Board.</span>
     </div>
@@ -972,7 +972,7 @@ def dashboard_screen():
     if not st.session_state.get('hide_guide', False):
         st.markdown("""
         <div style="background: linear-gradient(135deg, #0B1B3D 0%, #152A55 100%); padding: 25px; border-radius: 16px; border: 1px solid #C09B5A; box-shadow: 0 10px 20px rgba(0,0,0,0.15); margin-bottom: 15px; margin-top: 10px;">
-            <h3 style="color: #C09B5A; margin-top: 0; text-align: center; margin-bottom: 20px;"><i class="fa-solid fa-map-location-dot"></i> Welcome to Novara Academy</h3>
+            <h3 style="color: #C09B5A; margin-top: 0; text-align: center; margin-bottom: 20px;"><i class="fa-solid fa-map-location-dot"></i> Welcome to Fluxion Math</h3>
             <div style="display: flex; flex-wrap: wrap; gap: 20px;">
                 <div style="flex: 1 1 45%; min-width: 200px;">
                     <h4 style="color: #FFFFFF; margin-top: 0; font-size: 16px;"><i class="fa-solid fa-brain" style="color: #C09B5A;"></i> Adaptive Engine</h4>
@@ -1384,7 +1384,7 @@ def dashboard_screen():
     </div>
     
     <div class="legal-footer">
-        &copy; 2026 Novara Academy. All rights reserved.<br>
+        &copy; 2026 Fluxion Math. All rights reserved.<br>
         Designed & Engineered in Uzbekistan.<br>
         <span style="font-size: 10px; opacity: 0.7;">For educational purposes only. Not affiliated with the College Board.</span>
     </div>
