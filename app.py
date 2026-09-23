@@ -145,7 +145,6 @@ st.markdown("""
         font-size: 14px !important;
     }
     .stMarkdown tr:last-child td { border-bottom: none !important; }
-    /* Fixes the corner bleeding bug */
     .stMarkdown tr:last-child td:first-child { border-bottom-left-radius: 12px !important; }
     .stMarkdown tr:last-child td:last-child { border-bottom-right-radius: 12px !important; }
     .stMarkdown td:first-child {
@@ -213,7 +212,6 @@ def init_connection():
 supabase = init_connection()
 
 # --- GLOBAL CONSTANTS (Performance Optimization) ---
-# Moving this outside the function stops it from rebuilding 360 lines of text on every click!
 CHEAT_SHEETS = {
     1: r"""
 <div style="background-color: #0B1B3D; border: 2px solid #C09B5A; border-bottom: none; border-top-left-radius: 12px; border-top-right-radius: 12px; padding: 15px; text-align: center; color: #C09B5A;">
@@ -414,6 +412,8 @@ if 'username' not in st.session_state:
     st.session_state.username = None
 if 'is_admin' not in st.session_state:
     st.session_state.is_admin = False
+if 'is_guest' not in st.session_state:
+    st.session_state.is_guest = False
 if 'current_screen' not in st.session_state:
     st.session_state.current_screen = "login"
 if 'quiz_started' not in st.session_state:
@@ -474,8 +474,11 @@ def start_quiz(unit=None, selected_subtopic="All Subtopics"):
             all_questions.extend(chunk.data)
             offset += 1000
             
-        attempts_response = supabase.table("attempts").select("is_correct, question_id").eq("user_id", st.session_state.user_id).execute()
-        attempts = attempts_response.data
+        if not st.session_state.get('is_guest', False):
+            attempts_response = supabase.table("attempts").select("is_correct, question_id").eq("user_id", st.session_state.user_id).execute()
+            attempts = attempts_response.data
+        else:
+            attempts = []
         
         q_map = get_question_map()
         
@@ -551,7 +554,7 @@ def start_saved_quiz():
     st.session_state.current_q_index = 0
     st.session_state.quiz_score = 0
     st.session_state.user_answers = []
-    st.session_state.checked_answers = {}  # 🆕 Fixes the crash!
+    st.session_state.checked_answers = {}
     st.session_state.quiz_started = True
     st.session_state.q_start_time = time.time()
     st.session_state.current_screen = "quiz"
@@ -560,7 +563,6 @@ def start_saved_quiz():
 def submit_entire_quiz():
     end_time = time.time()
     total_time = int(end_time - st.session_state.q_start_time)
-    # Average the time taken across all questions for the analytics engine
     avg_time = max(1, total_time // len(st.session_state.quiz_questions))
     
     st.session_state.quiz_score = 0
@@ -568,7 +570,6 @@ def submit_entire_quiz():
     attempts_batch = []
 
     for idx, q in enumerate(st.session_state.quiz_questions):
-        # Retrieve their saved answer, or default to "A" if they skipped it
         selected_option = st.session_state.current_answers.get(idx, "A")
         is_correct = 1 if selected_option == q['correct_option'] else 0
         
@@ -593,16 +594,14 @@ def submit_entire_quiz():
             "time_taken_seconds": avg_time
         })
 
-    # Bulk insert all attempts into Supabase for maximum speed
-    if attempts_batch:
+    # Bulk insert all attempts into Supabase ONLY if the user is NOT a guest
+    if attempts_batch and not st.session_state.get('is_guest', False):
         supabase.table("attempts").insert(attempts_batch).execute()
     
-    # Push the user to the Quiz Review screen
     st.session_state.current_q_index = len(st.session_state.quiz_questions)
     st.rerun()
 
 def save_to_vault(q_id):
-    """Saves a question to the student's personal vault in Supabase."""
     try:
         supabase.table("saved_questions").insert({
             "user_id": st.session_state.user_id,
@@ -617,7 +616,6 @@ def save_to_vault(q_id):
             st.toast(f"Error saving question: {err_msg}", icon="❌")
 
 def remove_from_vault(q_id):
-    """Deletes a mastered question from the student's personal vault."""
     try:
         supabase.table("saved_questions").delete().eq("user_id", st.session_state.user_id).eq("question_id", q_id).execute()
         st.toast("Question removed from your Vault!", icon="✅")
@@ -629,7 +627,20 @@ def vault_screen():
     st.markdown("<h1 style='text-align: center; color: #0B1B3D;'><i class='fa-solid fa-star' style='color: #C09B5A;'></i> My Saved Questions Vault</h1>", unsafe_allow_html=True)
     st.write("---")
 
-    # 1. Fetch saved question IDs for this user
+    # Lock this feature for guests
+    if st.session_state.get('is_guest', False):
+        st.markdown("""
+        <div style="background-color: rgba(192, 155, 90, 0.1); border: 1px solid #C09B5A; padding: 20px; border-radius: 12px; text-align: center; margin-bottom: 20px;">
+            <i class="fa-solid fa-lock" style="font-size: 32px; color: #C09B5A; margin-bottom: 10px;"></i>
+            <h3 style="color: #0B1B3D; margin: 0;">Feature Locked for Guests</h3>
+            <p style="color: #64748B; font-size: 14px; margin-top: 10px;">Create a free account to save difficult questions, generate custom practice quizzes, and track your mastery!</p>
+        </div>
+        """, unsafe_allow_html=True)
+        if st.button("Create Free Account 🚀", type="primary", use_container_width=True):
+            st.session_state.clear()
+            st.rerun()
+        return
+
     saved_res = supabase.table("saved_questions").select("question_id").eq("user_id", st.session_state.user_id).execute()
     
     if not saved_res.data:
@@ -638,7 +649,6 @@ def vault_screen():
 
     saved_q_ids = [item['question_id'] for item in saved_res.data]
     
-    # 2. Fetch the actual questions from the question bank
     q_res = supabase.table("questions").select("*").in_("question_id", saved_q_ids).execute()
     questions = q_res.data if q_res.data else []
 
@@ -646,11 +656,7 @@ def vault_screen():
         st.info("Your vault is empty!")
         return
 
-    # ==========================================
-    # VIEW 1: SPECIFIC QUESTION REVIEW MODE
-    # ==========================================
     if st.session_state.get('reviewing_q_id'):
-        # Find the specific question the user clicked
         q = next((q for q in questions if q['question_id'] == st.session_state.reviewing_q_id), None)
         
         if q:
@@ -661,7 +667,6 @@ def vault_screen():
             st.write("---")
             st.markdown(f"### Unit {q['unit_number']} - {q['difficulty']}")
             
-            # Show image first, just like the real quiz!
             if q.get('image_url'):
                 st.image(q['image_url'], use_container_width=True)
                 
@@ -687,9 +692,6 @@ def vault_screen():
             st.rerun()
         return
 
-    # ==========================================
-    # VIEW 2: KHAN ACADEMY STYLE GRID
-    # ==========================================
     st.markdown(f"**Total Saved Questions:** {len(questions)}")
     if st.button("Generate 10-Question Quiz from Vault", type="primary", use_container_width=True):
         start_saved_quiz()
@@ -700,28 +702,22 @@ def vault_screen():
         6: "Integration", 7: "Diff Eq", 8: "Integration Apps", 9: "Parametric/Polar", 10: "Series"
     }
 
-    # Group questions by unit
     q_by_unit = {i: [] for i in range(1, 11)}
     for q in questions:
         q_by_unit[q['unit_number']].append(q)
 
-    # Draw the Grid row by row
     for u in range(1, 11):
         col1, col2 = st.columns([1.5, 4])
-        
         with col1:
             st.markdown(f"<div style='padding-top: 10px;'><b>Unit {u}</b><br><span style='font-size: 12px; color: gray;'>{unit_titles[u]}</span></div>", unsafe_allow_html=True)
-            
         with col2:
             unit_qs = q_by_unit[u]
             if not unit_qs:
                 st.markdown("<div style='padding-top: 10px; color: #A0A0A0; font-size: 14px;'>This unit does not include saved questions.</div>", unsafe_allow_html=True)
             else:
-                # Chunk buttons into rows of 6 so it looks like a clean grid
                 chunk_size = 6
                 for i in range(0, len(unit_qs), chunk_size):
                     chunk = unit_qs[i:i+chunk_size]
-                    # Create exactly 6 columns so the buttons stay small/square
                     b_cols = st.columns(chunk_size) 
                     for j, q in enumerate(chunk):
                         with b_cols[j]:
@@ -734,7 +730,6 @@ def login_screen():
     st.write("") # Top padding
     st.write("")
     
-    # --- Split Screen Layout: 1.2 parts Info (Left) | 0.2 Spacing | 1 part Login (Right) ---
     col_info, col_space, col_login = st.columns([1.2, 0.2, 1])
     
     with col_info:
@@ -804,7 +799,6 @@ def login_screen():
                         if user_record.data:
                             user = user_record.data[0]
                             
-                            # --- 1. DB-LEVEL LOCKOUT CHECK ---
                             is_locked = False
                             if user.get('lockout_until'):
                                 lockout_time = pd.to_datetime(user['lockout_until']).timestamp()
@@ -813,22 +807,20 @@ def login_screen():
                                     remaining = int(lockout_time - time.time())
                                     st.markdown(f"<div style='background-color: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; padding: 14px; border-radius: 8px; color: #ef4444; margin-bottom: 15px;'><i class='fa-solid fa-lock'></i> <b>Account temporarily locked.</b> Try again in {remaining} seconds.</div>", unsafe_allow_html=True)
                             
-                            # --- 2. PASSWORD CHECK ---
                             if not is_locked:
                                 if bcrypt.checkpw(login_password.encode('utf-8'), user['password_hash'].encode('utf-8')):
-                                    # Wipe the bad history clean in the database on success
                                     supabase.table("users").update({"failed_attempts": 0, "lockout_until": None}).eq("email", login_email).execute()
                                     
                                     st.session_state.logged_in = True
                                     st.session_state.user_id = user['user_id']
                                     st.session_state.username = user['username']
                                     st.session_state.is_admin = user.get('is_admin', False)
+                                    st.session_state.is_guest = False
                                     st.session_state.current_screen = "dashboard"
                                     st.success(f"Welcome back, {user['username']}!")
                                     time.sleep(1)
                                     st.rerun()
                                 else:
-                                    # Log the strike
                                     new_attempts = user.get('failed_attempts', 0) + 1
                                     update_data = {"failed_attempts": new_attempts}
                                     
@@ -840,7 +832,6 @@ def login_screen():
                                         attempts_left = 5 - new_attempts
                                         st.error(f"Invalid email or password. ({attempts_left} attempts remaining)")
                                         
-                                    # Write to DB unconditionally (Claude's cleaner syntax!)
                                     supabase.table("users").update(update_data).eq("email", login_email).execute()
                         else:
                             st.error("Invalid email or password.")
@@ -849,7 +840,6 @@ def login_screen():
                 else:
                     st.warning("Please fill in both fields.")
             
-            # The Toggle Link
             st.write("---")
             st.markdown("<div style='text-align: center; color: #64748B; font-size: 13px; margin-bottom: 10px;'>Don't have an account?</div>", unsafe_allow_html=True)
             if st.button("Sign Up", use_container_width=True):
@@ -868,7 +858,7 @@ def login_screen():
             if st.button("Sign Up", type="primary", use_container_width=True):
                 if reg_username and reg_email and reg_password:
                     email_pattern = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
-                    username_pattern = r"^[A-Za-z0-9 _.'-]{2,40}$" # 🆕 Locks down the allowed characters
+                    username_pattern = r"^[A-Za-z0-9 _.'-]{2,40}$" 
                     
                     if not re.match(email_pattern, reg_email):
                         st.warning("Please enter a valid email address format (e.g., student@example.com).")
@@ -903,12 +893,23 @@ def login_screen():
                 else:
                     st.warning("Please fill in all fields.")
 
-            # The Toggle Link
             st.write("---")
             st.markdown("<div style='text-align: center; color: #64748B; font-size: 13px; margin-bottom: 10px;'>Already have an account?</div>", unsafe_allow_html=True)
             if st.button("Sign In", use_container_width=True):
                 st.session_state.auth_mode = 'login'
                 st.rerun()
+
+        # --- GUEST ONBOARDING ---
+        st.write("---")
+        st.markdown("<div style='text-align: center; color: #64748B; font-size: 13px; margin-bottom: 10px;'>Want to try it first?</div>", unsafe_allow_html=True)
+        if st.button("Continue as Guest (No Registration)", use_container_width=True):
+            st.session_state.logged_in = True
+            st.session_state.is_guest = True
+            st.session_state.user_id = "guest_user"
+            st.session_state.username = "Guest Student"
+            st.session_state.is_admin = False
+            st.session_state.current_screen = "dashboard"
+            st.rerun()
 
     # --- MINIMALIST SOCIAL MEDIA & LEGAL FOOTER ---
     st.write("---")
@@ -964,7 +965,9 @@ def login_screen():
 def dashboard_screen():
     st.markdown(f"<h1 style='text-align: center; color: #0B1B3D;'>Welcome, {st.session_state.username}!</h1>", unsafe_allow_html=True)
     
-    # --- 0. 🗺️ ONBOARDING QUICK GUIDE ---
+    if st.session_state.get('is_guest', False):
+        st.markdown("<div style='text-align: center; background-color: rgba(234, 179, 8, 0.1); border: 1px solid #eab308; padding: 10px; border-radius: 8px; color: #eab308; margin-bottom: 15px;'><i class='fa-solid fa-triangle-exclamation'></i> <b>You are playing as a Guest.</b> Your progress and XP will not be saved. Create an account to track your mastery!</div>", unsafe_allow_html=True)
+
     if not st.session_state.get('hide_guide', False):
         st.markdown("""
         <div style="background: linear-gradient(135deg, #0B1B3D 0%, #152A55 100%); padding: 25px; border-radius: 16px; border: 1px solid #C09B5A; box-shadow: 0 10px 20px rgba(0,0,0,0.15); margin-bottom: 15px; margin-top: 10px;">
@@ -1001,78 +1004,70 @@ def dashboard_screen():
     now = datetime.now(tz)
     total_seconds = int((exam_datetime - now).total_seconds())
     
-    # Force the streak to calculate based on Tashkent midnight, not server UTC
     today = datetime.now(tz).date()
     streak = 0
     unit_accuracies = {}
     
-    try:
-        # 🚨 FIX 1: Restored q_map and changed "created_at" back to "timestamp"
-        q_map = get_question_map()
-        response = supabase.table("attempts").select("timestamp, is_correct, question_id").eq("user_id", st.session_state.user_id).execute()
-        
-        if response.data:
-            active_dates = set()
-            unit_stats = {}
+    if not st.session_state.get('is_guest', False):
+        try:
+            q_map = get_question_map()
+            response = supabase.table("attempts").select("timestamp, is_correct, question_id").eq("user_id", st.session_state.user_id).execute()
             
-            for row in response.data:
-                # Daily Streak Calculation (Timezone Corrected!)
-                if row.get("timestamp"):
-                    # Convert Supabase's UTC timestamp string into a real Tashkent date
-                    utc_dt = pd.to_datetime(row["timestamp"], utc=True)
-                    tashkent_dt = utc_dt.tz_convert(tz)
-                    active_dates.add(tashkent_dt.strftime("%Y-%m-%d"))
+            if response.data:
+                active_dates = set()
+                unit_stats = {}
                 
-                # Unit Accuracy for Trophy Case
-                q_id = row.get("question_id")
-                if q_id in q_map:
-                    u = q_map[q_id]
-                    if u not in unit_stats:
-                        unit_stats[u] = {"correct": 0, "total": 0}
-                    unit_stats[u]["total"] += 1
-                    unit_stats[u]["correct"] += row["is_correct"]
-            
-            # Streak Logic
-            current_date = today
-            while current_date.strftime("%Y-%m-%d") in active_dates:
-                streak += 1
-                current_date -= timedelta(days=1)
-            if streak == 0:
-                current_date = today - timedelta(days=1)
+                for row in response.data:
+                    if row.get("timestamp"):
+                        utc_dt = pd.to_datetime(row["timestamp"], utc=True)
+                        tashkent_dt = utc_dt.tz_convert(tz)
+                        active_dates.add(tashkent_dt.strftime("%Y-%m-%d"))
+                    
+                    q_id = row.get("question_id")
+                    if q_id in q_map:
+                        u = q_map[q_id]
+                        if u not in unit_stats:
+                            unit_stats[u] = {"correct": 0, "total": 0}
+                        unit_stats[u]["total"] += 1
+                        unit_stats[u]["correct"] += row["is_correct"]
+                
+                current_date = today
                 while current_date.strftime("%Y-%m-%d") in active_dates:
                     streak += 1
                     current_date -= timedelta(days=1)
-                    
-            # Compute percentage per unit
-            for u, stats in unit_stats.items():
-                if stats["total"] > 0:
-                    unit_accuracies[u] = (stats["correct"] / stats["total"]) * 100
-    except Exception:
-        pass
+                if streak == 0:
+                    current_date = today - timedelta(days=1)
+                    while current_date.strftime("%Y-%m-%d") in active_dates:
+                        streak += 1
+                        current_date -= timedelta(days=1)
+                        
+                for u, stats in unit_stats.items():
+                    if stats["total"] > 0:
+                        unit_accuracies[u] = (stats["correct"] / stats["total"]) * 100
+        except Exception:
+            pass
 
-    # --- 2. Dynamic Gamification Gamestate Logic ---
     if streak == 0:
-        card_bg = "linear-gradient(135deg, #1E293B 0%, #0F172A 100%)" # Slate Gray
+        card_bg = "linear-gradient(135deg, #1E293B 0%, #0F172A 100%)"
         icon_color = "#64748B"
         text_color = "#94A3B8"
         streak_msg = "Start your streak!"
     elif 1 <= streak <= 7:
-        card_bg = "linear-gradient(135deg, #FBBF24 0%, #D97706 100%)" # Vibrant Yellow
+        card_bg = "linear-gradient(135deg, #FBBF24 0%, #D97706 100%)"
         icon_color = "#FFFFFF"
         text_color = "#FFFFFF"
         streak_msg = "Heating Up!"
     elif 8 <= streak <= 30:
-        card_bg = "linear-gradient(135deg, #F97316 0%, #C2410C 100%)" # Bright Orange
+        card_bg = "linear-gradient(135deg, #F97316 0%, #C2410C 100%)"
         icon_color = "#FFFFFF"
         text_color = "#FFFFFF"
         streak_msg = "On Fire!"
     else:
-        card_bg = "linear-gradient(135deg, #EF4444 0%, #991B1B 100%)" # Blazing Red
+        card_bg = "linear-gradient(135deg, #EF4444 0%, #991B1B 100%)"
         icon_color = "#FFFFFF"
         text_color = "#FFFFFF"
         streak_msg = "Unstoppable!"
 
-    # --- 3. Live JavaScript Countdown Widget & Duolingo Layout ---
     components.html(
     f"""
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -1194,7 +1189,6 @@ def dashboard_screen():
     st.write("---")
     st.markdown("<h3 style='text-align: center; color: #0B1B3D;'><i class='fa-solid fa-globe' style='color: #C09B5A;'></i> Global Leaderboard</h3>", unsafe_allow_html=True)
     
-    # Fetch Leaderboard Data
     lb_users_res = supabase.table("users").select("user_id, username").execute()
     lb_users_dict = {u['user_id']: u['username'] for u in lb_users_res.data} if lb_users_res.data else {}
     
@@ -1203,28 +1197,23 @@ def dashboard_screen():
     if lb_attempts_res.data:
         df_lb = pd.DataFrame(lb_attempts_res.data)
         if not df_lb.empty and 'timestamp' in df_lb.columns:
-            # Clean, filter, and convert Leaderboard to Tashkent Time!
             df_lb['timestamp'] = pd.to_datetime(df_lb['timestamp'], errors='coerce', utc=True).dt.tz_convert(tz)
-            df_lb = df_lb[df_lb['is_correct'] == 1] # Only count correct answers (XP)
+            df_lb = df_lb[df_lb['is_correct'] == 1]
             
-            # Force the monthly leaderboard to reset based on Tashkent time
             curr_month = datetime.now(tz).month
             curr_year = datetime.now(tz).year
             
-            # --- Monthly Data ---
             df_monthly = df_lb[(df_lb['timestamp'].dt.month == curr_month) & (df_lb['timestamp'].dt.year == curr_year)]
             monthly_xp = df_monthly.groupby('user_id').size().reset_index(name='XP')
             monthly_xp['Student'] = monthly_xp['user_id'].map(lb_users_dict)
             monthly_xp = monthly_xp.sort_values(by='XP', ascending=False).head(10)[['Student', 'XP']]
             monthly_xp.index = range(1, len(monthly_xp) + 1)
             
-            # --- All-Time Data ---
             alltime_xp = df_lb.groupby('user_id').size().reset_index(name='XP')
             alltime_xp['Student'] = alltime_xp['user_id'].map(lb_users_dict)
             alltime_xp = alltime_xp.sort_values(by='XP', ascending=False).head(10)[['Student', 'XP']]
             alltime_xp.index = range(1, len(alltime_xp) + 1)
             
-            # Display Tabs
             tab_month, tab_alltime = st.tabs(["This Month", "All-Time"])
             with tab_month:
                 st.markdown("<h4 style='color: #0B1B3D; margin-top: 5px;'><i class='fa-solid fa-calendar-days' style='color: #C09B5A;'></i> This Month's Scholars</h4>", unsafe_allow_html=True)
@@ -1241,10 +1230,8 @@ def dashboard_screen():
     col1, col2, col3 = st.columns([1, 2, 1])
     
     with col2:
-        # 1. Safely pull the card number from Streamlit Secrets (No Git exposure!)
         card_number = st.secrets.get("support_card", "CARD_NOT_FOUND")
         
-        # 2. Use an f-string to inject it dynamically
         components.html(
             f"""
             <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
@@ -1310,7 +1297,6 @@ def dashboard_screen():
                 function copyText() {{
                     const textToCopy = "{card_number}";
                     
-                    // Claude's modern Clipboard API fix, with a fallback just in case Streamlit's iframe blocks it
                     const copyAction = navigator.clipboard ? 
                         navigator.clipboard.writeText(textToCopy) : 
                         new Promise((res) => {{
@@ -1410,28 +1396,22 @@ def unit_detail_screen():
     st.markdown(f"<h1 style='text-align: center; color: #0B1B3D;'>{unit_name}</h1>", unsafe_allow_html=True)
     st.write("---")
     
-    # --- 🆕 DYNAMIC SUBTOPIC SELECTOR ---
     st.markdown("<h3 style='text-align: center; color: #0B1B3D;'><i class='fa-solid fa-layer-group' style='color: #C09B5A;'></i> Select Subtopic</h3>", unsafe_allow_html=True)
     
-    # Fetch all unique subtopics for this specific unit from the database
     res = supabase.table("questions").select("subtopic").eq("unit_number", unit_num).execute()
     
     subtopic_options = ["All Subtopics"]
     if res.data:
-        # Extract unique valid subtopics (ignoring empty/None values)
         unique_subs = list(set([q['subtopic'] for q in res.data if q.get('subtopic')]))
-        
-        # Custom sorting logic to fix the "1.10 comes before 1.2" bug
         def subtopic_sort_key(s):
             match = re.match(r"^(\d+)\.(\d+)", s)
             if match:
                 return (int(match.group(1)), int(match.group(2)), s)
-            return (999, 999, s) # Puts things like "General Practice" safely at the bottom
+            return (999, 999, s)
             
         fetched_subs = sorted(unique_subs, key=subtopic_sort_key)
         subtopic_options.extend(fetched_subs)
     
-    # Render the sleek dropdown
     selected_subtopic = st.selectbox("Focus on a specific skill:", subtopic_options, label_visibility="collapsed")
     st.write("---")
     
@@ -1459,7 +1439,6 @@ def unit_detail_screen():
 
     st.write("")
     
-    # Change the button text dynamically based on what they selected
     btn_text = f"Start {st.session_state.quiz_mode}: {selected_subtopic}" if selected_subtopic != "All Subtopics" else f"Start Full Unit Quiz ({st.session_state.quiz_mode})"
     
     if st.button(btn_text, type="primary", use_container_width=True):
@@ -1471,7 +1450,6 @@ def unit_detail_screen():
         st.markdown(CHEAT_SHEETS.get(unit_num, "*Add your custom formulas for this unit here!*"), unsafe_allow_html=True)
 
 def quiz_screen():
-    # --- POST-QUIZ REVIEW SCREEN ---
     if st.session_state.current_q_index >= len(st.session_state.quiz_questions):
         st.markdown("<h2 style='text-align: center; color: #0B1B3D;'><i class='fa-solid fa-flag-checkered' style='color: #C09B5A;'></i> Quiz Complete!</h2>", unsafe_allow_html=True)
         st.markdown(f"<h3 style='text-align: center; color: #C09B5A;'>Your Score: {st.session_state.quiz_score} / {len(st.session_state.quiz_questions)}</h3>", unsafe_allow_html=True)
@@ -1479,9 +1457,11 @@ def quiz_screen():
         
         st.markdown("<h3 style='color: #0B1B3D;'><i class='fa-solid fa-magnifying-glass' style='color: #C09B5A;'></i> Question Review</h3>", unsafe_allow_html=True)
         
-        # --- 1. QUICKLY FETCH THE STUDENT'S VAULT FIRST ---
-        vault_response = supabase.table("saved_questions").select("question_id").eq("user_id", st.session_state.user_id).execute()
-        saved_q_ids = [item['question_id'] for item in vault_response.data] if vault_response.data else []
+        saved_q_ids = []
+        if not st.session_state.get('is_guest', False):
+            vault_response = supabase.table("saved_questions").select("question_id").eq("user_id", st.session_state.user_id).execute()
+            if vault_response.data:
+                saved_q_ids = [item['question_id'] for item in vault_response.data]
         
         for i, ans in enumerate(st.session_state.user_answers):
             st.markdown(f"**Q{i+1}:** {ans['question']}")
@@ -1491,12 +1471,12 @@ def quiz_screen():
             else:
                 st.markdown(f"<span style='display: block; background-color: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; padding: 14px; border-radius: 8px; color: #ef4444; margin-bottom: 12px;'><b>❌ Incorrect:</b> You chose {ans['selected']}) {ans['selected_text']}<br><br><i class='fa-solid fa-lightbulb' style='color: #eab308;'></i> <b style='color: #eab308;'>Right Answer:</b> <span style='color: #eab308;'>{ans['correct']}) {ans['correct_text']}</span></span>", unsafe_allow_html=True)
             
-            # --- 2. DYNAMICALLY SHOW ONLY ONE BUTTON ---
-            if ans['question_id'] in saved_q_ids:
-                # If it's already in the vault, ONLY show the Remove button
+            # Lock vault buttons for guests
+            if st.session_state.get('is_guest', False):
+                st.markdown("<div style='font-size: 13px; color: #eab308; margin-top: -5px;'><i class='fa-solid fa-lock'></i> Register to save questions to your Vault.</div>", unsafe_allow_html=True)
+            elif ans['question_id'] in saved_q_ids:
                 st.button("Remove from Vault", key=f"remove_btn_{i}_{ans['question_id']}", on_click=remove_from_vault, args=(ans['question_id'],))
             else:
-                # If it's not in the vault, ONLY show the Save button
                 st.button("Save to Vault", key=f"save_btn_{i}_{ans['question_id']}", on_click=save_to_vault, args=(ans['question_id'],))
             
             st.write("---")
@@ -1509,7 +1489,6 @@ def quiz_screen():
             st.rerun()
         return
 
-    # --- ACTIVE QUIZ SCREEN ---
     q = st.session_state.quiz_questions[st.session_state.current_q_index]
     st.progress((st.session_state.current_q_index) / len(st.session_state.quiz_questions))
     st.markdown(f"**Question {st.session_state.current_q_index + 1} of {len(st.session_state.quiz_questions)}** (Unit {q['unit_number']} - {q['difficulty']})")
@@ -1517,7 +1496,6 @@ def quiz_screen():
     elapsed = int(time.time() - st.session_state.q_start_time)
     is_exam = st.session_state.get("quiz_mode") == "Exam Mode"
     
-    # Exam Mode gives 15 mins (900s). Practice mode just counts up.
     time_val = max(0, 900 - elapsed) if is_exam else elapsed
 
     components.html(
@@ -1538,10 +1516,10 @@ def quiz_screen():
                 clock_div.innerText = formatted_time;
                 
                 if (is_exam) {{
-                    if (time_val <= 300) clock_div.style.color = "#FF4B4B"; // Turns red at 5 mins left
+                    if (time_val <= 300) clock_div.style.color = "#FF4B4B"; 
                     if (time_val > 0) time_val--;
                 }} else {{
-                    if (time_val > 90) clock_div.style.color = "#eab308"; // Turns yellow after 90s per question
+                    if (time_val > 90) clock_div.style.color = "#eab308"; 
                     time_val++;
                 }}
             }}, 1000);
@@ -1572,7 +1550,6 @@ def quiz_screen():
         
         st.write("") 
         
-        # --- INSTANT FEEDBACK (PRACTICE MODE ONLY) ---
         if not is_exam and st.session_state.checked_answers.get(st.session_state.current_q_index, False):
             if choice_label == q['correct_option']:
                 st.markdown(f"<div style='background-color: rgba(34, 197, 94, 0.1); border: 1px solid #22c55e; padding: 14px; border-radius: 8px; color: #22c55e; margin-bottom: 15px;'><b>✅ Correct!</b> Great job.</div>", unsafe_allow_html=True)
@@ -1580,33 +1557,28 @@ def quiz_screen():
                 correct_text = options[q['correct_option']]
                 st.markdown(f"<div style='background-color: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; padding: 14px; border-radius: 8px; color: #ef4444; margin-bottom: 15px;'><b>❌ Incorrect.</b><br><br><i class='fa-solid fa-lightbulb' style='color: #eab308;'></i> <b style='color: #eab308;'>Right Answer:</b> <span style='color: #eab308;'>{q['correct_option']}) {correct_text}</span></div>", unsafe_allow_html=True)
 
-        # --- DYNAMIC BUTTON LAYOUT ---
         is_last = (st.session_state.current_q_index == len(st.session_state.quiz_questions) - 1)
         back_disabled = (st.session_state.current_q_index == 0)
         check_btn = False
 
         if is_exam:
-            # EXAM MODE: Quit | Spacer | Back | Next
             c1, c_space, c2, c3 = st.columns([2, 3, 2, 2])
             with c1: quit_btn = st.form_submit_button("Quit Quiz", use_container_width=True)
             with c2: back_btn = st.form_submit_button("Back", disabled=back_disabled, use_container_width=True)
             with c3: next_btn = st.form_submit_button("Submit" if is_last else "Next", type="primary", use_container_width=True)
         else:
-            # PRACTICE MODE: Quit | Check Answer | Back | Next
             c1, c2, c3, c4 = st.columns([2, 2, 2, 2])
             with c1: quit_btn = st.form_submit_button("Quit Quiz", use_container_width=True)
             with c2: check_btn = st.form_submit_button("Check Answer", use_container_width=True)
             with c3: back_btn = st.form_submit_button("Back", disabled=back_disabled, use_container_width=True)
             with c4: next_btn = st.form_submit_button("Submit" if is_last else "Next", type="primary", use_container_width=True)
 
-        # --- ROUTING LOGIC ---
         if quit_btn:
             st.session_state.quiz_started = False
             st.session_state.current_screen = "dashboard"
             st.rerun()
             
         elif check_btn:
-            # Save their current answer and mark it as 'checked' so the feedback box appears
             st.session_state.current_answers[st.session_state.current_q_index] = choice_label
             st.session_state.checked_answers[st.session_state.current_q_index] = True
             st.rerun()
@@ -1618,7 +1590,6 @@ def quiz_screen():
             
         elif next_btn:
             st.session_state.current_answers[st.session_state.current_q_index] = choice_label
-            # Safety check: if we are at or past the last question, force submission
             if st.session_state.current_q_index >= len(st.session_state.quiz_questions) - 1:
                 submit_entire_quiz()
             else:
@@ -1628,6 +1599,20 @@ def quiz_screen():
 def analytics_screen():
     st.markdown("<h1 style='text-align: center; color: #0B1B3D;'><i class='fa-solid fa-chart-line' style='color: #C09B5A;'></i> Performance Analytics</h1>", unsafe_allow_html=True)
     
+    # Lock this feature for guests
+    if st.session_state.get('is_guest', False):
+        st.markdown("""
+        <div style="background-color: rgba(192, 155, 90, 0.1); border: 1px solid #C09B5A; padding: 20px; border-radius: 12px; text-align: center; margin-bottom: 20px;">
+            <i class="fa-solid fa-lock" style="font-size: 32px; color: #C09B5A; margin-bottom: 10px;"></i>
+            <h3 style="color: #0B1B3D; margin: 0;">Feature Locked for Guests</h3>
+            <p style="color: #64748B; font-size: 14px; margin-top: 10px;">Create a free account to track your mastery, view dynamic radar charts, and identify your weakest units!</p>
+        </div>
+        """, unsafe_allow_html=True)
+        if st.button("Create Free Account 🚀", type="primary", use_container_width=True):
+            st.session_state.clear()
+            st.rerun()
+        return
+
     response = supabase.table("attempts").select("is_correct, time_taken_seconds, question_id").eq("user_id", st.session_state.user_id).execute()
     data = response.data
     
@@ -1650,12 +1635,8 @@ def analytics_screen():
             df = pd.DataFrame(processed)
             summary_raw = df.groupby('unit_num')['correct'].mean() * 100
             
-            # ==========================================
-            # 🕸️ SKILL RADAR CHART (SPIDER WEB)
-            # ==========================================
             st.markdown("<h3 style='color: #0B1B3D;'>Your Mastery Radar</h3>", unsafe_allow_html=True)
             
-            # 1. Map all 10 units (fill with 0 if unattempted)
             all_units = [f"U{i}" for i in range(1, 11)]
             accuracies = []
             for i in range(1, 11):
@@ -1664,37 +1645,30 @@ def analytics_screen():
                 else:
                     accuracies.append(0)
             
-            # 2. Calculate angles for the radar
             angles = np.linspace(0, 2 * np.pi, len(all_units), endpoint=False).tolist()
             
-            # 3. Close the loop to draw a full shape
             accuracies += [accuracies[0]]
             angles += [angles[0]]
             
-            # 4. Plot the beautiful chart
             fig, ax = plt.subplots(figsize=(6, 6), subplot_kw=dict(polar=True))
-            fig.patch.set_facecolor('#0B1B3D') # Navy background
+            fig.patch.set_facecolor('#0B1B3D')
             ax.set_facecolor('#0B1B3D')
             
-            # Adjust grid and axes
             plt.xticks(angles[:-1], all_units, color='white', size=12)
             ax.set_rlabel_position(0)
             plt.yticks([20, 40, 60, 80], ["20%", "40%", "60%", "80%"], color="#A0A0A0", size=8)
             plt.ylim(0, 100)
             
-            # Fill the radar
             ax.plot(angles, accuracies, color='#C09B5A', linewidth=2.5, linestyle='solid')
             ax.fill(angles, accuracies, color='#C09B5A', alpha=0.4)
             
-            # Styling
             ax.grid(color='#334155', linestyle='--', linewidth=0.8)
             ax.spines['polar'].set_color('#C09B5A')
             
             st.pyplot(fig)
-            plt.close(fig) # 🆕 Closes the chart to prevent memory leaks!
+            plt.close(fig) 
             st.write("---")
             
-            # Feedback logic
             if slow_units:
                 sorted_slow = sorted(list(slow_units))
                 st.markdown(f"<div style='background-color: rgba(234, 179, 8, 0.1); border: 1px solid #eab308; padding: 14px; border-radius: 8px; color: #eab308; margin-top: 15px;'><i class='fa-solid fa-stopwatch'></i> <b>Speed Improvement Needed:</b> You have correct answers that took longer than 90 seconds in <b>Units: {', '.join(map(str, sorted_slow))}</b>. The AP exam requires faster pacing here!</div>", unsafe_allow_html=True)
@@ -1736,7 +1710,7 @@ def admin_dashboard_screen():
                 unit_acc[unit]['correct'] += a['is_correct']
         
         weakest_unit = "None"
-        lowest_acc = 101 # Safely catches 100% accuracy students now
+        lowest_acc = 101 
         for u, stats in unit_acc.items():
             acc = (stats['correct'] / stats['total']) * 100
             if acc <= lowest_acc:
@@ -1776,9 +1750,13 @@ else:
     with st.sidebar:
         st.markdown("<h2 style='text-align: center; color: white;'><i class='fa-solid fa-user-graduate' style='color: #C09B5A;'></i> Novara Profile</h2>", unsafe_allow_html=True)
         
-        response = supabase.table("attempts").select("is_correct").eq("user_id", st.session_state.user_id).execute()
-        total_score = sum([1 for item in response.data if item['is_correct'] == 1]) if response.data else 0
-        
+        # Prevent fetching XP for guests to avoid database errors
+        if not st.session_state.get('is_guest', False):
+            response = supabase.table("attempts").select("is_correct").eq("user_id", st.session_state.user_id).execute()
+            total_score = sum([1 for item in response.data if item['is_correct'] == 1]) if response.data else 0
+        else:
+            total_score = 0
+            
         st.markdown(f"<div style='text-align: center; color: #C09B5A; font-size: 18px; margin-bottom: 20px;'><b><i class='fa-solid fa-user'></i> {st.session_state.username}</b><br><i class='fa-solid fa-star'></i> Total XP: {total_score}</div>", unsafe_allow_html=True)
         
         if st.button("Home", use_container_width=True, type="primary"):
@@ -1803,9 +1781,17 @@ else:
                 st.rerun()
             
         st.write("---")
-        if st.button("Log Out", use_container_width=True, type="primary"):
-            st.session_state.clear()
-            st.rerun()
+        
+        # Show "Create Account" for guests, "Log Out" for registered users
+        if st.session_state.get('is_guest', False):
+            st.markdown("<div style='text-align: center; color: #eab308; font-size: 13px; margin-bottom: 10px;'><i class='fa-solid fa-triangle-exclamation'></i> Progress not saved</div>", unsafe_allow_html=True)
+            if st.button("Create Account", use_container_width=True, type="primary"):
+                st.session_state.clear()
+                st.rerun()
+        else:
+            if st.button("Log Out", use_container_width=True, type="primary"):
+                st.session_state.clear()
+                st.rerun()
 
     if st.session_state.current_screen == "dashboard":
         dashboard_screen()
