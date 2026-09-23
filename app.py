@@ -44,12 +44,13 @@ st.markdown("""
     [data-testid="stDecoration"] {display: none !important;}
     [data-testid="stStatusWidget"] {display: none !important;}
     
-    /* Updated Streamlit Cloud Watermark Kill-Switches */
-    [data-testid="viewerBadge"] {display: none !important;}
-    div[data-testid="stAppCreatorProfile"] {display: none !important;}
-    div[class^="viewerBadge"] {display: none !important;}
-    div[class^="styles_viewerBadge"] {display: none !important;}
-
+    /* Ядерный вариант скрытия водяных знаков */
+    [data-testid="stAppCreatorProfile"] {display: none !important; opacity: 0 !important; pointer-events: none !important;}
+    [data-testid="viewerBadge"] {display: none !important; opacity: 0 !important; pointer-events: none !important;}
+    [class^="viewerBadge"] {display: none !important;}
+    [class^="styles_viewerBadge"] {display: none !important;}
+    a[href*="streamlit.io/cloud"] {display: none !important;}
+    
     /* RESTORED APP WIDTH */
     .block-container {
         padding-top: 2rem !important;
