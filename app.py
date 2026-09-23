@@ -1103,6 +1103,35 @@ def dashboard_screen():
             height=190
         )
 
+        # --- MINIMALIST SOCIAL MEDIA & LEGAL FOOTER ---
+        st.write("---")
+        st.markdown("""
+        <style>
+        .social-icon { width: 32px; height: 32px; margin: 0 20px; transition: transform 0.2s ease-in-out, opacity 0.2s; opacity: 0.65; }
+        .social-icon:hover { transform: scale(1.15); opacity: 1; }
+        .social-container { display: flex; justify-content: center; align-items: center; margin-top: 15px; margin-bottom: 15px; }
+        .legal-footer { text-align: center; color: #5c7386; font-size: 12px; font-family: sans-serif; padding-bottom: 30px; line-height: 1.5; }
+        </style>
+        
+        <div class="social-container">
+            <a href='https://t.me/Novara_Academy' target='_blank'>
+                <img class="social-icon" src='https://cdn.simpleicons.org/telegram/153e91' alt='Telegram'/>
+            </a>
+            <a href='https://www.instagram.com/thenovaraacademy' target='_blank'>
+                <img class="social-icon" src='https://cdn.simpleicons.org/instagram/153e91' alt='Instagram'/>
+            </a>
+            <a href='https://youtube.com/@thenovara_academy' target='_blank'>
+                <img class="social-icon" src='https://cdn.simpleicons.org/youtube/153e91' alt='YouTube'/>
+            </a>
+        </div>
+        
+        <div class="legal-footer">
+            &copy; 2026 Novara Academy. All rights reserved.<br>
+            Designed & Engineered in Uzbekistan.<br>
+            <span style="font-size: 10px; opacity: 0.7;">For educational purposes only. Not affiliated with the College Board.</span>
+        </div>
+        """, unsafe_allow_html=True)
+
 def unit_detail_screen():
     unit_num = st.session_state.selected_unit
     unit_name = st.session_state.selected_unit_name
@@ -1245,7 +1274,7 @@ def quiz_screen():
     )
     
     if q.get('image_url'): st.image(q['image_url'], use_container_width=True)
-    st.markdown(f"<h3 style='font-family: Fraunces, serif; color: #0a2038;'>{q['question_text']}</h3>", unsafe_allow_html=True)
+    st.markdown(f"### {q['question_text']}")
     
     options = {"A": q['option_a'], "B": q['option_b'], "C": q['option_c'], "D": q['option_d']}
     saved_ans = st.session_state.current_answers.get(st.session_state.current_q_index, "A")
@@ -1343,7 +1372,7 @@ def analytics_screen():
             
             fig, ax = plt.subplots(figsize=(6, 6), subplot_kw=dict(polar=True))
             fig.patch.set_facecolor('none') 
-            ax.set_facecolor('rgba(255, 255, 255, 0.5)')
+            ax.set_facecolor('#F5FAFF')
             
             plt.xticks(angles[:-1], all_units, color='#0a2038', size=12, weight='bold')
             ax.set_rlabel_position(0)
