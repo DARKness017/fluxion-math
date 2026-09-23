@@ -965,6 +965,7 @@ def login_screen():
 
 def dashboard_screen():
     st.markdown(f"<h1 style='text-align: center; color: #0B1B3D;'>Welcome, {st.session_state.username}!</h1>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: center; color: #5c7386; font-family: Fraunces, serif; font-style: italic; font-size: 16px; margin-top: -15px; margin-bottom: 25px;'>«Regret the missed, not the mistake.»</p>", unsafe_allow_html=True)
     
     if st.session_state.get('is_guest', False):
         st.markdown("<div style='text-align: center; background-color: rgba(234, 179, 8, 0.1); border: 1px solid #eab308; padding: 10px; border-radius: 8px; color: #eab308; margin-bottom: 15px;'><i class='fa-solid fa-triangle-exclamation'></i> <b>You are playing as a Guest.</b> Your progress and XP will not be saved. Create an account to track your mastery!</div>", unsafe_allow_html=True)
