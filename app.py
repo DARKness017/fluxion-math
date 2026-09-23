@@ -1188,18 +1188,37 @@ def quiz_screen():
     # --- FOCUS MODE & ELITE GLASSMORPHISM CARD ---
     st.markdown("""
         <style>
+        /* Полностью скрываем боковую панель */
         [data-testid="stSidebar"] { display: none !important; }
         [data-testid="collapsedControl"] { display: none !important; }
         
+        /* Слегка затемняем фон всего экрана (чтобы белая карточка квиза мощно выделялась) */
+        .stApp {
+            background-color: #f0f6fc !important;
+            background-image: 
+                radial-gradient(1100px 500px at 85% -10%, rgba(34, 96, 214, 0.08), transparent 60%),
+                radial-gradient(700px 460px at 92% 30%, rgba(216, 176, 108, 0.15), transparent 65%) !important;
+        }
+
         /* Трансформируем стандартную форму Streamlit в премиальную карточку */
         div[data-testid="stForm"] {
-            background: rgba(255, 255, 255, 0.7) !important;
+            background: rgba(255, 255, 255, 0.95) !important;
             backdrop-filter: blur(16px) !important;
             -webkit-backdrop-filter: blur(16px) !important;
-            border: 1px solid rgba(216,176,108,0.3) !important;
+            border: 1px solid rgba(216,176,108,0.4) !important;
             border-radius: 24px !important;
             padding: 40px 30px !important;
-            box-shadow: 0 24px 60px -28px rgba(6,19,35,0.2) !important;
+            box-shadow: 0 24px 60px -28px rgba(6,19,35,0.25) !important;
+            margin-top: 15px !important;
+        }
+        
+        /* Стилизуем текст вопроса (h3), чтобы он был красивым (Fraunces), но не ломал LaTeX */
+        .stMarkdown h3 {
+            font-family: 'Fraunces', serif !important;
+            color: #0a2038 !important;
+            line-height: 1.6 !important;
+            font-weight: 600 !important;
+            margin-bottom: 20px !important;
         }
         </style>
     """, unsafe_allow_html=True)
@@ -1240,17 +1259,26 @@ def quiz_screen():
         return
 
     q = st.session_state.quiz_questions[st.session_state.current_q_index]
-    st.progress((st.session_state.current_q_index) / len(st.session_state.quiz_questions))
-    st.markdown(f"**Question {st.session_state.current_q_index + 1} of {len(st.session_state.quiz_questions)}** (Unit {q['unit_number']} - {q['difficulty']})")
     
     elapsed = int(time.time() - st.session_state.q_start_time)
     is_exam = st.session_state.get("quiz_mode") == "Exam Mode"
     time_val = max(0, 900 - elapsed) if is_exam else elapsed
 
+    # --- ПРЕМИАЛЬНЫЙ БАННЕР КВИЗА ---
     components.html(
         f"""
-        <div style="font-family: 'Inter', sans-serif; text-align: right; color: #0a2038; font-size: 18px; font-weight: bold; margin: 0; padding-right: 10px;">
-            <i class="fa-solid fa-stopwatch" style="color: #2260d6;"></i> Time: <span id="clock"></span>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+        
+        <div style="background: linear-gradient(135deg, #0A2038 0%, #153E91 100%); padding: 18px 26px; border-radius: 16px; color: white; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 14px 26px -12px rgba(22,50,79,.5); border: 1px solid #d8b06c; font-family: 'Inter', sans-serif;">
+            <div>
+                <h2 style="margin: 0; font-family: 'Fraunces', serif; font-size: 20px; color: #d8b06c;"><i class="fa-solid fa-pen-nib" style="margin-right: 8px;"></i> Novara Focus Mode</h2>
+                <p style="margin: 4px 0 0 0; font-size: 13px; color: #b9cbdc; opacity: 0.95;">Unit {q['unit_number']} • {q['difficulty']} • Question {st.session_state.current_q_index + 1} of {len(st.session_state.quiz_questions)}</p>
+            </div>
+            <div style="text-align: right;">
+                <div style="font-size: 24px; font-weight: 800; font-family: monospace; color: #ffffff; line-height: 1;" id="clock">--:--</div>
+                <div style="font-size: 10px; color: #d8b06c; text-transform: uppercase; letter-spacing: 1px; margin-top: 4px;">{st.session_state.quiz_mode}</div>
+            </div>
         </div>
         <script>
             let time_val = {time_val};
@@ -1270,10 +1298,14 @@ def quiz_screen():
             }}, 1000);
         </script>
         """,
-        height=40
+        height=105
     )
     
+    st.progress((st.session_state.current_q_index) / len(st.session_state.quiz_questions))
+    
     if q.get('image_url'): st.image(q['image_url'], use_container_width=True)
+    
+    # Выводим вопрос через Native Markdown (h3), чтобы CSS подхватил шрифт Fraunces, а LaTeX сработал!
     st.markdown(f"### {q['question_text']}")
     
     options = {"A": q['option_a'], "B": q['option_b'], "C": q['option_c'], "D": q['option_d']}
