@@ -840,9 +840,8 @@ def login_screen():
                 else:
                     st.warning("Please fill in both fields.")
             
-            st.write("---")
-            st.markdown("<div style='text-align: center; color: #64748B; font-size: 13px; margin-bottom: 10px;'>Don't have an account?</div>", unsafe_allow_html=True)
-            if st.button("Sign Up", use_container_width=True):
+            st.markdown("<div style='margin-top: 10px;'></div>", unsafe_allow_html=True)
+            if st.button("Create Account", use_container_width=True):
                 st.session_state.auth_mode = 'register'
                 st.rerun()
 
@@ -893,15 +892,12 @@ def login_screen():
                 else:
                     st.warning("Please fill in all fields.")
 
-            st.write("---")
-            st.markdown("<div style='text-align: center; color: #64748B; font-size: 13px; margin-bottom: 10px;'>Already have an account?</div>", unsafe_allow_html=True)
-            if st.button("Sign In", use_container_width=True):
+            st.markdown("<div style='margin-top: 10px;'></div>", unsafe_allow_html=True)
+            if st.button("Sign In Instead", use_container_width=True):
                 st.session_state.auth_mode = 'login'
                 st.rerun()
 
         # --- GUEST ONBOARDING ---
-        st.write("---")
-        st.markdown("<div style='text-align: center; color: #64748B; font-size: 13px; margin-bottom: 10px;'>Want to try it first?</div>", unsafe_allow_html=True)
         if st.button("Continue as Guest (No Registration)", use_container_width=True):
             st.session_state.logged_in = True
             st.session_state.is_guest = True
