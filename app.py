@@ -1551,7 +1551,7 @@ def quiz_screen():
         
         <div style="background: linear-gradient(135deg, #0B1B3D 0%, #152A55 100%); padding: 18px 26px; border-radius: 16px; color: white; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 10px 20px rgba(0,0,0,0.15); border: 1px solid #C09B5A; font-family: 'Inter', sans-serif;">
             <div>
-                <h2 style="margin: 0; font-family: 'Fraunces', serif; font-size: 20px; color: #C09B5A;"><i class="fa-solid fa-pen-nib" style="margin-right: 8px;"></i> Novara Focus Mode</h2>
+                <h2 style="margin: 0; font-family: 'Fraunces', serif; font-size: 20px; color: #C09B5A;"><i class="fa-solid fa-pen-nib" style="margin-right: 8px;"></i> Fluxion Focus Mode</h2>
                 <p style="margin: 4px 0 0 0; font-size: 13px; color: #94A3B8; opacity: 0.95;">Unit {q['unit_number']} • {q['difficulty']} • Question {st.session_state.current_q_index + 1} of {len(st.session_state.quiz_questions)}</p>
             </div>
             <div style="text-align: right;">
@@ -1806,7 +1806,7 @@ if not st.session_state.logged_in:
     login_screen()
 else:
     with st.sidebar:
-        st.markdown("<h2 style='text-align: center; color: white;'><i class='fa-solid fa-user-graduate' style='color: #C09B5A;'></i> Novara Profile</h2>", unsafe_allow_html=True)
+        st.markdown("<h2 style='text-align: center; color: white;'><i class='fa-solid fa-user-graduate' style='color: #C09B5A;'></i> Fluxion Profile</h2>", unsafe_allow_html=True)
         
         # Prevent fetching XP for guests to avoid database errors
         if not st.session_state.get('is_guest', False):
