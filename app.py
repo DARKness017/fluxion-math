@@ -36,7 +36,7 @@ st.markdown("""
 
     /* --- 2. REMOVE STREAMLIT CHROME --- */
     #MainMenu {visibility: hidden;}
-    header {visibility: hidden;}
+    header {background-color: transparent !important; box-shadow: none !important;}
     footer {visibility: hidden;}
     
     .stDeployButton {display: none !important;}
@@ -734,10 +734,10 @@ def login_screen():
         Master AP Calculus.<br>
         <span style="color: #d8b06c;">Smarter, Not Harder.</span>
     </h1>
-    <div style='margin-bottom: 30px;'>
-        <span style='display: inline-block; width: 30px; height: 1.5px; background-color: #d8b06c; vertical-align: middle; margin-right: 12px;'></span>
-        <span style='font-family: "Inter", sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #5c7386; vertical-align: middle;'>Regret the missed, not the mistake</span>
-        <span style='display: inline-block; width: 30px; height: 1.5px; background-color: #d8b06c; vertical-align: middle; margin-left: 12px;'></span>
+    <div style='display: flex; align-items: center; justify-content: center; margin-bottom: 30px; gap: 10px;'>
+        <div style='width: 30px; height: 1.5px; background-color: #d8b06c; flex-shrink: 0;'></div>
+        <div style='font-family: "Inter", sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #5c7386; text-align: center;'>Regret the missed, not the mistake</div>
+        <div style='width: 30px; height: 1.5px; background-color: #d8b06c; flex-shrink: 0;'></div>
     </div>
     <p style="color: #5c7386; font-size: 16px; margin-bottom: 35px; line-height: 1.6;">
         Welcome to Fluxion Math's Adaptive Engine. We track your performance in real-time to pinpoint weaknesses, optimize your study time, and help you secure a 5 on the AP Exam.
@@ -965,10 +965,10 @@ def login_screen():
 def dashboard_screen():
     st.markdown(f"<h1 style='text-align: center; color: #0B1B3D;'>Welcome, {st.session_state.username}!</h1>", unsafe_allow_html=True)
     st.markdown("""
-        <div style='text-align: center; margin-top: -15px; margin-bottom: 30px;'>
-            <span style='display: inline-block; width: 30px; height: 1.5px; background-color: #d8b06c; vertical-align: middle; margin-right: 12px;'></span>
-            <span style='font-family: "Inter", sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #5c7386; vertical-align: middle;'>Regret the missed, not the mistake</span>
-            <span style='display: inline-block; width: 30px; height: 1.5px; background-color: #d8b06c; vertical-align: middle; margin-left: 12px;'></span>
+        <div style='display: flex; align-items: center; justify-content: center; margin-top: -15px; margin-bottom: 30px; gap: 10px;'>
+            <div style='width: 30px; height: 1.5px; background-color: #d8b06c; flex-shrink: 0;'></div>
+            <div style='font-family: "Inter", sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #5c7386; text-align: center;'>Regret the missed, not the mistake</div>
+            <div style='width: 30px; height: 1.5px; background-color: #d8b06c; flex-shrink: 0;'></div>
         </div>
     """, unsafe_allow_html=True)
     
