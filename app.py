@@ -788,11 +788,15 @@ def login_screen():
         if st.session_state.auth_mode == 'login':
             st.markdown("<p style='text-align: center; color: #64748B; margin-top: -10px; margin-bottom: 30px; font-size: 15px;'>Welcome back! Please enter your details.</p>", unsafe_allow_html=True)
             
-            login_email = st.text_input("Email Address", key="login_email")
-            login_password = st.text_input("Password", type="password", key="login_password")
+            # Обертка в форму решает проблему с автозаполнением браузера
+            with st.form(key="login_form"):
+                login_email = st.text_input("Email Address")
+                login_password = st.text_input("Password", type="password")
+                
+                st.write("")
+                submit_login = st.form_submit_button("Sign In", type="primary", use_container_width=True)
             
-            st.write("")
-            if st.button("Sign In", type="primary", use_container_width=True):
+            if submit_login:
                 if login_email and login_password:
                     try:
                         user_record = supabase.table("users").select("*").eq("email", login_email).execute()
@@ -850,12 +854,15 @@ def login_screen():
         else:
             st.markdown("<p style='text-align: center; color: #64748B; margin-top: -10px; margin-bottom: 30px; font-size: 15px;'>Create an account to start mastering AP Calc.</p>", unsafe_allow_html=True)
             
-            reg_username = st.text_input("Full Name", key="reg_username")
-            reg_email = st.text_input("Email Address", key="reg_email")
-            reg_password = st.text_input("Password", type="password", key="reg_password")
+            with st.form(key="register_form"):
+                reg_username = st.text_input("Full Name")
+                reg_email = st.text_input("Email Address")
+                reg_password = st.text_input("Password", type="password")
+                
+                st.write("")
+                submit_reg = st.form_submit_button("Sign Up", type="primary", use_container_width=True)
             
-            st.write("")
-            if st.button("Sign Up", type="primary", use_container_width=True):
+            if submit_reg:
                 if reg_username and reg_email and reg_password:
                     email_pattern = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
                     username_pattern = r"^[A-Za-z0-9 _.'-]{2,40}$" 
