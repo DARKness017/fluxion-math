@@ -935,15 +935,17 @@ def login_screen():
     st.markdown("""
     <style>
     .social-icon {
-        width: 32px;
-        height: 32px;
+        font-size: 28px;
+        color: #0B1B3D;
         margin: 0 20px;
-        transition: transform 0.2s ease-in-out, opacity 0.2s;
-        opacity: 0.65;
+        transition: transform 0.2s ease-in-out, color 0.2s;
+        opacity: 0.75;
+        text-decoration: none;
     }
     .social-icon:hover {
         transform: scale(1.15);
         opacity: 1;
+        color: #C09B5A; /* При наведении иконки будут становиться золотыми */
     }
     .social-container {
         display: flex;
@@ -960,17 +962,24 @@ def login_screen():
         padding-bottom: 30px;
         line-height: 1.5;
     }
+    .legal-footer a {
+        color: #C09B5A;
+        text-decoration: none;
+    }
+    .legal-footer a:hover {
+        text-decoration: underline;
+    }
     </style>
     
     <div class="social-container">
-        <a href='https://t.me/Novara_Academy' target='_blank'>
-            <img class="social-icon" src='https://cdn.simpleicons.org/telegram/0B1B3D' alt='Telegram'/>
+        <a href='https://t.me/Novara_Academy' target='_blank' class="social-icon">
+            <i class="fa-brands fa-telegram"></i>
         </a>
-        <a href='https://www.instagram.com/thenovaraacademy' target='_blank'>
-            <img class="social-icon" src='https://cdn.simpleicons.org/instagram/0B1B3D' alt='Instagram'/>
+        <a href='https://www.instagram.com/thenovaraacademy' target='_blank' class="social-icon">
+            <i class="fa-brands fa-instagram"></i>
         </a>
-        <a href='https://youtube.com/@thenovara_academy' target='_blank'>
-            <img class="social-icon" src='https://cdn.simpleicons.org/youtube/0B1B3D' alt='YouTube'/>
+        <a href='https://youtube.com/@thenovara_academy' target='_blank' class="social-icon">
+            <i class="fa-brands fa-youtube"></i>
         </a>
     </div>
     
@@ -1362,15 +1371,17 @@ def dashboard_screen():
     st.markdown("""
     <style>
     .social-icon {
-        width: 32px;
-        height: 32px;
+        font-size: 28px;
+        color: #0B1B3D;
         margin: 0 20px;
-        transition: transform 0.2s ease-in-out, opacity 0.2s;
-        opacity: 0.65;
+        transition: transform 0.2s ease-in-out, color 0.2s;
+        opacity: 0.75;
+        text-decoration: none;
     }
     .social-icon:hover {
         transform: scale(1.15);
         opacity: 1;
+        color: #C09B5A; /* При наведении иконки будут становиться золотыми */
     }
     .social-container {
         display: flex;
@@ -1397,14 +1408,14 @@ def dashboard_screen():
     </style>
     
     <div class="social-container">
-        <a href='https://t.me/Novara_Academy' target='_blank'>
-            <img class="social-icon" src='https://cdn.simpleicons.org/telegram/0B1B3D' alt='Telegram'/>
+        <a href='https://t.me/Novara_Academy' target='_blank' class="social-icon">
+            <i class="fa-brands fa-telegram"></i>
         </a>
-        <a href='https://www.instagram.com/thenovaraacademy' target='_blank'>
-            <img class="social-icon" src='https://cdn.simpleicons.org/instagram/0B1B3D' alt='Instagram'/>
+        <a href='https://www.instagram.com/thenovaraacademy' target='_blank' class="social-icon">
+            <i class="fa-brands fa-instagram"></i>
         </a>
-        <a href='https://youtube.com/@thenovara_academy' target='_blank'>
-            <img class="social-icon" src='https://cdn.simpleicons.org/youtube/0B1B3D' alt='YouTube'/>
+        <a href='https://youtube.com/@thenovara_academy' target='_blank' class="social-icon">
+            <i class="fa-brands fa-youtube"></i>
         </a>
     </div>
     
