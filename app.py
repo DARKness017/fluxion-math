@@ -899,17 +899,36 @@ def login_screen():
                 st.session_state.auth_mode = 'login'
                 st.rerun()
 
-        # --- GUEST ONBOARDING ---
+        # --- ALTERNATIVE LOGIN (GOOGLE & GUEST) ---
         st.markdown("<hr style='margin: 15px 0 8px 0; border: none; border-top: 1px solid rgba(192, 155, 90, 0.3);'>", unsafe_allow_html=True)
-        st.markdown("<div style='text-align: center; color: #64748B; font-size: 13px; margin-bottom: 8px;'>Want to try it first?</div>", unsafe_allow_html=True)
-        if st.button("Continue as Guest", use_container_width=True):
-            st.session_state.logged_in = True
-            st.session_state.is_guest = True
-            st.session_state.user_id = "guest_user"
-            st.session_state.username = "Guest Student"
-            st.session_state.is_admin = False
-            st.session_state.current_screen = "dashboard"
-            st.rerun()
+        st.markdown("<div style='text-align: center; color: #64748B; font-size: 13px; margin-bottom: 8px;'>Or continue with</div>", unsafe_allow_html=True)
+        
+        alt_col1, alt_col2 = st.columns(2)
+        
+        with alt_col1:
+            if st.button("Google", use_container_width=True):
+                try:
+                    # Генерируем ссылку для OAuth через Supabase
+                    res = supabase.auth.sign_in_with_oauth({
+                        "provider": "google",
+                        "options": {
+                            "redirect_to": "https://fluxion-math.streamlit.app"
+                        }
+                    })
+                    # Мгновенный редирект на страницу авторизации Google
+                    st.markdown(f'<meta http-equiv="refresh" content="0;url={res.url}">', unsafe_allow_html=True)
+                except Exception as e:
+                    st.error("Error initializing Google Auth. Check Supabase settings.")
+                
+        with alt_col2:
+            if st.button("Guest", use_container_width=True):
+                st.session_state.logged_in = True
+                st.session_state.is_guest = True
+                st.session_state.user_id = "guest_user"
+                st.session_state.username = "Guest Student"
+                st.session_state.is_admin = False
+                st.session_state.current_screen = "dashboard"
+                st.rerun()
 
     # --- MINIMALIST SOCIAL MEDIA & LEGAL FOOTER ---
     st.write("---")
